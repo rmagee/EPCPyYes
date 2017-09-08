@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EPCPyYes.core.v1_2.helpers &mdash; EPCPyYes 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/serial-lab-favicon.png"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="EPCPyYes 0.1 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> EPCPyYes
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Examples and Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../EPCISEvents.html">EPCIS Event Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CBV.html">Core Business Vocabulary Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">EPCPyYes</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>EPCPyYes.core.v1_2.helpers</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for EPCPyYes.core.v1_2.helpers</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2015 Rob Magee.  All rights reserved.</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">gettext</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">gettext</span>
+
+
+<div class="viewcode-block" id="get_iso_8601_regex"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.helpers.get_iso_8601_regex">[docs]</a><span class="k">def</span> <span class="nf">get_iso_8601_regex</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Returns a compiled ISO 8601 regex for use in validation of date strings.</span>
+<span class="sd">    :return: A compiled regex.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;/(\d</span><span class="si">{4}</span><span class="s1">-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d</span><span class="si">{4}</span><span class="s1">-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d</span><span class="si">{4}</span><span class="s1">-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/&#39;</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="gtin_urn_generator"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.helpers.gtin_urn_generator">[docs]</a><span class="k">def</span> <span class="nf">gtin_urn_generator</span><span class="p">(</span><span class="n">company_prefix</span><span class="p">,</span> <span class="n">indicator</span><span class="p">,</span> <span class="n">item_reference</span><span class="p">,</span>
+                       <span class="n">serial_numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A python generator that creates SGTIN URNs for the list of serial numbers</span>
+<span class="sd">    passed in.</span>
+
+<span class="sd">    :param company_prefix: The company prefix (GS1).</span>
+<span class="sd">    :param indicator: The GS1 indicator digit for the GTIN</span>
+<span class="sd">    :param item_reference: The item reference number for the GTIN</span>
+<span class="sd">    :param serial_numbers: A list of serial numbers in string or integer format.</span>
+<span class="sd">    :return: Generates a sgtin URN string for each serial number provided.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;urn:epc:id:sgtin:</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}{2}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">company_prefix</span><span class="p">,</span> <span class="n">indicator</span><span class="p">,</span>
+                                                   <span class="n">item_reference</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;The indicator may only be one digit in length.&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">company_prefix</span> <span class="o">+</span> <span class="n">indicator</span> <span class="o">+</span> <span class="n">item_reference</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">13</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;The combined length of the company prefix,&#39;</span>
+                           <span class="s1">&#39; indicator digit and item reference number must&#39;</span>
+                           <span class="s1">&#39; be 13.&#39;</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">serial_number</span> <span class="ow">in</span> <span class="n">serial_numbers</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">prefix</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">serial_number</span><span class="p">)])</span></div>
+
+
+<div class="viewcode-block" id="gtin_to_urn"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.helpers.gtin_to_urn">[docs]</a><span class="k">def</span> <span class="nf">gtin_to_urn</span><span class="p">(</span><span class="n">company_prefix</span><span class="p">,</span> <span class="n">indicator</span><span class="p">,</span> <span class="n">item_reference</span><span class="p">,</span>
+                <span class="n">serial_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A python generator that creates SGTIN URNs for the list of serial numbers</span>
+<span class="sd">    passed in.</span>
+
+<span class="sd">    :param company_prefix: The company prefix (GS1).</span>
+<span class="sd">    :param indicator: The GS1 indicator digit for the GTIN</span>
+<span class="sd">    :param item_reference: The item reference number for the GTIN</span>
+<span class="sd">    :param serial_number: A serial number.</span>
+<span class="sd">    :return: Generates a sgtin URN string for each serial number provided.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;urn:epc:id:sgtin:</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}{2}</span><span class="s1">.</span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">company_prefix</span><span class="p">,</span> <span class="n">indicator</span><span class="p">,</span>
+                                                    <span class="n">item_reference</span><span class="p">,</span>
+                                                    <span class="n">serial_number</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_current_utc_time_and_offset"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.helpers.get_current_utc_time_and_offset">[docs]</a><span class="k">def</span> <span class="nf">get_current_utc_time_and_offset</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Based on the inbound datetime value, it will reuturn the ISO string</span>
+<span class="sd">    and the ISO timezone offset value.  Helps when creating EPCIS events</span>
+<span class="sd">    on the fly.</span>
+
+<span class="sd">    :param datetime: The datetime instance you want to convert to a string.</span>
+<span class="sd">    :return: A two-tuple with the datetime ISO string and the ISO timezone</span>
+<span class="sd">        offset.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">val</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:]</span></div>
+
+
+<div class="viewcode-block" id="gln13_data_to_sgln_urn"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.helpers.gln13_data_to_sgln_urn">[docs]</a><span class="k">def</span> <span class="nf">gln13_data_to_sgln_urn</span><span class="p">(</span><span class="n">company_prefix</span><span class="p">,</span> <span class="n">location_reference</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Takes the three parameters and outputs a compliant EPCGlobal urn.</span>
+<span class="sd">    The company prefix and location reference must be a total of 12 digits-</span>
+<span class="sd">    do not send in the check digit as part of the location reference.</span>
+
+<span class="sd">    :param company_prefix: The company prefix</span>
+<span class="sd">    :param location_reference: The location reference</span>
+<span class="sd">    :param extension: The id of the sub-site for the GLN</span>
+<span class="sd">    :return: An TDS 1.9 compliant SGLN URN value.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">company_prefix</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">location_reference</span><span class="p">))</span> <span class="o">==</span> <span class="mi">12</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span><span class="s1">&#39;The company prefix and location reference variables&#39;</span>
+              <span class="s1">&#39; must total 12 digits in lenght when combined.&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s1">&#39;urn:epc:id:sgln:</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">.</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">company_prefix</span><span class="p">,</span>
+                                                <span class="n">location_reference</span><span class="p">,</span>
+                                                <span class="n">extension</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Rob Magee.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

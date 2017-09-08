@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EPCPyYes.core.v1_2.template_events &mdash; EPCPyYes 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/serial-lab-favicon.png"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="EPCPyYes 0.1 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> EPCPyYes
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Examples and Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../EPCISEvents.html">EPCIS Event Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CBV.html">Core Business Vocabulary Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">EPCPyYes</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>EPCPyYes.core.v1_2.template_events</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for EPCPyYes.core.v1_2.template_events</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2015 Rob Magee.  All rights reserved.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">The templates package contains classes derived from the core EPCIS classes</span>
+<span class="sd">along with Jinja2 templates for generating EPCIS event XML.  By calling any</span>
+<span class="sd">classes&#39; `render` function, you can obtain the output of the Jinja2 template</span>
+<span class="sd">associated with the current class.  There are examples of this in the</span>
+<span class="sd">*Usage* section of this documentation.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">EPCPyYes.core.v1_2</span> <span class="k">import</span> <span class="n">events</span>
+<span class="kn">from</span> <span class="nn">EPCPyYes.core.v1_2.events</span> <span class="k">import</span> <span class="n">Action</span><span class="p">,</span> <span class="n">ErrorDeclaration</span>
+<span class="kn">from</span> <span class="nn">EPCPyYes.core.v1_2.CBV.instance_lot_master_data</span> <span class="k">import</span> \
+    <span class="n">InstanceLotMasterDataAttribute</span>
+
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="k">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">PackageLoader</span><span class="p">,</span> <span class="n">Template</span>
+
+
+<span class="k">def</span> <span class="nf">_load_default_environment</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Loads up the default Jinja2 environment so simple template names can</span>
+<span class="sd">    be passed in.</span>
+
+<span class="sd">    :return: The defualt Jinja2 environment for this package.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">Environment</span><span class="p">(</span><span class="n">loader</span><span class="o">=</span><span class="n">PackageLoader</span><span class="p">(</span><span class="s1">&#39;EPCPyYes&#39;</span><span class="p">,</span> <span class="s1">&#39;templates&#39;</span><span class="p">),</span>
+                       <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;jinja2.ext.with_&#39;</span><span class="p">],</span> <span class="n">trim_blocks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">lstrip_blocks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TemplateMixin"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.template_events.TemplateMixin">[docs]</a><span class="k">class</span> <span class="nc">TemplateMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Mixin class to add template support for serializing EPCIS classes to</span>
+<span class="sd">    text using jinja templates.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Will render an object event using the default &#39;object_event.xml&#39;</span>
+<span class="sd">        template or you can pass in a Jinja2 template along with a new</span>
+<span class="sd">        Jinja2 enviornment as well if you wish.</span>
+
+<span class="sd">        :param args:</span>
+<span class="sd">        :param kwargs: env = a jinja2 Environment, template = a string</span>
+<span class="sd">            representing the template in either the default or passed in Jinja2</span>
+<span class="sd">            environment and render_xml_declaration which is a bool value</span>
+<span class="sd">            used to determine whether or not to render an xml declaration during</span>
+<span class="sd">            template rendering.  It is populated as a jinja context variable.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># env: Environment = None, template: str = None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;env&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">_load_default_environment</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;template&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_render_xml_declaration</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;render_xml_declaration&#39;</span><span class="p">,</span>
+                                                  <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span>
+                         <span class="s1">&#39;render_xml_declaration&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_xml_declaration</span><span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :return: Returns a Jinja2 Template instance.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_template</span>
+
+    <span class="nd">@template</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Pass in the name of a template that has been loaded into the</span>
+<span class="sd">        jinja2 Environment class used to intialize this mixin.</span>
+
+<span class="sd">        :param value: The name of the template to load.</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_template</span><span class="o">.</span><span class="n">new_context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">namespaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Override to provide a list of XML namespace declarations for inclusion</span>
+<span class="sd">        in the EPCIS body root node.</span>
+
+<span class="sd">        :return: An empty list.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="TemplateMixin.render"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.template_events.TemplateMixin.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Renders the Class template using the _context dictionary for the</span>
+<span class="sd">        template context.</span>
+
+<span class="sd">        :param: render_namespaces: A boolean value passed into the</span>
+<span class="sd">        template as a context variable.  Used by the default templates</span>
+<span class="sd">        to determine whether or not to declare the XML namespaces in the</span>
+<span class="sd">        root element.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ObjectEvent"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.template_events.ObjectEvent">[docs]</a><span class="k">class</span> <span class="nc">ObjectEvent</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">ObjectEvent</span><span class="p">,</span> <span class="n">TemplateMixin</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Used to render an ObjectEvent using the Jinja2 environment and template</span>
+<span class="sd">    associated with the class.  The default environment utilizes the</span>
+<span class="sd">    `templates` directory in the root folder of the package.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                 <span class="n">event_timezone_offset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;+00:00&#39;</span><span class="p">,</span>
+                 <span class="n">record_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">action</span><span class="p">:</span> <span class="n">Action</span> <span class="o">=</span> <span class="n">Action</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+                 <span class="n">epc_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">biz_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">disposition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">read_point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">biz_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">event_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">error_declaration</span><span class="p">:</span> <span class="n">ErrorDeclaration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">source_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">destination_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">business_transaction_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ilmd</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">quantity_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">event_time</span><span class="p">,</span> <span class="n">event_timezone_offset</span><span class="p">,</span> <span class="n">record_time</span><span class="p">,</span>
+                         <span class="n">action</span><span class="p">,</span> <span class="n">epc_list</span><span class="p">,</span> <span class="n">biz_step</span><span class="p">,</span> <span class="n">disposition</span><span class="p">,</span> <span class="n">read_point</span><span class="p">,</span>
+                         <span class="n">biz_location</span><span class="p">,</span> <span class="n">event_id</span><span class="p">,</span> <span class="n">error_declaration</span><span class="p">,</span>
+                         <span class="n">source_list</span><span class="p">,</span> <span class="n">destination_list</span><span class="p">,</span>
+                         <span class="n">business_transaction_list</span><span class="p">,</span> <span class="n">ilmd</span><span class="p">,</span> <span class="n">quantity_list</span><span class="p">)</span>
+        <span class="n">TemplateMixin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;epcis/object_event.xml&#39;</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">namespaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        If there are any CBV ILMD attributes, we&#39;ll need to expose the</span>
+<span class="sd">        namespace for any XML generation.  Override to provide custom</span>
+<span class="sd">        XML namespaces if needed.</span>
+<span class="sd">        :return: A full string of the namespace declaration for use in</span>
+<span class="sd">        an XML root node.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ilmd</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ilmd_item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ilmd</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ilmd_item</span><span class="p">,</span> <span class="n">InstanceLotMasterDataAttribute</span><span class="p">):</span>
+                    <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;xmlns:cbvmd=&quot;urn:epcglobal:cbv:mda&quot;&#39;</span><span class="p">)</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="AggregationEvent"><a class="viewcode-back" href="../../../../EPCISEvents.html#EPCPyYes.core.v1_2.template_events.AggregationEvent">[docs]</a><span class="k">class</span> <span class="nc">AggregationEvent</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">AggregationEvent</span><span class="p">,</span> <span class="n">TemplateMixin</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Generates an EPCIS Aggregation Event.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                 <span class="n">event_timezone_offset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;+00:00&#39;</span><span class="p">,</span>
+                 <span class="n">record_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">action</span><span class="p">:</span> <span class="n">Action</span> <span class="o">=</span> <span class="n">Action</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+                 <span class="n">parent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">child_epcs</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">child_quantity_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">biz_step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">disposition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">read_point</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">biz_location</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">event_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">error_declaration</span><span class="p">:</span> <span class="n">ErrorDeclaration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">source_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">destination_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">business_transaction_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates a new EPCIS AggregationEvent instance.</span>
+
+<span class="sd">        :param event_time: The date and time at which the EPCIS Capturing</span>
+<span class="sd">            Applications asserts the event occurred.</span>
+<span class="sd">        :param event_timezone_offset: The time zone offset in effect at the</span>
+<span class="sd">            time and place the event occurred, expressed as an offset from UTC.</span>
+<span class="sd">        :param action: How this event relates to the lifecycle of the</span>
+<span class="sd">            aggregation named in this event.</span>
+<span class="sd">        :param parent_id: (Optional when action is OBSERVE, required otherwise)</span>
+<span class="sd">            The identifier of the parent of the association</span>
+<span class="sd">        :param child_epcs: An unordered list of the EPCs of contained</span>
+<span class="sd">            objects identified by instance-level identifiers.</span>
+<span class="sd">        :param child_quantity_list: An unordered list of one or more</span>
+<span class="sd">            QuantityElements identifying (at the class level) contained objects</span>
+<span class="sd">        :param biz_step: The business step of which this event was a part.</span>
+<span class="sd">        :param disposition: The business condition of the objects associated</span>
+<span class="sd">            with the EPCs, presumed to hold true until contradicted by a</span>
+<span class="sd">            subsequent event.</span>
+<span class="sd">        :param read_point: The read point at which the event took place.</span>
+<span class="sd">        :param biz_location: The business location where the objects</span>
+<span class="sd">            associated with the containing and contained EPCs may be found,</span>
+<span class="sd">            until contradicted by a subsequent event.</span>
+<span class="sd">        :param event_id: (Optional) An identifier for this event as specified</span>
+<span class="sd">            by the capturing application, globally unique across all events</span>
+<span class="sd">            other than error declarations.</span>
+<span class="sd">        :param error_declaration:  If present, indicates that this event</span>
+<span class="sd">            serves to assert that the assertions made by a prior event are</span>
+<span class="sd">            in error. See Section 7.4.1.2.</span>
+<span class="sd">        :param source_list: An unordered list of Source elements (Section 7.3.5.4)</span>
+<span class="sd">            that provide context about the originating endpoint of a business</span>
+<span class="sd">            transfer of which this event is a part.</span>
+<span class="sd">        :param destination_list:  An unordered list of Destination elements</span>
+<span class="sd">            (Section 7.3.5.4) that provide context about the terminating</span>
+<span class="sd">            endpoint of a business transfer of which this event is a part</span>
+<span class="sd">        :param business_transaction_list: An unordered list of business</span>
+<span class="sd">            transactions that define the context of this event.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">event_time</span><span class="p">,</span> <span class="n">event_timezone_offset</span><span class="p">,</span> <span class="n">record_time</span><span class="p">,</span>
+                         <span class="n">action</span><span class="p">,</span> <span class="n">parent_id</span><span class="p">,</span> <span class="n">child_epcs</span><span class="p">,</span> <span class="n">child_quantity_list</span><span class="p">,</span>
+                         <span class="n">biz_step</span><span class="p">,</span> <span class="n">disposition</span><span class="p">,</span> <span class="n">read_point</span><span class="p">,</span> <span class="n">biz_location</span><span class="p">,</span>
+                         <span class="n">event_id</span><span class="p">,</span> <span class="n">error_declaration</span><span class="p">,</span> <span class="n">source_list</span><span class="p">,</span>
+                         <span class="n">destination_list</span><span class="p">,</span> <span class="n">business_transaction_list</span><span class="p">)</span>
+        <span class="n">TemplateMixin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;epcis/aggregation_event.xml&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">TransactionEvent</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">TransactionEvent</span><span class="p">,</span> <span class="n">TemplateMixin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                 <span class="n">event_timezone_offset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;+00:00&#39;</span><span class="p">,</span>
+                 <span class="n">record_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">action</span><span class="p">:</span> <span class="n">Action</span> <span class="o">=</span> <span class="n">Action</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+                 <span class="n">parent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">epc_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">biz_step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">disposition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">read_point</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">biz_location</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">event_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">error_declaration</span><span class="p">:</span> <span class="n">ErrorDeclaration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">source_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">destination_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">business_transaction_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">quantity_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">event_time</span><span class="p">,</span> <span class="n">event_timezone_offset</span><span class="p">,</span> <span class="n">record_time</span><span class="p">,</span>
+                         <span class="n">action</span><span class="p">,</span> <span class="n">parent_id</span><span class="p">,</span> <span class="n">epc_list</span><span class="p">,</span> <span class="n">biz_step</span><span class="p">,</span> <span class="n">disposition</span><span class="p">,</span>
+                         <span class="n">read_point</span><span class="p">,</span> <span class="n">biz_location</span><span class="p">,</span> <span class="n">event_id</span><span class="p">,</span> <span class="n">error_declaration</span><span class="p">,</span>
+                         <span class="n">source_list</span><span class="p">,</span> <span class="n">destination_list</span><span class="p">,</span>
+                         <span class="n">business_transaction_list</span><span class="p">,</span> <span class="n">quantity_list</span><span class="p">)</span>
+        <span class="n">TemplateMixin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;epcis/transaction_event.xml&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">TransformationEvent</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">TransformationEvent</span><span class="p">,</span> <span class="n">TemplateMixin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                 <span class="n">event_timezone_offset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;+00:00&#39;</span><span class="p">,</span>
+                 <span class="n">record_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">event_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">input_epc_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_quantity_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">output_epc_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_quantity_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">transformation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">biz_step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">disposition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">read_point</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">biz_location</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">business_transaction_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">source_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">destination_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ilmd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">error_declaration</span><span class="p">:</span> <span class="n">ErrorDeclaration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">event_time</span><span class="p">,</span> <span class="n">event_timezone_offset</span><span class="p">,</span> <span class="n">record_time</span><span class="p">,</span>
+                         <span class="n">event_id</span><span class="p">,</span> <span class="n">input_epc_list</span><span class="p">,</span> <span class="n">input_quantity_list</span><span class="p">,</span>
+                         <span class="n">output_epc_list</span><span class="p">,</span> <span class="n">output_quantity_list</span><span class="p">,</span>
+                         <span class="n">transformation_id</span><span class="p">,</span> <span class="n">biz_step</span><span class="p">,</span> <span class="n">disposition</span><span class="p">,</span> <span class="n">read_point</span><span class="p">,</span>
+                         <span class="n">biz_location</span><span class="p">,</span> <span class="n">business_transaction_list</span><span class="p">,</span> <span class="n">source_list</span><span class="p">,</span>
+                         <span class="n">destination_list</span><span class="p">,</span> <span class="n">ilmd</span><span class="p">,</span> <span class="n">error_declaration</span><span class="p">)</span>
+        <span class="n">TemplateMixin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;epcis/transformation_event.xml&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">EPCISDocument</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">EPCISDocument</span><span class="p">,</span> <span class="n">TemplateMixin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_events</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">aggregation_events</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+                 <span class="n">transaction_events</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+                 <span class="n">transformation_events</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+                 <span class="n">render_xml_declaration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">created_date</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">(),</span>
+                 <span class="n">template</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;epcis/epcis_document.xml&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">object_events</span><span class="p">,</span> <span class="n">aggregation_events</span><span class="p">,</span> <span class="n">transaction_events</span><span class="p">,</span>
+                         <span class="n">transformation_events</span><span class="p">,</span> <span class="n">render_xml_declaration</span><span class="p">,</span>
+                         <span class="n">created_date</span><span class="p">)</span>
+        <span class="n">TemplateMixin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">render_namespaces</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">render_xml_declaration</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;object_events&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_events</span><span class="p">,</span>
+                   <span class="s1">&#39;aggregation_events&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregation_events</span><span class="p">,</span>
+                   <span class="s1">&#39;transaction_events&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transaction_events</span><span class="p">,</span>
+                   <span class="s1">&#39;transformation_events&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformation_events</span><span class="p">,</span>
+                   <span class="s1">&#39;created_date&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_created_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+                   <span class="s1">&#39;render_xml_declaration&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_xml_declaration</span><span class="p">,</span>
+                   <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="o">**</span><span class="n">context</span><span class="p">)</span>
+        <span class="c1"># TODO: add namespace support</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Rob Magee.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

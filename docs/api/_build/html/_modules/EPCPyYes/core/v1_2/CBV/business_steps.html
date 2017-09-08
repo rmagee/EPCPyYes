@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EPCPyYes.core.v1_2.CBV.business_steps &mdash; EPCPyYes 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../../_static/serial-lab-favicon.png"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../../search.html"/>
+    <link rel="top" title="EPCPyYes 0.1 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> EPCPyYes
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../usage.html">Examples and Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../EPCISEvents.html">EPCIS Event Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CBV.html">Core Business Vocabulary Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">EPCPyYes</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>EPCPyYes.core.v1_2.CBV.business_steps</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for EPCPyYes.core.v1_2.CBV.business_steps</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2015 Rob Magee.  All rights reserved.</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="BusinessSteps"><a class="viewcode-back" href="../../../../../CBV.html#EPCPyYes.core.v1_2.CBV.business_steps.BusinessSteps">[docs]</a><span class="k">class</span> <span class="nc">BusinessSteps</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    CVB 1.2 Business Steps as defined in section 7.1 of the standard.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">accepting</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:accepting&#39;</span>
+    <span class="n">arriving</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:arriving&#39;</span>
+    <span class="n">assembling</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:assembling&#39;</span>
+    <span class="n">collecting</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:collecting&#39;</span>
+    <span class="n">commissioning</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:commissioning&#39;</span>
+    <span class="n">consigning</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:consigning&#39;</span>
+    <span class="n">creating_class_instance</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:creating_class_instance&#39;</span>
+    <span class="n">cycle_counting</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:cycle_counting&#39;</span>
+    <span class="n">decommissioning</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:decommissioning&#39;</span>
+    <span class="n">departing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:departing&#39;</span>
+    <span class="n">destroying</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:destroying&#39;</span>
+    <span class="n">disassembling</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:disassembling&#39;</span>
+    <span class="n">dispensing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:dispensing&#39;</span>
+    <span class="n">entering_exit</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:entering_exit&#39;</span>
+    <span class="n">ingholding</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:ingholding&#39;</span>
+    <span class="n">inspecting</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:inspecting&#39;</span>
+    <span class="n">installing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:installing&#39;</span>
+    <span class="n">killing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:killing&#39;</span>
+    <span class="n">loading</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:loading&#39;</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:other&#39;</span>
+    <span class="n">packing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:packing&#39;</span>
+    <span class="n">picking</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:picking&#39;</span>
+    <span class="n">receiving</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:receiving&#39;</span>
+    <span class="n">removing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:removing&#39;</span>
+    <span class="n">repackaging</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:repackaging&#39;</span>
+    <span class="n">repairing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:repairing&#39;</span>
+    <span class="n">replacing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:replacing&#39;</span>
+    <span class="n">reserving</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:reserving&#39;</span>
+    <span class="n">retail_selling</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:retail_selling&#39;</span>
+    <span class="n">shipping</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:shipping&#39;</span>
+    <span class="n">staging_outbound</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:staging_outbound&#39;</span>
+    <span class="n">stock_taking</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:stock_taking&#39;</span>
+    <span class="n">stocking</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:stocking&#39;</span>
+    <span class="n">storing</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:storing&#39;</span>
+    <span class="n">transporting</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:transporting&#39;</span>
+    <span class="n">unloading</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:unloading&#39;</span>
+    <span class="n">unpacking</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:unpacking&#39;</span>
+    <span class="n">void_shipping</span> <span class="o">=</span> <span class="s1">&#39;urn:epcglobal:cbv:bizstep:void_shipping&#39;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Rob Magee.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

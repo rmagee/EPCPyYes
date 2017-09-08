@@ -1,0 +1,1117 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EPCIS Event Modules &mdash; EPCPyYes 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/serial-lab-favicon.png"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="EPCPyYes 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Core Business Vocabulary Modules" href="CBV.html"/>
+        <link rel="prev" title="Examples and Usage" href="usage.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> EPCPyYes
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Examples and Usage</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">EPCIS Event Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-EPCPyYes.core.v1_2.events">Core EPCIS Event Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-EPCPyYes.core.v1_2.template_events">EPCIS Template Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#epcis-helper-functions">EPCIS Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-EPCPyYes.core.errors">EPCIS Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CBV.html">Core Business Vocabulary Modules</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">EPCPyYes</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>EPCIS Event Modules</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/EPCISEvents.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="epcis-event-modules">
+<h1>EPCIS Event Modules<a class="headerlink" href="#epcis-event-modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-EPCPyYes.core.v1_2.events">
+<span id="core-epcis-event-classes"></span><h2>Core EPCIS Event Classes<a class="headerlink" href="#module-EPCPyYes.core.v1_2.events" title="Permalink to this headline">¶</a></h2>
+<p>The events module contains the base python implementations of the
+fundamental EPCIS event classes.  The intent of these classes is to
+implement the EPCIS events along with their business rules and no
+other type of implementation features.  The idea here is that the classes
+in this module will be inherited and extended by other classes (such
+as those in this package&#8217;s template_events module).</p>
+<p>In addition to the base classes defined there are some enumerations and
+classes that cover common sections and valued shared across the
+primary EPCIS event types.</p>
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.Action">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">Action</code><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>The Action type says how an event relates to the lifecycle of the entity
+being described. See section 7.3.2 of the EPCIS 1.2 standard.</p>
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.Action.add">
+<code class="descname">add</code><em class="property"> = 'ADD'</em><a class="headerlink" href="#EPCPyYes.core.v1_2.events.Action.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity in question has been created or added to.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.Action.delete">
+<code class="descname">delete</code><em class="property"> = 'DELETE'</em><a class="headerlink" href="#EPCPyYes.core.v1_2.events.Action.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity in question has been removed from or destroyed altogether.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.Action.observe">
+<code class="descname">observe</code><em class="property"> = 'OBSERVE'</em><a class="headerlink" href="#EPCPyYes.core.v1_2.events.Action.observe" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entity in question has not been changed: it has neither been
+created, added to, destroyed, or removed from.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.AggregationEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">AggregationEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime</em>, <em>event_timezone_offset: str</em>, <em>record_time: datetime.datetime</em>, <em>action: EPCPyYes.core.v1_2.events.Action = &lt;Action.add: 'ADD'&gt;</em>, <em>parent_id: str = None</em>, <em>child_epcs: list = None</em>, <em>child_quantity_list: list = None</em>, <em>biz_step: str = None</em>, <em>disposition: str = None</em>, <em>read_point: str = None</em>, <em>biz_location: str = None</em>, <em>event_id: str = None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em>, <em>source_list=None</em>, <em>destination_list=None</em>, <em>business_transaction_list=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#AggregationEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.AggregationEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.EPCISBusinessEvent</span></code></a></p>
+<p>The event type AggregationEvent describes events that apply to objects
+that have been aggregated to one another. In such an event, there is a
+set of “contained” objects that have been aggregated within a “containing”
+entity that’s meant to identify the aggregation itself.</p>
+<p>Creates a new python AggregationEvent instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>event_timezone_offset</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>record_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>action</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>parent_id</strong> &#8211; The identifier of the parent of the association.</li>
+<li><strong>child_epcs</strong> &#8211; An unordered list of the EPCs of contained objects
+identified by instance-level identifiers.</li>
+<li><strong>child_quantity_list</strong> &#8211; An unordered list of one or more
+QuantityElements identifying (at the class level) contained objects.</li>
+<li><strong>biz_step</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>disposition</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>read_point</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>biz_location</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>event_id</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>error_declaration</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>source_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>destination_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>business_transaction_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.AggregationEvent.child_epcs">
+<code class="descname">child_epcs</code><a class="headerlink" href="#EPCPyYes.core.v1_2.events.AggregationEvent.child_epcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or sets an unordered list of the EPCs of contained objects
+identified by instance-level identifiers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.AggregationEvent.child_quantity_list">
+<code class="descname">child_quantity_list</code><a class="headerlink" href="#EPCPyYes.core.v1_2.events.AggregationEvent.child_quantity_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or sets the unordered list of one or more QuantityElements
+identifying contained objects</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.AggregationEvent.parent_id">
+<code class="descname">parent_id</code><a class="headerlink" href="#EPCPyYes.core.v1_2.events.AggregationEvent.parent_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or sets identifier of the parent of the association.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.BusinessTransaction">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">BusinessTransaction</code><span class="sig-paren">(</span><em>biz_transaction</em>, <em>type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#BusinessTransaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.BusinessTransaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A BusinessTransaction identifies a particular business
+transaction. An example of a business
+transaction is a specific purchase order. Business Transaction
+information may be included in EPCIS
+events to record an event’s participation in particular
+business transactions.
+As defined in section 7.3.5.3 of the protocol.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>biz_transaction</strong> &#8211; An identifier that denotes a specific
+business transaction.</li>
+<li><strong>type</strong> &#8211; (Optional) An identifier that indicates what kind of
+business transaction this BusinessTransaction denotes.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.Destination">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">Destination</code><span class="sig-paren">(</span><em>destination_type: str</em>, <em>destination: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#Destination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.Destination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.SourceDest</span></code></p>
+<p>A Source or Destination is used to provide
+additional business context when an EPCIS event is
+part of a business transfer; that is, a process
+in which there is a transfer of ownership,
+responsibility, and/or custody of physical or digital objects.</p>
+<p>See the <cite>EPCPyYes.core.v1_2.CBV.source_destination</cite> module for standard
+source types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source_type</strong> &#8211; An identifier that indicates what kind of
+source or destination this Source or Destination
+(respectively) denotes.</li>
+<li><strong>source</strong> &#8211; An identifier that denotes a specific
+source or destination.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.EPCISBusinessEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">EPCISBusinessEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime</em>, <em>event_timezone_offset: str</em>, <em>record_time: datetime.datetime = None</em>, <em>action: EPCPyYes.core.v1_2.events.Action = &lt;Action.add: 'ADD'&gt;</em>, <em>biz_step: str = None</em>, <em>disposition: str = None</em>, <em>read_point: str = None</em>, <em>biz_location: str = None</em>, <em>event_id: str = None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em>, <em>source_list=None</em>, <em>destination_list=None</em>, <em>business_transaction_list=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#EPCISBusinessEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.EPCISEvent</span></code></a></p>
+<p>For super-classes with an Action, biz step, biz location, etc...basically
+every main EPCIS class except the TransformationEvent class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>event_timezone_offset</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>record_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>action</strong> &#8211; How this event relates to the lifecycle of the
+EPCs named in this event.</li>
+<li><strong>biz_step</strong> &#8211; The business step of which this event was a part.</li>
+<li><strong>disposition</strong> &#8211; The business condition of the objects associated
+with the EPCs, presumed to hold true until
+contradicted by a subsequent event.</li>
+<li><strong>read_point</strong> &#8211; The read point at which the event took place.</li>
+<li><strong>biz_location</strong> &#8211; The business location where the objects
+associated with the EPCs may be found, until contradicted
+by a subsequent event.</li>
+<li><strong>event_id</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>error_declaration</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>source_list</strong> &#8211; An unordered list of Source elements
+that provide context about the originating endpoint of a
+business transfer of which this event is a part.</li>
+<li><strong>destination_list</strong> &#8211; An unordered list of Destination elements
+that provide context about
+the terminating endpoint of a business transfer of which
+this event is a part. Class
+<a class="reference internal" href="CBV.html#EPCPyYes.core.v1_2.CBV.source_destination.SourceDestinationTypes" title="EPCPyYes.core.v1_2.CBV.source_destination.SourceDestinationTypes"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.CBV.source_destination.SourceDestinationTypes</span></code></a>
+can be used to generate the appropriate XML values for this.</li>
+<li><strong>business_transaction_list</strong> &#8211; An unordered list of business
+transactions that define the context of this event.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.events.EPCISBusinessEvent.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement this function to Validate an event based on rules defined
+in the EPCIS protocol or custom business rules if neccessary.
+:return: None or a EPCPyYes.core.errors.ValidationError</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.EPCISDocument">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">EPCISDocument</code><span class="sig-paren">(</span><em>object_events: list = None</em>, <em>aggregation_events: list = None</em>, <em>transaction_events: list = None</em>, <em>transformation_events: list = None</em>, <em>render_xml_declaration: bool = True</em>, <em>created_date: datetime.datetime = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#EPCISDocument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.EPCISDocument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Represents the higher-level container for an aggregation of EPCIS
+events.</p>
+<p>Initializes the EPCIS Document with the constituent object, aggregation,
+transaction and transformation events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>object_events</strong> &#8211; A list of ObjectEvent instances.</li>
+<li><strong>aggregation_events</strong> &#8211; A list of AggregationEvent instances</li>
+<li><strong>transaction_events</strong> &#8211; A list of TransactionEvent instances</li>
+<li><strong>transformation_events</strong> &#8211; A list of TransformationEvent instances.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.EPCISEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">EPCISEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime</em>, <em>event_timezone_offset: str</em>, <em>record_time: datetime.datetime = None</em>, <em>event_id: str = None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#EPCISEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The base EPCIS event as defined by GS1 on page 38 of the EPCIS 1.2 draft.</p>
+<p>The base EPCIS event class contains common properties shared
+across each of the Aggregation, Object, Transaction and
+Transformation events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event_time</strong> &#8211; The date and time at which the EPCIS Capturing
+Applications asserts the event occurred.</li>
+<li><strong>event_timezone_offset</strong> &#8211; The time zone offset in effect at the
+time and place the event occurred, expressed as an offset from UTC.</li>
+<li><strong>record_time</strong> &#8211; The date and time at which this event was
+recorded by an EPCIS Repository.</li>
+<li><strong>event_id</strong> &#8211; An identifier for this event as specified by the
+capturing application, globally unique across all events
+other than error declarations.</li>
+<li><strong>error_declaration</strong> &#8211; If present, indicates that this event
+serves to assert that the assertions made by a prior event are in
+error.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.events.EPCISEvent.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#EPCISEvent.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.EPCISEvent.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement this function to Validate an event based on rules defined
+in the EPCIS protocol or custom business rules if neccessary.
+:return: None or a EPCPyYes.core.errors.ValidationError</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.ErrorDeclaration">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">ErrorDeclaration</code><span class="sig-paren">(</span><em>declaration_time: datetime.datetime = '2015-02-25T00:42:08.573214'</em>, <em>reason: str = None</em>, <em>corrective_event_ids=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#ErrorDeclaration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.ErrorDeclaration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>As defined by the working group?...yikes.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.InstanceLotMasterData">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">InstanceLotMasterData</code><span class="sig-paren">(</span><em>attributes: list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#InstanceLotMasterData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.InstanceLotMasterData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Instance Lot Master Data (ILMD) class.  This
+is an openly defined class in the EPCIS standard.
+The more detailed aspects of it are layed out
+in the CBV 1.2 specification.</p>
+<p>Preferably, pass in a list of
+EPCPyYes.core.v1_2.CBV.instance_lot_master_data.
+InstanceLotMasterDataAttribute
+instances.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attributes</strong> &#8211; A list of InstanceLotMasterDataAttribute instances.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.InstanceLotMasterDataAttribute">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">InstanceLotMasterDataAttribute</code><span class="sig-paren">(</span><em>name: str</em>, <em>value: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#InstanceLotMasterDataAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.InstanceLotMasterDataAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Base class for ILMD nodes.</p>
+<p>An ILMD attribute.  If you are using the CBV compliant
+events see the <code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.CBV.instance_lot_master_data.</span>
+<span class="pre">InstanceLotMasterDataAttribute</span></code>
+class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> &#8211; The name of the attribute (will be the name of the
+element in the ILMD section)</li>
+<li><strong>value</strong> &#8211; Will be the element value in the ILMD section.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.InstanceLotMasterDataAttribute.name">
+<code class="descname">name</code><a class="headerlink" href="#EPCPyYes.core.v1_2.events.InstanceLotMasterDataAttribute.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets and sets the name of the ILMD node. This value should
+be XML safe and is not auto-escaped.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.events.InstanceLotMasterDataAttribute.value">
+<code class="descname">value</code><a class="headerlink" href="#EPCPyYes.core.v1_2.events.InstanceLotMasterDataAttribute.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets and sets the value of the ILMD node.  This value should
+be XML safe and is not auto-escaped.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.ObjectEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">ObjectEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime</em>, <em>event_timezone_offset: str</em>, <em>record_time: datetime.datetime</em>, <em>action: EPCPyYes.core.v1_2.events.Action = &lt;Action.add: 'ADD'&gt;</em>, <em>epc_list: list = None</em>, <em>biz_step=None</em>, <em>disposition=None</em>, <em>read_point=None</em>, <em>biz_location=None</em>, <em>event_id: str = None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em>, <em>source_list: list = None</em>, <em>destination_list: list = None</em>, <em>business_transaction_list: list = None</em>, <em>ilmd: str = None</em>, <em>quantity_list: list = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#ObjectEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.ObjectEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.EPCISBusinessEvent</span></code></a></p>
+<p>A python implementation of the EPCIS Object event as outlined in
+section 7.4.2 of the standard.</p>
+<p>A python representation of an EPCIS ObjectEvent instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>event_timezone_offset</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>record_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>action</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>epc_list</strong> &#8211; An unordered list of one or more EPCs
+naming specific objects to which the event pertained</li>
+<li><strong>biz_step</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>disposition</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>read_point</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>biz_location</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>event_id</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>error_declaration</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>source_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>destination_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>business_transaction_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>ilmd</strong> &#8211; Instance/Lot master data (Section 7.3.6)
+that describes the objects created during this event. An ObjectEvent
+SHALL NOT contain ilmd if action is OBSERVE or DELETE.</li>
+<li><strong>quantity_list</strong> &#8211; An unordered list of one or more QuantityElements
+identifying (at the class level) objects to which the event pertained.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Parm enforce_rules:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">whether or not to enforce EPCIS rules during
+the initilization of the class.  Default is false.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.events.ObjectEvent.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#ObjectEvent.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.ObjectEvent.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate the event.
+:return: None or raises a ValidationError</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.QuantityElement">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">QuantityElement</code><span class="sig-paren">(</span><em>epc_class: str</em>, <em>quantity: float = None</em>, <em>uom=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#QuantityElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.QuantityElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The EPCIS QuantityElement as outlined in section 7.3.3.3 of the protocol.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.Source">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">Source</code><span class="sig-paren">(</span><em>source_type: str</em>, <em>source: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#Source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.Source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.SourceDest</span></code></p>
+<p>A Source or Destination is used to provide
+additional business context when an EPCIS event is
+part of a business transfer; that is, a process
+in which there is a transfer of ownership,
+responsibility, and/or custody of physical or digital objects.</p>
+<p>See the <cite>EPCPyYes.core.v1_2.CBV.source_destination</cite> module for standard
+source types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source_type</strong> &#8211; An identifier that indicates what kind of
+source or destination this Source or Destination
+(respectively) denotes.</li>
+<li><strong>source</strong> &#8211; An identifier that denotes a specific
+source or destination.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.TransactionEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">TransactionEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime</em>, <em>event_timezone_offset: str</em>, <em>record_time: datetime.datetime</em>, <em>action: EPCPyYes.core.v1_2.events.Action = &lt;Action.add: 'ADD'&gt;</em>, <em>parent_id: str = None</em>, <em>epc_list: list = None</em>, <em>biz_step: str = None</em>, <em>disposition: str = None</em>, <em>read_point: str = None</em>, <em>biz_location: str = None</em>, <em>event_id: str = None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em>, <em>source_list=None</em>, <em>destination_list=None</em>, <em>business_transaction_list=None</em>, <em>quantity_list: list = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#TransactionEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.TransactionEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.EPCISBusinessEvent</span></code></a></p>
+<p>A python implementation of and EPCIS TransactionEvent.</p>
+<p>Initializes a new python representation of an EPCIS TransactionEvent.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>event_timezone_offset</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>record_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>action</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>parent_id</strong> &#8211; The identifier of the parent of the association.</li>
+<li><strong>epc_list</strong> &#8211; An unordered list of one or more EPCs
+naming specific objects to which the event pertained</li>
+<li><strong>biz_step</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>disposition</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>read_point</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>biz_location</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>event_id</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>error_declaration</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>source_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>destination_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>business_transaction_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+<li><strong>quantity_list</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISBusinessEvent" title="EPCPyYes.core.v1_2.events.EPCISBusinessEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISBusinessEvent</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.events.TransactionEvent.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPCPyYes.core.v1_2.events.TransactionEvent.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement this function to Validate an event based on rules defined
+in the EPCIS protocol or custom business rules if neccessary.
+:return: None or a EPCPyYes.core.errors.ValidationError</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.events.TransformationEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.events.</code><code class="descname">TransformationEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime</em>, <em>event_timezone_offset: str</em>, <em>record_time: datetime.datetime</em>, <em>event_id: str = None</em>, <em>input_epc_list=None</em>, <em>input_quantity_list=None</em>, <em>output_epc_list=None</em>, <em>output_quantity_list=None</em>, <em>transformation_id=None</em>, <em>biz_step: str = None</em>, <em>disposition: str = None</em>, <em>read_point: str = None</em>, <em>biz_location: str = None</em>, <em>business_transaction_list=None</em>, <em>source_list=None</em>, <em>destination_list=None</em>, <em>ilmd=None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#TransformationEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.events.TransformationEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.EPCISEvent</span></code></a></p>
+<p>A python implementation for the EPCIS TransformationEvent from
+section 7.4.6 of the GS1 standard.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>event_timezone_offset</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>record_time</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>event_id</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+<li><strong>input_epc_list</strong> &#8211; An unordered list of one or more EPCs identifying
+(at the instance level) objects that were inputs to the transformation.</li>
+<li><strong>input_quantity_list</strong> &#8211; An unordered list of one or more
+QuantityElements identifying (at the class level) objects
+that were inputs to the transformation.</li>
+<li><strong>output_epc_list</strong> &#8211; An unordered list of one or more EPCs naming
+(at the instance level) objects that were outputs from the transformation.</li>
+<li><strong>output_quantity_list</strong> &#8211; An unordered list of one or more
+QuantityElements identifying (at the class level) objects that were
+outputs from the transformation</li>
+<li><strong>transformation_id</strong> &#8211; A unique identifier that links this event
+to other TransformationEvents having an identical value of
+transformationID.</li>
+<li><strong>biz_step</strong> &#8211; The business step of which this event was a part.</li>
+<li><strong>disposition</strong> &#8211; The business condition of the objects associated
+with the EPCs, presumed to hold true until
+contradicted by a subsequent event.</li>
+<li><strong>read_point</strong> &#8211; The read point at which the event took place.</li>
+<li><strong>biz_location</strong> &#8211; The business location where the objects
+associated with the EPCs may be found, until contradicted
+by a subsequent event.</li>
+<li><strong>business_transaction_list</strong> &#8211; An unordered list of business
+transactions that define the context of this event.</li>
+<li><strong>source_list</strong> &#8211; An unordered list of Source elements
+that provide context about the originating endpoint of a
+business transfer of which this event is a part.</li>
+<li><strong>destination_list</strong> &#8211; An unordered list of Destination elements
+that provide context about
+the terminating endpoint of a business transfer of which
+this event is a part. Class
+<a class="reference internal" href="CBV.html#EPCPyYes.core.v1_2.CBV.source_destination.SourceDestinationTypes" title="EPCPyYes.core.v1_2.CBV.source_destination.SourceDestinationTypes"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.CBV.source_destination.SourceDestinationTypes</span></code></a>
+can be used to generate the appropriate XML values for this.</li>
+<li><strong>ilmd</strong> &#8211; Instance/Lot master data (Section 7.3.6)
+that describes the output objects created during this event.</li>
+<li><strong>error_declaration</strong> &#8211; Inherited from <a class="reference internal" href="#EPCPyYes.core.v1_2.events.EPCISEvent" title="EPCPyYes.core.v1_2.events.EPCISEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCISEvent</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.events.TransformationEvent.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPCPyYes.core.v1_2.events.TransformationEvent.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement this function to Validate an event based on rules defined
+in the EPCIS protocol or custom business rules if neccessary.
+:return: None or a EPCPyYes.core.errors.ValidationError</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-EPCPyYes.core.v1_2.template_events">
+<span id="epcis-template-classes"></span><h2>EPCIS Template Classes<a class="headerlink" href="#module-EPCPyYes.core.v1_2.template_events" title="Permalink to this headline">¶</a></h2>
+<p>The templates package contains classes derived from the core EPCIS classes
+along with Jinja2 templates for generating EPCIS event XML.  By calling any
+classes&#8217; <cite>render</cite> function, you can obtain the output of the Jinja2 template
+associated with the current class.  There are examples of this in the
+<em>Usage</em> section of this documentation.</p>
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.template_events.AggregationEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.template_events.</code><code class="descname">AggregationEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime = '2015-02-25T00:42:08.974014'</em>, <em>event_timezone_offset: str = '+00:00'</em>, <em>record_time: datetime.datetime = None</em>, <em>action: EPCPyYes.core.v1_2.events.Action = &lt;Action.add: 'ADD'&gt;</em>, <em>parent_id: str = None</em>, <em>child_epcs: list = None</em>, <em>child_quantity_list: list = None</em>, <em>biz_step: str = None</em>, <em>disposition: str = None</em>, <em>read_point: str = None</em>, <em>biz_location: str = None</em>, <em>event_id: str = None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em>, <em>source_list=None</em>, <em>destination_list=None</em>, <em>business_transaction_list=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/template_events.html#AggregationEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.AggregationEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EPCPyYes.core.v1_2.events.AggregationEvent" title="EPCPyYes.core.v1_2.events.AggregationEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.AggregationEvent</span></code></a>, <a class="reference internal" href="#EPCPyYes.core.v1_2.template_events.TemplateMixin" title="EPCPyYes.core.v1_2.template_events.TemplateMixin"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.template_events.TemplateMixin</span></code></a></p>
+<p>Generates an EPCIS Aggregation Event.</p>
+<p>Creates a new EPCIS AggregationEvent instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event_time</strong> &#8211; The date and time at which the EPCIS Capturing
+Applications asserts the event occurred.</li>
+<li><strong>event_timezone_offset</strong> &#8211; The time zone offset in effect at the
+time and place the event occurred, expressed as an offset from UTC.</li>
+<li><strong>action</strong> &#8211; How this event relates to the lifecycle of the
+aggregation named in this event.</li>
+<li><strong>parent_id</strong> &#8211; (Optional when action is OBSERVE, required otherwise)
+The identifier of the parent of the association</li>
+<li><strong>child_epcs</strong> &#8211; An unordered list of the EPCs of contained
+objects identified by instance-level identifiers.</li>
+<li><strong>child_quantity_list</strong> &#8211; An unordered list of one or more
+QuantityElements identifying (at the class level) contained objects</li>
+<li><strong>biz_step</strong> &#8211; The business step of which this event was a part.</li>
+<li><strong>disposition</strong> &#8211; The business condition of the objects associated
+with the EPCs, presumed to hold true until contradicted by a
+subsequent event.</li>
+<li><strong>read_point</strong> &#8211; The read point at which the event took place.</li>
+<li><strong>biz_location</strong> &#8211; The business location where the objects
+associated with the containing and contained EPCs may be found,
+until contradicted by a subsequent event.</li>
+<li><strong>event_id</strong> &#8211; (Optional) An identifier for this event as specified
+by the capturing application, globally unique across all events
+other than error declarations.</li>
+<li><strong>error_declaration</strong> &#8211; If present, indicates that this event
+serves to assert that the assertions made by a prior event are
+in error. See Section 7.4.1.2.</li>
+<li><strong>source_list</strong> &#8211; An unordered list of Source elements (Section 7.3.5.4)
+that provide context about the originating endpoint of a business
+transfer of which this event is a part.</li>
+<li><strong>destination_list</strong> &#8211; An unordered list of Destination elements
+(Section 7.3.5.4) that provide context about the terminating
+endpoint of a business transfer of which this event is a part</li>
+<li><strong>business_transaction_list</strong> &#8211; An unordered list of business
+transactions that define the context of this event.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.AggregationEvent.child_epcs">
+<code class="descname">child_epcs</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.AggregationEvent.child_epcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or sets an unordered list of the EPCs of contained objects
+identified by instance-level identifiers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.AggregationEvent.child_quantity_list">
+<code class="descname">child_quantity_list</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.AggregationEvent.child_quantity_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or sets the unordered list of one or more QuantityElements
+identifying contained objects</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.AggregationEvent.namespaces">
+<code class="descname">namespaces</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.AggregationEvent.namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override to provide a list of XML namespace declarations for inclusion
+in the EPCIS body root node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An empty list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.AggregationEvent.parent_id">
+<code class="descname">parent_id</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.AggregationEvent.parent_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or sets identifier of the parent of the association.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.template_events.AggregationEvent.render">
+<code class="descname">render</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.AggregationEvent.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the Class template using the _context dictionary for the
+template context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">render_namespaces: A boolean value passed into the</td>
+</tr>
+</tbody>
+</table>
+<p>template as a context variable.  Used by the default templates
+to determine whether or not to declare the XML namespaces in the
+root element.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.AggregationEvent.template">
+<code class="descname">template</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.AggregationEvent.template" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Returns a Jinja2 Template instance.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.template_events.ObjectEvent">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.template_events.</code><code class="descname">ObjectEvent</code><span class="sig-paren">(</span><em>event_time: datetime.datetime = '2015-02-25T00:42:08.973958'</em>, <em>event_timezone_offset: str = '+00:00'</em>, <em>record_time: datetime.datetime = None</em>, <em>action: EPCPyYes.core.v1_2.events.Action = &lt;Action.add: 'ADD'&gt;</em>, <em>epc_list: list = None</em>, <em>biz_step=None</em>, <em>disposition=None</em>, <em>read_point=None</em>, <em>biz_location=None</em>, <em>event_id: str = None</em>, <em>error_declaration: EPCPyYes.core.v1_2.events.ErrorDeclaration = None</em>, <em>source_list: list = None</em>, <em>destination_list: list = None</em>, <em>business_transaction_list: list = None</em>, <em>ilmd: list = None</em>, <em>quantity_list: list = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/template_events.html#ObjectEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.ObjectEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EPCPyYes.core.v1_2.events.ObjectEvent" title="EPCPyYes.core.v1_2.events.ObjectEvent"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.events.ObjectEvent</span></code></a>, <a class="reference internal" href="#EPCPyYes.core.v1_2.template_events.TemplateMixin" title="EPCPyYes.core.v1_2.template_events.TemplateMixin"><code class="xref py py-class docutils literal"><span class="pre">EPCPyYes.core.v1_2.template_events.TemplateMixin</span></code></a></p>
+<p>Used to render an ObjectEvent using the Jinja2 environment and template
+associated with the class.  The default environment utilizes the
+<cite>templates</cite> directory in the root folder of the package.</p>
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.template_events.ObjectEvent.clean">
+<code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/events.html#ObjectEvent.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.ObjectEvent.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate the event.
+:return: None or raises a ValidationError</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.ObjectEvent.namespaces">
+<code class="descname">namespaces</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.ObjectEvent.namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>If there are any CBV ILMD attributes, we&#8217;ll need to expose the
+namespace for any XML generation.  Override to provide custom
+XML namespaces if needed.
+:return: A full string of the namespace declaration for use in
+an XML root node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.template_events.ObjectEvent.render">
+<code class="descname">render</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.ObjectEvent.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the Class template using the _context dictionary for the
+template context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">render_namespaces: A boolean value passed into the</td>
+</tr>
+</tbody>
+</table>
+<p>template as a context variable.  Used by the default templates
+to determine whether or not to declare the XML namespaces in the
+root element.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.ObjectEvent.template">
+<code class="descname">template</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.ObjectEvent.template" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Returns a Jinja2 Template instance.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="EPCPyYes.core.v1_2.template_events.TemplateMixin">
+<em class="property">class </em><code class="descclassname">EPCPyYes.core.v1_2.template_events.</code><code class="descname">TemplateMixin</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/template_events.html#TemplateMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.TemplateMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Mixin class to add template support for serializing EPCIS classes to
+text using jinja templates.</p>
+<p>Will render an object event using the default &#8216;object_event.xml&#8217;
+template or you can pass in a Jinja2 template along with a new
+Jinja2 enviornment as well if you wish.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>args</strong> &#8211; </li>
+<li><strong>kwargs</strong> &#8211; env = a jinja2 Environment, template = a string
+representing the template in either the default or passed in Jinja2
+environment and render_xml_declaration which is a bool value
+used to determine whether or not to render an xml declaration during
+template rendering.  It is populated as a jinja context variable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.TemplateMixin.namespaces">
+<code class="descname">namespaces</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.TemplateMixin.namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override to provide a list of XML namespace declarations for inclusion
+in the EPCIS body root node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An empty list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="EPCPyYes.core.v1_2.template_events.TemplateMixin.render">
+<code class="descname">render</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/template_events.html#TemplateMixin.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.TemplateMixin.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the Class template using the _context dictionary for the
+template context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">render_namespaces: A boolean value passed into the</td>
+</tr>
+</tbody>
+</table>
+<p>template as a context variable.  Used by the default templates
+to determine whether or not to declare the XML namespaces in the
+root element.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="EPCPyYes.core.v1_2.template_events.TemplateMixin.template">
+<code class="descname">template</code><a class="headerlink" href="#EPCPyYes.core.v1_2.template_events.TemplateMixin.template" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Returns a Jinja2 Template instance.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="epcis-helper-functions">
+<h2>EPCIS Helper Functions<a class="headerlink" href="#epcis-helper-functions" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-EPCPyYes.core.v1_2.helpers"></span><dl class="function">
+<dt id="EPCPyYes.core.v1_2.helpers.get_current_utc_time_and_offset">
+<code class="descclassname">EPCPyYes.core.v1_2.helpers.</code><code class="descname">get_current_utc_time_and_offset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/helpers.html#get_current_utc_time_and_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.helpers.get_current_utc_time_and_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Based on the inbound datetime value, it will reuturn the ISO string
+and the ISO timezone offset value.  Helps when creating EPCIS events
+on the fly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>datetime</strong> &#8211; The datetime instance you want to convert to a string.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A two-tuple with the datetime ISO string and the ISO timezone
+offset.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="EPCPyYes.core.v1_2.helpers.get_iso_8601_regex">
+<code class="descclassname">EPCPyYes.core.v1_2.helpers.</code><code class="descname">get_iso_8601_regex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/helpers.html#get_iso_8601_regex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.helpers.get_iso_8601_regex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a compiled ISO 8601 regex for use in validation of date strings.
+:return: A compiled regex.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="EPCPyYes.core.v1_2.helpers.gln13_data_to_sgln_urn">
+<code class="descclassname">EPCPyYes.core.v1_2.helpers.</code><code class="descname">gln13_data_to_sgln_urn</code><span class="sig-paren">(</span><em>company_prefix</em>, <em>location_reference</em>, <em>extension='0'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/helpers.html#gln13_data_to_sgln_urn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.helpers.gln13_data_to_sgln_urn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the three parameters and outputs a compliant EPCGlobal urn.
+The company prefix and location reference must be a total of 12 digits-
+do not send in the check digit as part of the location reference.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>company_prefix</strong> &#8211; The company prefix</li>
+<li><strong>location_reference</strong> &#8211; The location reference</li>
+<li><strong>extension</strong> &#8211; The id of the sub-site for the GLN</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An TDS 1.9 compliant SGLN URN value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="EPCPyYes.core.v1_2.helpers.gtin_to_urn">
+<code class="descclassname">EPCPyYes.core.v1_2.helpers.</code><code class="descname">gtin_to_urn</code><span class="sig-paren">(</span><em>company_prefix</em>, <em>indicator</em>, <em>item_reference</em>, <em>serial_number: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/helpers.html#gtin_to_urn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.helpers.gtin_to_urn" title="Permalink to this definition">¶</a></dt>
+<dd><p>A python generator that creates SGTIN URNs for the list of serial numbers
+passed in.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>company_prefix</strong> &#8211; The company prefix (GS1).</li>
+<li><strong>indicator</strong> &#8211; The GS1 indicator digit for the GTIN</li>
+<li><strong>item_reference</strong> &#8211; The item reference number for the GTIN</li>
+<li><strong>serial_number</strong> &#8211; A serial number.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Generates a sgtin URN string for each serial number provided.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="EPCPyYes.core.v1_2.helpers.gtin_urn_generator">
+<code class="descclassname">EPCPyYes.core.v1_2.helpers.</code><code class="descname">gtin_urn_generator</code><span class="sig-paren">(</span><em>company_prefix</em>, <em>indicator</em>, <em>item_reference</em>, <em>serial_numbers: list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EPCPyYes/core/v1_2/helpers.html#gtin_urn_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.v1_2.helpers.gtin_urn_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A python generator that creates SGTIN URNs for the list of serial numbers
+passed in.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>company_prefix</strong> &#8211; The company prefix (GS1).</li>
+<li><strong>indicator</strong> &#8211; The GS1 indicator digit for the GTIN</li>
+<li><strong>item_reference</strong> &#8211; The item reference number for the GTIN</li>
+<li><strong>serial_numbers</strong> &#8211; A list of serial numbers in string or integer format.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Generates a sgtin URN string for each serial number provided.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-EPCPyYes.core.errors">
+<span id="epcis-errors"></span><h2>EPCIS Errors<a class="headerlink" href="#module-EPCPyYes.core.errors" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="EPCPyYes.core.errors.ValidationError">
+<em class="property">exception </em><code class="descclassname">EPCPyYes.core.errors.</code><code class="descname">ValidationError</code><a class="reference internal" href="_modules/EPCPyYes/core/errors.html#ValidationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EPCPyYes.core.errors.ValidationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when an EPCIS event can not be validated.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="CBV.html" class="btn btn-neutral float-right" title="Core Business Vocabulary Modules" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usage.html" class="btn btn-neutral" title="Examples and Usage" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Rob Magee.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

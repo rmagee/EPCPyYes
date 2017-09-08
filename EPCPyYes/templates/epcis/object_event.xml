@@ -1,0 +1,12 @@
+<ObjectEvent>
+    {% include "epcis/event_times.xml" %}
+    {% if event.epc_list %}
+        <epcList>
+            {% for epc in event.epc_list %}
+                <epc>{{ epc }}</epc>
+            {% endfor %}
+        </epcList>
+    {% endif %}
+    {% include "epcis/business_data.xml" %}
+    {% include "epcis/extension.xml" %}
+</ObjectEvent>
