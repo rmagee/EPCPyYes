@@ -53,6 +53,32 @@ def gtin_urn_generator(company_prefix, indicator, item_reference,
         yield ''.join([prefix, str(serial_number)])
 
 
+def sscc_urn_generator(company_prefix, extension, serial_numbers: list):
+    '''
+    A python generator that creates SSCC URNs for the list of serial numbers
+    passed in.
+
+    :param company_prefix: The company prefix (GS1).
+    :param extension: The extension digit.
+    :param serial_numbers: The serial reference numbers for the SSCC
+    :return: Generates a SSCC URN string for each serial reference provided.
+    '''
+    sscc_length = 17
+    prefix = 'urn:epc:id:sscc:{0}.{1}'.format(company_prefix, extension)
+
+    for serial_number in serial_numbers:
+        actual_length = len(company_prefix + extension + str(serial_number))
+        if actual_length < sscc_length:
+            padding = '0' * (sscc_length - actual_length)
+        elif actual_length > sscc_length:
+            raise ValueError(_('The combined length of the company prefix,'
+                               ' extension digit and serial number'
+                               ' must be 17 or less.'))
+        else:
+            padding = ''  # no padding by default.
+        yield ''.join([prefix, padding, str(serial_number)])
+
+
 def gtin_to_urn(company_prefix, indicator, item_reference,
                 serial_number: str):
     '''
