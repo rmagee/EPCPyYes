@@ -58,7 +58,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'EPCPyYes'
-copyright = u"2015, Rob Magee"
+copyright = u"2018, SerialLab,LLC"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout

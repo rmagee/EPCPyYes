@@ -255,11 +255,11 @@ class CoreEventTests(unittest.TestCase):
         trade_item = helpers.make_trade_item_master_data_urn('305555', '0',
                                                              '555551')
         output_quantity_list = [
-            QuantityElement(epc_class=trade_item, quantity=10),
+            QuantityElement(epc_class=trade_item, quantity=10, uom='EA'),
             QuantityElement(epc_class=trade_item, quantity=94.3,
                             uom='LB')]
         input_quantity_list = [
-            QuantityElement(epc_class=trade_item, quantity=100),
+            QuantityElement(epc_class=trade_item, quantity=100, uom='EA'),
             QuantityElement(epc_class=trade_item, quantity=94.3,
                             uom='LB')]
 
@@ -356,9 +356,9 @@ class CoreEventTests(unittest.TestCase):
     def create_business_transaction_list(self):
         business_transaction_list = [
             BusinessTransaction('urn:epcglobal:cbv:bt:0555555555555.DE45_111',
-                                BusinessTransactionType.Despatch_Advice, ),
+                                BusinessTransactionType.Despatch_Advice),
             BusinessTransaction('urn:epcglobal:cbv:bt:0555555555555.00001',
-                                BusinessTransactionType.Bill_Of_Lading, )
+                                BusinessTransactionType.Bill_Of_Lading)
         ]
         return business_transaction_list
 

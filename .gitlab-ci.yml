@@ -17,6 +17,21 @@ python3_5_unit_test:
     paths:
       - EPCPyYes/core/tests/htmlcov/
 
+python3_6_unit_test:
+  image: seriallab/python3.6dev
+  stage: test-python
+  script:
+  - export PYTHONPATH=$PYTHONPATH:$CI_PROJECT_DIR
+  - pip install -r requirements.txt
+  - pip install coverage
+  - cd EPCPyYes/core/tests/
+  - coverage run -m unittest discover
+  - coverage report -m
+  - coverage html
+  artifacts:
+    paths:
+      - EPCPyYes/core/tests/htmlcov/
+
 pages:
     image: seriallab/python3.5dev
     stage: build-docs
