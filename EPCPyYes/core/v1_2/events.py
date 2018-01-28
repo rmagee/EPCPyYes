@@ -125,26 +125,6 @@ class InstanceLotMasterDataAttribute(object):
         self._value = value
 
 
-class InstanceLotMasterData(object):
-    '''
-    Instance Lot Master Data (ILMD) class.  This
-    is an openly defined class in the EPCIS standard.
-    The more detailed aspects of it are layed out
-    in the CBV 1.2 specification.
-    '''
-
-    def __init__(self, attributes: list):
-        '''
-        Preferably, pass in a list of
-        EPCPyYes.core.v1_2.CBV.instance_lot_master_data.
-        InstanceLotMasterDataAttribute
-        instances.
-
-        :param attributes: A list of InstanceLotMasterDataAttribute instances.
-        '''
-        self.attributes = attributes
-
-
 class SourceDest(object):
     def __init__(self, type: str):
         self.type = type
@@ -580,7 +560,7 @@ class AggregationEvent(EPCISBusinessEvent):
 
         self._parent_id = parent_id
         self._child_epcs = child_epcs or []
-        self._child_quantity_list = child_quantity_list
+        self._child_quantity_list = child_quantity_list or []
 
     def clean(self):
         super().clean()
