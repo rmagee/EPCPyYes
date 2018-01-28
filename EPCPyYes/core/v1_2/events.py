@@ -742,7 +742,7 @@ class TransformationEvent(EPCISEvent):
         '''
         super().__init__(event_time, event_timezone_offset, record_time,
                          event_id, error_declaration)
-        self._input_epc_list = input_epc_list
+        self._input_epc_list = input_epc_list or []
         self._input_quantity_list = input_quantity_list or []
         self._output_epc_list = output_epc_list or []
         self._output_quantity_list = output_quantity_list or []
@@ -792,8 +792,8 @@ class TransformationEvent(EPCISEvent):
     def transformation_id(self):
         return self._transformation_id
 
-    @_transformation_id.setter
-    def _transformation_id(self, value):
+    @transformation_id.setter
+    def transformation_id(self, value):
         self._transformation_id = value
 
     @property
