@@ -789,12 +789,12 @@ class TransformationEvent(EPCISEvent):
         self._output_quantity_list = value
 
     @property
-    def _transformation_id(self):
-        return self.__transformation_id
+    def transformation_id(self):
+        return self._transformation_id
 
     @_transformation_id.setter
     def _transformation_id(self, value):
-        self.__transformation_id = value
+        self._transformation_id = value
 
     @property
     def biz_step(self):
