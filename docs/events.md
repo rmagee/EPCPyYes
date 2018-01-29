@@ -19,9 +19,7 @@ The EPCPyYes module is designed to allow developers to quickly and easily genera
 
 # Before You Try To Run This Code in Jupyter
 If you are running the jupyter notebook from the EPCPyYes source tree
-execute the cell below to append the EPCPyYes module to the python path.  
-Also, each of the EPCSI event and document rendering examples here rely on the prior examples being run
-for context.  
+execute the cell below to append the EPCPyYes module to the python path.  Also, each of the EPCIS event and document rendering examples here rely on the prior examples being run for context.  
 
 
 ```python
@@ -38,10 +36,10 @@ The `EPCPyYes.core.v1_2.helpers` module contains some helpful functions for crea
 
 In the example below, we create a python generator with ten SGTIN URN values by supplying the following (For notebook users: if you get an import error, run the code section above first):
 
-    * Company Prefix
-    * Indicator Digit
-    * Item Reference Number
-    * A list of serial numbers (in this case sequential)
+* Company Prefix
+* Indicator Digit
+* Item Reference Number
+* A list of serial numbers (in this case sequential)
     
 ### `gtin_urn_generator` helper function
 
@@ -55,7 +53,7 @@ def create_epcs(start=1000, end=1002):
     nums = range(start, end)
     # generate some URNS by passing in the company prefix, indicator, item refernce
     # number and a range of sequetial serial numbers.
-    epcs = helpers.gtin_urn_generator('305555', '1', '555555', nums)
+    epcs = helpers.gtin_urn_generator('305555', '0', '555551', nums)
     return epcs
 
 for epc in create_epcs(1000,1010):
@@ -70,7 +68,7 @@ Similar to the example above but instead of passing in a list of serial numbers 
 
 ```python
 from EPCPyYes.core.v1_2 import helpers
-print(helpers.gtin_to_urn('305555', '1', '555551', 1000))
+print(helpers.gtin_to_urn('305555', '10', '555551', 1000))
 ```
 
 ### Getting Time Values for Events with the `get_current_utc_time_and_offset` function
@@ -151,7 +149,7 @@ now, tzoffset = helpers.get_current_utc_time_and_offset()
 # now we create an object event...
 oe = ObjectEvent(now, tzoffset,
                  record_time=now,
-                 action=Action.add,
+                 action=Action.add.value,
                  epc_list=epcs,
                  biz_step=BusinessSteps.commissioning.value,
                  disposition=Disposition.encoded.value)
@@ -270,10 +268,10 @@ parent_epc = helpers.gtin_to_urn(company_prefix, indicator=3,
 # now we create an object event...
 ae = AggregationEvent(
     event_time=now, event_timezone_offset=tzoffset,
-    record_time=now, action=Action.add, parent_id=parent_epc,
+    record_time=now, action=Action.add.value, parent_id=parent_epc,
     child_epcs=epcs,
-    biz_step=BusinessSteps.packing,
-    disposition=Disposition.container_closed,
+    biz_step=BusinessSteps.packing.value,
+    disposition=Disposition.container_closed.value,
     read_point=read_point,biz_location=biz_location
 )
 
@@ -282,7 +280,7 @@ print(ae.render())
 
 ## Adding a Transaction Event
 
-Below we will add a transaction event that mimics a *shipping* event in EPCIS.  The end result of the combined examples in this notebook will be a full EPCIS lot notificiation that would be typical in a pharmaceutical 
+Below we will add a transaction event that mimics a *shipping* event in EPCIS.  The end result of the combined examples in this notebook will be a full EPCIS lot notification that would be typical in a pharmaceutical 
 manufacturing environment with the following data (to review):
 
 	* Object Event with Commissioning of Prodcut IDs
@@ -291,23 +289,34 @@ manufacturing environment with the following data (to review):
 
 
 ```python
+from EPCPyYes.core.v1_2.CBV.business_transactions import BusinessTransactionType
 from EPCPyYes.core.v1_2.CBV.helpers import make_trade_item_master_data_urn
 from EPCPyYes.core.v1_2.template_events import TransactionEvent
+from EPCPyYes.core.v1_2.events import BusinessTransaction
 
 disposition = Disposition.in_transit.value
 biz_step = BusinessSteps.shipping.value
 
+#here we create a business transaction to add to the events business transaction list.
+biz_transaction_list = [
+    BusinessTransaction(
+        'urn:epc:id:gdti:0614141.06012.1234', 
+        type=BusinessTransactionType.Purchase_Order
+    )
+]
 # We will use the other biz location and read point data, etc. from the 
 # examples above.
 te = TransactionEvent(now, tzoffset, now, 
-                      action=Action.add,
+                      action=Action.add.value,
                       parent_id=parent_epc, 
                       biz_location=biz_location, 
                       read_point=read_point,
                       source_list=source_list,
                       destination_list=destination_list,
                       biz_step=biz_step, 
-                      disposition=disposition)
+                      disposition=disposition,
+                      business_transaction_list=biz_transaction_list
+                     )
 print(te.render())
 ```
 
@@ -334,6 +343,97 @@ te.quantity_list = quantity_list
 print(te.render())
 ```
 
+# Using the New EventID and ErrorDeclaration
+
+Before we create our TransformationEvent (see below) we'll use the new features of EPCIS 1.2 to create a unique identifier for our event and also add an ErrorDeclaration that contains info with regards to the (albeit fictional) EPCIS events that the ErrorDeclaration claims to have the error fixed by.
+
+
+```python
+import uuid
+from datetime import datetime
+from EPCPyYes.core.v1_2.events import ErrorDeclaration
+from EPCPyYes.core.v1_2.CBV import error_reasons
+
+# here we create a new error declaration using the CBV error reasons
+# along with the current time and some fake corrective event ids 
+# to use as an example
+error_declaration = ErrorDeclaration(
+    declaration_time = datetime.utcnow().isoformat(),
+    reason=error_reasons.ErrorReason.incorrect_data.value,
+    corrective_event_ids=[str(uuid.uuid4()), str(uuid.uuid4())]
+)
+# here we create a new event id by using a UUID 4
+event_id = str(uuid.uuid4())
+
+```
+
+# Add a Transformation Event
+Next we will add a transformation event that shows how some EPC values were repacked into new EPC values.
+
+
+```python
+import uuid
+from EPCPyYes.core.v1_2.template_events import TransformationEvent
+
+#lets create a custom ilmd for the transformation event
+ilmd = [
+    InstanceLotMasterDataAttribute(
+        name=LotLevelAttributeName.itemExpirationDate,
+        value='2015-12-31'),
+    InstanceLotMasterDataAttribute(
+        name=ItemLevelAttributeName.lotNumber,
+        value='DL232')
+]
+
+#next we will create an input and ouput quantity list that
+#shows a different count but the same weight
+input_quantity_list = [
+            QuantityElement(epc_class=trade_item, quantity=100, uom='EA'),
+            QuantityElement(epc_class=trade_item, quantity=94.3,
+                            uom='LB')]
+output_quantity_list = [
+    QuantityElement(epc_class=trade_item, quantity=10, uom='EA'),
+    QuantityElement(epc_class=trade_item, quantity=94.3,
+                    uom='LB')]
+
+# we will create a list of 100 for input
+epcs = create_epcs(2000,2099)
+# this function returns a python generator so we will
+# convert it to a list for re-use in this example since
+# the event will be rendered twice
+input_epcs = [epc for epc in epcs]
+# and a list of 10 for the output
+epcs = create_epcs(2100,2109)
+# this function returns a python generator so we will
+# convert it to a list for re-use in this example since
+# the event will be rendered twice
+output_epcs = [epc for epc in epcs]
+
+#while it's not realistic, we can use the rest of the business transaction, source,
+#destination lists, etc to keep the code to a minimum...
+
+tx_event = TransformationEvent(
+    now, tzoffset, record_time=now,
+    input_epc_list=input_epcs,
+    input_quantity_list=input_quantity_list,
+    output_epc_list=output_epcs,
+    output_quantity_list=output_quantity_list,
+    transformation_id=str(uuid.uuid4()),
+    biz_step=BusinessSteps.repackaging.value,
+    disposition=Disposition.returned.value,
+    read_point=read_point,
+    biz_location=biz_location,
+    business_transaction_list=biz_transaction_list,
+    source_list=source_list,
+    destination_list=destination_list,
+    ilmd=ilmd,
+    event_id=event_id,
+    error_declaration=error_declaration
+)
+
+print(tx_event.render())
+```
+
 # Adding The Events to an EPCIS Document
  
 To execute this code in Jupyter, make sure you have run the code in the prior example.  
@@ -345,6 +445,11 @@ Creating and EPCIS Document and adding events to it in EPCPyYes if fairly simple
 from EPCPyYes.core.v1_2.template_events import EPCISDocument
 
 epc_doc = EPCISDocument(object_events=[oe], aggregation_events=[ae],
-                        transaction_events=[te])
+                        transaction_events=[te], transformation_events=[tx_event])
 print(epc_doc.render())
+```
+
+
+```python
+
 ```

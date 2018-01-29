@@ -306,7 +306,7 @@ class EPCISBusinessEvent(EPCISEvent):
 
     # TODO: add getter setters
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime = None, action: Action = Action.add,
+                 record_time: datetime = None, action: str = Action.add.value,
                  biz_step: str = None, disposition: str = None,
                  read_point: str = None,
                  biz_location: str = None, event_id: str = None,
@@ -427,7 +427,7 @@ class ObjectEvent(EPCISBusinessEvent):
     '''
 
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime, action: Action = Action.add,
+                 record_time: datetime, action: str = Action.add.value,
                  epc_list: list = None, biz_step=None, disposition=None,
                  read_point=None,
                  biz_location=None, event_id: str = None,
@@ -484,7 +484,7 @@ class ObjectEvent(EPCISBusinessEvent):
             raise ValidationError(_('There must be either an epc_list or a '
                                     'quantity_list specified during '
                                     'initialization.'))
-        if self.ilmd and self.action.value != 'ADD':
+        if self.ilmd and self.action != 'ADD':
             raise ValidationError(_('An ILMD section can only be included in '
                                     'ObjectEvents of type ADD.'))
 
@@ -522,7 +522,7 @@ class AggregationEvent(EPCISBusinessEvent):
     '''
 
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime, action: Action = Action.add,
+                 record_time: datetime, action: str = Action.add.value,
                  parent_id: str = None, child_epcs: list = None,
                  child_quantity_list: list = None,
                  biz_step: str = None, disposition: str = None,
@@ -564,7 +564,7 @@ class AggregationEvent(EPCISBusinessEvent):
 
     def clean(self):
         super().clean()
-        if not self.parent_id and self.action != Action.observe:
+        if not self.parent_id and self.action != Action.observe.value:
             raise ValidationError(
                 _('Parent ID is required in aggregation events '
                   'where the Action is ADD or DELETE.'))
@@ -616,7 +616,7 @@ class TransactionEvent(EPCISBusinessEvent):
     '''
 
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime, action: Action = Action.add,
+                 record_time: datetime, action: Action = Action.add.value,
                  parent_id: str = None, epc_list: list = None,
                  biz_step: str = None, disposition: str = None,
                  read_point: str = None, biz_location: str = None,

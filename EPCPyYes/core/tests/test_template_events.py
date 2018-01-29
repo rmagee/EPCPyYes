@@ -101,7 +101,7 @@ class CoreEventTests(unittest.TestCase):
         ae.child_quantity_list = None
         self.assertRaises(ValidationError, ae.clean)
         ae = self.create_aggregation_event(epcs, None)
-        ae.action = Action.add
+        ae.action = Action.add.value
         self.assertRaises(ValidationError, ae.clean)
 
     def test_transformation_event_template(self):
@@ -126,7 +126,7 @@ class CoreEventTests(unittest.TestCase):
         event_id = str(uuid.uuid4())
         error_declaration = self.create_error_declaration()
         ae = AggregationEvent(
-            action=Action.add,
+            action=Action.add.value,
             parent_id=parent_id, child_epcs=epcs,
             business_transaction_list=business_transaction_list,
             biz_location=biz_location, read_point=read_point,
@@ -159,7 +159,7 @@ class CoreEventTests(unittest.TestCase):
             now,
             tzoffset,
             now,
-            action=Action.add,
+            action=Action.add.value,
             parent_id=parent_id,
             epc_list=epcs,
             business_transaction_list=business_transaction_list,
@@ -312,7 +312,8 @@ class CoreEventTests(unittest.TestCase):
         ]
         oe = self.create_object_event(biz_location, business_transaction_list,
                                       destination_list, epcs, now, read_point,
-                                      source_list, tzoffset, action=Action.add,
+                                      source_list, tzoffset,
+                                      action=Action.add.value,
                                       ilmd=ilmd)
         oe.clean()
         return oe
@@ -336,18 +337,20 @@ class CoreEventTests(unittest.TestCase):
         # get the current time and tz
         now, tzoffset = get_current_utc_time_and_offset()
 
-        action = Action.observe
+        action = Action.observe.value
         ilmd = "<ilmd></ilmd>"
 
         oe = self.create_object_event(None, None,
                                       None, epcs, '01/dfg/2322', None,
-                                      None, tzoffset, action=Action.observe,
+                                      None, tzoffset,
+                                      action=Action.observe.value,
                                       ilmd=ilmd)
         self.assertRaises(ValidationError, oe.clean)
 
         oe = self.create_object_event(None, None,
                                       None, epcs, now, None,
-                                      None, tzoffset, action=Action.observe,
+                                      None, tzoffset,
+                                      action=Action.observe.value,
                                       ilmd=ilmd)
         self.assertRaises(ValidationError, oe.clean)
 
