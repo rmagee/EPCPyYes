@@ -1,5 +1,6 @@
 <ObjectEvent>
     {% include "epcis/event_times.xml" %}
+    {% include "epcis/base_extension.xml" %}
     {% if event.epc_list %}
         <epcList>
             {% for epc in event.epc_list %}

@@ -1,5 +1,6 @@
 <TransactionEvent>
     {% include "epcis/event_times.xml" %}
+    {% include "epcis/base_extension.xml" %}
     {% if event.business_transaction_list %}
         {% with business_transaction_list = event.business_transaction_list %}
             {% include "epcis/biz_transaction_list.xml" %}
