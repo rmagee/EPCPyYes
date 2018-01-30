@@ -101,7 +101,7 @@ class CoreEventTests(unittest.TestCase):
         ae.child_quantity_list = None
         self.assertRaises(ValidationError, ae.clean)
         ae = self.create_aggregation_event(epcs, None)
-        ae.action = Action.add
+        ae.action = Action.add.value
         self.assertRaises(ValidationError, ae.clean)
 
     def test_transformation_event_template(self):
@@ -123,17 +123,19 @@ class CoreEventTests(unittest.TestCase):
             QuantityElement(epc_class=trade_item, quantity=100),
             QuantityElement(epc_class=trade_item, quantity=94.3,
                             uom='LB')]
-        error = ErrorDeclaration(
-            reason=error_reasons.ErrorReason.incorrect_data)
+        event_id = str(uuid.uuid4())
+        error_declaration = self.create_error_declaration()
         ae = AggregationEvent(
-            action=Action.add,
+            action=Action.add.value,
             parent_id=parent_id, child_epcs=epcs,
             business_transaction_list=business_transaction_list,
             biz_location=biz_location, read_point=read_point,
             source_list=source_list,
             destination_list=destination_list,
             child_quantity_list=child_quantity_list,
-            error_declaration=error)
+            error_declaration=error_declaration,
+            event_id=event_id
+        )
         return ae
 
     def create_transaction_event(self, epcs, parent_id):
@@ -149,11 +151,15 @@ class CoreEventTests(unittest.TestCase):
             QuantityElement(epc_class=trade_item, quantity=100),
             QuantityElement(epc_class=trade_item, quantity=94.3,
                             uom='LB')]
+
+        event_id = str(uuid.uuid4())
+        error_declaration = self.create_error_declaration()
+
         te = TransactionEvent(
             now,
             tzoffset,
             now,
-            action=Action.add,
+            action=Action.add.value,
             parent_id=parent_id,
             epc_list=epcs,
             business_transaction_list=business_transaction_list,
@@ -162,7 +168,9 @@ class CoreEventTests(unittest.TestCase):
             source_list=source_list,
             destination_list=destination_list,
             biz_step=biz_step,
-            disposition=disposition)
+            disposition=disposition,
+            event_id=event_id,
+            error_declaration=error_declaration)
         te.quantity_list = quantity_list
         return te
 
@@ -234,9 +242,16 @@ class CoreEventTests(unittest.TestCase):
         print(epcis_document.render(render_xml_declaration=False))
         validate_epcis_doc(epcis_document.render().encode('utf-8'))
 
+    def create_error_declaration(self):
+        return ErrorDeclaration(
+            reason=error_reasons.ErrorReason.incorrect_data.value,
+            corrective_event_ids=[str(uuid.uuid4()), str(uuid.uuid4())]
+        )
+
     def create_transformation_event(self):
         now, tzoffset = get_current_utc_time_and_offset()
         event_id = str(uuid.uuid4())
+        error_declaration = self.create_error_declaration()
         input_epcs = self.create_epcs(1000, 1010)
         output_epcs = self.create_epcs(2000, 2010)
         business_transaction_list = self.create_business_transaction_list()
@@ -255,11 +270,11 @@ class CoreEventTests(unittest.TestCase):
         trade_item = helpers.make_trade_item_master_data_urn('305555', '0',
                                                              '555551')
         output_quantity_list = [
-            QuantityElement(epc_class=trade_item, quantity=10),
+            QuantityElement(epc_class=trade_item, quantity=10, uom='EA'),
             QuantityElement(epc_class=trade_item, quantity=94.3,
                             uom='LB')]
         input_quantity_list = [
-            QuantityElement(epc_class=trade_item, quantity=100),
+            QuantityElement(epc_class=trade_item, quantity=100, uom='EA'),
             QuantityElement(epc_class=trade_item, quantity=94.3,
                             uom='LB')]
 
@@ -276,6 +291,7 @@ class CoreEventTests(unittest.TestCase):
             business_transaction_list=business_transaction_list,
             source_list=source_list,
             destination_list=destination_list,
+            error_declaration=error_declaration,
             ilmd=ilmd)
         return te
 
@@ -296,7 +312,8 @@ class CoreEventTests(unittest.TestCase):
         ]
         oe = self.create_object_event(biz_location, business_transaction_list,
                                       destination_list, epcs, now, read_point,
-                                      source_list, tzoffset, action=Action.add,
+                                      source_list, tzoffset,
+                                      action=Action.add.value,
                                       ilmd=ilmd)
         oe.clean()
         return oe
@@ -320,18 +337,20 @@ class CoreEventTests(unittest.TestCase):
         # get the current time and tz
         now, tzoffset = get_current_utc_time_and_offset()
 
-        action = Action.observe
+        action = Action.observe.value
         ilmd = "<ilmd></ilmd>"
 
         oe = self.create_object_event(None, None,
                                       None, epcs, '01/dfg/2322', None,
-                                      None, tzoffset, action=Action.observe,
+                                      None, tzoffset,
+                                      action=Action.observe.value,
                                       ilmd=ilmd)
         self.assertRaises(ValidationError, oe.clean)
 
         oe = self.create_object_event(None, None,
                                       None, epcs, now, None,
-                                      None, tzoffset, action=Action.observe,
+                                      None, tzoffset,
+                                      action=Action.observe.value,
                                       ilmd=ilmd)
         self.assertRaises(ValidationError, oe.clean)
 
@@ -339,6 +358,8 @@ class CoreEventTests(unittest.TestCase):
                             destination_list, epcs, now, read_point,
                             source_list, tzoffset, action=None, ilmd=None):
         # create the event
+        event_id = str(uuid.uuid4())
+        error_declaration = self.create_error_declaration()
         oe = ObjectEvent(now, tzoffset,
                          record_time=now,
                          action=action,
@@ -350,15 +371,16 @@ class CoreEventTests(unittest.TestCase):
                          read_point=read_point,
                          source_list=source_list,
                          destination_list=destination_list,
-                         ilmd=ilmd)
+                         ilmd=ilmd, error_declaration=error_declaration,
+                         event_id=event_id)
         return oe
 
     def create_business_transaction_list(self):
         business_transaction_list = [
             BusinessTransaction('urn:epcglobal:cbv:bt:0555555555555.DE45_111',
-                                BusinessTransactionType.Despatch_Advice, ),
+                                BusinessTransactionType.Despatch_Advice),
             BusinessTransaction('urn:epcglobal:cbv:bt:0555555555555.00001',
-                                BusinessTransactionType.Bill_Of_Lading, )
+                                BusinessTransactionType.Bill_Of_Lading)
         ]
         return business_transaction_list
 

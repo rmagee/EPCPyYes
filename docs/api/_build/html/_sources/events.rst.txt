@@ -187,7 +187,7 @@ value will convert that value to a string for use in EPCIS events, etc.
     # now we create an object event...
     oe = ObjectEvent(now, tzoffset,
                      record_time=now,
-                     action=Action.add,
+                     action=Action.add.value,
                      epc_list=epcs,
                      biz_step=BusinessSteps.commissioning.value,
                      disposition=Disposition.encoded.value)

@@ -25,8 +25,5 @@
         {% include "epcis/ilmd.xml" %}
     {% endwith %}
 {% endif %}
-{% if event.event_id %}
-    <eventID>{{ event.event_id }}</eventID>
-{% endif %}
 </extension>
 {% endif %}

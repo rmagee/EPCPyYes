@@ -1,5 +1,6 @@
 <TransformationEvent>
     {% include "epcis/event_times.xml" %}
+    {% include "epcis/base_extension.xml" %}
     {% if event.input_epc_list %}
         <inputEPCList>
             {% for epc in event.input_epc_list %}
@@ -38,10 +39,19 @@
         <transformationID>{{ event.transformationID }}</transformationID>
     {% endif %}
     {% include "epcis/business_data.xml" %}
+    {% if event.source_list %}
+        {% with source_list = event.source_list %}
+            {% include "epcis/source_list.xml" %}
+        {% endwith %}
+    {% endif %}
+    {% if event.destination_list %}
+        {% with destination_list = event.destination_list %}
+            {% include "epcis/destination_list.xml" %}
+        {% endwith %}
+    {% endif %}
     {% if event.ilmd %}
         {% with ilmd = event.ilmd %}
             {% include "epcis/ilmd.xml" %}
         {% endwith %}
     {% endif %}
-    {% include "epcis/extension.xml" %}
 </TransformationEvent>

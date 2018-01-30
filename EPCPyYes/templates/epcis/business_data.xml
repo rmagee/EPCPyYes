@@ -1,5 +1,5 @@
 {% if event.action %}
-    <action>{{ event.action.value }}</action>
+    <action>{{ event.action.value or event.action }}</action>
 {% endif %}
 {% if event.biz_step %}
     <bizStep>{{ event.biz_step }}</bizStep>

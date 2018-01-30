@@ -125,26 +125,6 @@ class InstanceLotMasterDataAttribute(object):
         self._value = value
 
 
-class InstanceLotMasterData(object):
-    '''
-    Instance Lot Master Data (ILMD) class.  This
-    is an openly defined class in the EPCIS standard.
-    The more detailed aspects of it are layed out
-    in the CBV 1.2 specification.
-    '''
-
-    def __init__(self, attributes: list):
-        '''
-        Preferably, pass in a list of
-        EPCPyYes.core.v1_2.CBV.instance_lot_master_data.
-        InstanceLotMasterDataAttribute
-        instances.
-
-        :param attributes: A list of InstanceLotMasterDataAttribute instances.
-        '''
-        self.attributes = attributes
-
-
 class SourceDest(object):
     def __init__(self, type: str):
         self.type = type
@@ -326,7 +306,7 @@ class EPCISBusinessEvent(EPCISEvent):
 
     # TODO: add getter setters
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime = None, action: Action = Action.add,
+                 record_time: datetime = None, action: str = Action.add.value,
                  biz_step: str = None, disposition: str = None,
                  read_point: str = None,
                  biz_location: str = None, event_id: str = None,
@@ -447,7 +427,7 @@ class ObjectEvent(EPCISBusinessEvent):
     '''
 
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime, action: Action = Action.add,
+                 record_time: datetime, action: str = Action.add.value,
                  epc_list: list = None, biz_step=None, disposition=None,
                  read_point=None,
                  biz_location=None, event_id: str = None,
@@ -504,7 +484,7 @@ class ObjectEvent(EPCISBusinessEvent):
             raise ValidationError(_('There must be either an epc_list or a '
                                     'quantity_list specified during '
                                     'initialization.'))
-        if self.ilmd and self.action.value != 'ADD':
+        if self.ilmd and self.action != 'ADD':
             raise ValidationError(_('An ILMD section can only be included in '
                                     'ObjectEvents of type ADD.'))
 
@@ -542,7 +522,7 @@ class AggregationEvent(EPCISBusinessEvent):
     '''
 
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime, action: Action = Action.add,
+                 record_time: datetime, action: str = Action.add.value,
                  parent_id: str = None, child_epcs: list = None,
                  child_quantity_list: list = None,
                  biz_step: str = None, disposition: str = None,
@@ -580,11 +560,11 @@ class AggregationEvent(EPCISBusinessEvent):
 
         self._parent_id = parent_id
         self._child_epcs = child_epcs or []
-        self._child_quantity_list = child_quantity_list
+        self._child_quantity_list = child_quantity_list or []
 
     def clean(self):
         super().clean()
-        if not self.parent_id and self.action != Action.observe:
+        if not self.parent_id and self.action != Action.observe.value:
             raise ValidationError(
                 _('Parent ID is required in aggregation events '
                   'where the Action is ADD or DELETE.'))
@@ -636,7 +616,7 @@ class TransactionEvent(EPCISBusinessEvent):
     '''
 
     def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime, action: Action = Action.add,
+                 record_time: datetime, action: Action = Action.add.value,
                  parent_id: str = None, epc_list: list = None,
                  biz_step: str = None, disposition: str = None,
                  read_point: str = None, biz_location: str = None,
@@ -762,7 +742,7 @@ class TransformationEvent(EPCISEvent):
         '''
         super().__init__(event_time, event_timezone_offset, record_time,
                          event_id, error_declaration)
-        self._input_epc_list = input_epc_list
+        self._input_epc_list = input_epc_list or []
         self._input_quantity_list = input_quantity_list or []
         self._output_epc_list = output_epc_list or []
         self._output_quantity_list = output_quantity_list or []
@@ -809,12 +789,12 @@ class TransformationEvent(EPCISEvent):
         self._output_quantity_list = value
 
     @property
-    def _transformation_id(self):
-        return self.__transformation_id
+    def transformation_id(self):
+        return self._transformation_id
 
-    @_transformation_id.setter
-    def _transformation_id(self, value):
-        self.__transformation_id = value
+    @transformation_id.setter
+    def transformation_id(self, value):
+        self._transformation_id = value
 
     @property
     def biz_step(self):

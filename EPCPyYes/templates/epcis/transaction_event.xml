@@ -1,5 +1,6 @@
 <TransactionEvent>
     {% include "epcis/event_times.xml" %}
+    {% include "epcis/base_extension.xml" %}
     {% if event.business_transaction_list %}
         {% with business_transaction_list = event.business_transaction_list %}
             {% include "epcis/biz_transaction_list.xml" %}
@@ -16,7 +17,7 @@
         </epcList>
     {% endif %}
     {% if event.action %}
-        <action>{{ event.action.value }}</action>
+        <action>{{ event.action.value or event.action }}</action>
     {% endif %}
     {% if event.biz_step %}
         <bizStep>{{ event.biz_step }}</bizStep>
