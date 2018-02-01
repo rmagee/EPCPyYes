@@ -187,7 +187,7 @@ value will convert that value to a string for use in EPCIS events, etc.
     # now we create an object event...
     oe = ObjectEvent(now, tzoffset,
                      record_time=now,
-                     action=Action.add,
+                     action=Action.add.value,
                      epc_list=epcs,
                      biz_step=BusinessSteps.commissioning.value,
                      disposition=Disposition.encoded.value)
@@ -316,7 +316,7 @@ Creating an Aggregation Event
     # now we create an object event...
     ae = AggregationEvent(
         event_time=now, event_timezone_offset=tzoffset,
-        record_time=now, action=Action.add, parent_id=parent_epc,
+        record_time=now, action=Action.add.value, parent_id=parent_epc,
         child_epcs=epcs,
         biz_step=BusinessSteps.packing,
         disposition=Disposition.container_closed,
@@ -350,7 +350,7 @@ manufacturing environment with the following data (to review):
     # We will use the other biz location and read point data, etc. from the 
     # examples above.
     te = TransactionEvent(now, tzoffset, now, 
-                          action=Action.add,
+                          action=Action.add.value,
                           parent_id=parent_epc, 
                           biz_location=biz_location, 
                           read_point=read_point,
