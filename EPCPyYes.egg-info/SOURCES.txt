@@ -17,6 +17,7 @@ EPCPyYes/core/__init__.py
 EPCPyYes/core/errors.py
 EPCPyYes/core/tests/__init__.py
 EPCPyYes/core/tests/test_cbv_helpers.py
+EPCPyYes/core/tests/test_helpers.py
 EPCPyYes/core/tests/test_template_events.py
 EPCPyYes/core/tests/test_utils.py
 EPCPyYes/core/tests/schemas/BasicTypes.xsd

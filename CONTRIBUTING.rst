@@ -66,7 +66,7 @@ Ready to contribute? Here's how to set up `EPCPyYes` for local development.
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv EPCPyYes
+    $ mkvirtualenv EPCPyYes -p python3
     $ cd EPCPyYes/
     $ python setup.py develop
 
