@@ -15,20 +15,6 @@
 
 from EPCPyYes.core.SBDH import sbdh
 from EPCPyYes.core.v1_2.template_events import TemplateMixin
-from jinja2 import Environment, PackageLoader
-
-
-def _load_default_environment():
-    '''
-    Loads up the default Jinja2 environment so simple template names can
-    be passed in.
-
-    :return: The defualt Jinja2 environment for this package.
-    '''
-    return Environment(loader=PackageLoader('EPCPyYes', 'templates'),
-                       extensions=['jinja2.ext.with_'], trim_blocks=True,
-                       lstrip_blocks=True)
-
 
 class StandardBusinessDocumentHeader(sbdh.StandardBusinessDocumentHeader,
                                      TemplateMixin):

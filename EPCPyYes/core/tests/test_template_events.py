@@ -209,6 +209,18 @@ class CoreEventTests(unittest.TestCase):
             document_identification=document_identification,
             partners=[sender, receiver]
         )
+        self.assertEqual(sender_partner_id.value,
+                         'urn:epc:id:sgln:039999.999999.0')
+        self.assertEqual(sender_partner_id.authority, 'SGLN')
+        self.assertEqual(receiver_partner_id.authority, 'SGLN')
+        self.assertEqual(
+            receiver_partner_id.value, 'urn:epc:id:sgln:039999.111111.0'
+        )
+        self.assertEqual(sender.partner_type, 'Sender')
+        self.assertEqual(sender.contact, 'John Smith')
+        self.assertEqual(sender.telephone_number, '555-555-5555')
+        self.assertEqual(sender.email_address, 'john.smith@pharma.local')
+        self.assertEqual(sender.contact_type_identifier, 'Seller')
         print(header.render())
         return header
 
