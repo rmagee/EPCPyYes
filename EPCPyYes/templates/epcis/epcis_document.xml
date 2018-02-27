@@ -4,7 +4,17 @@
 <epcis:EPCISDocument
         xmlns:epcis="urn:epcglobal:epcis:xsd:1"
         xmlns:cbvmd="urn:epcglobal:cbv:mda"
+        {% if header %}
+        xmlns:{{ header.namespace }}="{{ header.schema_location }}"
+        {% endif %}
         schemaVersion="1.2" creationDate="{{ created_date }}">
+    {% block header %}
+    {% if header %}
+    <EPCISHeader>
+    {% include "epcis/sbdh.xml" %}
+    </EPCISHeader>
+    {% endif %}
+    {% endblock %}
     <EPCISBody>
         <EventList>
             {% block object_events %}

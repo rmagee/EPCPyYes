@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2015 Rob Magee.  All rights reserved.
+# Copyright 2018 SerialLab Corp.  All rights reserved.
 
 import unittest
 import uuid
@@ -36,6 +36,8 @@ from EPCPyYes.core.v1_2.CBV.instance_lot_master_data import \
     LotLevelAttributeName, ItemLevelAttributeName
 from EPCPyYes.core.v1_2.CBV import helpers, error_reasons
 from EPCPyYes.core.tests.test_utils import validate_epcis_doc
+from EPCPyYes.core.SBDH import template_sbdh
+from EPCPyYes.core.SBDH import sbdh
 
 
 class CoreEventTests(unittest.TestCase):
@@ -174,6 +176,42 @@ class CoreEventTests(unittest.TestCase):
         te.quantity_list = quantity_list
         return te
 
+    def create_sbdh(self):
+        sender_partner_id = sbdh.PartnerIdentification(
+            authority='SGLN',
+            value='urn:epc:id:sgln:039999.999999.0'
+        )
+        receiver_partner_id = sbdh.PartnerIdentification(
+            authority='SGLN',
+            value='urn:epc:id:sgln:039999.111111.0'
+        )
+        sender = sbdh.Partner(
+            partner_type=sbdh.PartnerType.SENDER,
+            partner_id=sender_partner_id,
+            contact='John Smith',
+            telephone_number='555-555-5555',
+            email_address='john.smith@pharma.local',
+            contact_type_identifier='Seller'
+        )
+        receiver = sbdh.Partner(
+            partner_type=sbdh.PartnerType.RECEIVER,
+            partner_id=receiver_partner_id,
+            contact='Joe Blow',
+            telephone_number='555-555-2222',
+            email_address='joe.blow@distributor.local',
+            contact_type_identifier='Buyer'
+        )
+        document_identification = sbdh.DocumentIdentification(
+            creation_date_and_time=datetime.now().isoformat(),
+            document_type=sbdh.DocumentType.EVENTS
+        )
+        header = template_sbdh.StandardBusinessDocumentHeader(
+            document_identification=document_identification,
+            partners=[sender, receiver]
+        )
+        print(header.render())
+        return header
+
     def test_object_event_template(self):
         oe = self.create_object_event_template()
         # render the event using it's default template
@@ -229,11 +267,15 @@ class CoreEventTests(unittest.TestCase):
         epcs = self.create_epcs(1000, 1010)
         transaction_event = self.create_transaction_event(epcs, parent_id)
         txe = self.create_transformation_event()
-        epcis_document = EPCISDocument(object_events=object_events,
-                                       aggregation_events=[ag1, ag2],
-                                       transaction_events=[transaction_event],
-                                       transformation_events=[txe]
-                                       )
+        header = self.create_sbdh()
+        epcis_document = EPCISDocument(
+            header=header,
+            object_events=object_events,
+            aggregation_events=[ag1, ag2],
+            transaction_events=[transaction_event],
+            transformation_events=[txe]
+        )
+        print(epcis_document.render())
         validate_epcis_doc(epcis_document.render().encode('utf-8'))
 
     def test_transformation_doc(self):

@@ -434,7 +434,72 @@ tx_event = TransformationEvent(
 print(tx_event.render())
 ```
 
-# Adding The Events to an EPCIS Document
+# Create a Standard Business Document Header
+
+If you'd like to include a SBDH header in your document to denote who the document is from and where it is going, you'll add a document header.
+
+## Create sender and receiver partner ids
+
+First we will create the partner ids for sender and receiver.  For most EPCIS event documents, it is common to just use the SGLN of each party.  The examples below will do more than this, but they are only examples intended to show how to use each field/element/value in the header.
+
+
+```python
+from EPCPyYes.core.SBDH import template_sbdh
+from EPCPyYes.core.SBDH import sbdh
+
+sender_partner_id = sbdh.PartnerIdentification(
+    authority='SGLN',
+    value='urn:epc:id:sgln:039999.999999.0'
+)
+receiver_partner_id = sbdh.PartnerIdentification(
+    authority='SGLN',
+    value='urn:epc:id:sgln:039999.111111.0'
+)
+
+```
+
+## Create the Partner Instances for Sender and Reciever
+
+So below we will create two partners and set one to have a `partner_type` of *Sender* and the other to have one of *Receiver*.  In addition, we use the **optional** contact info properties of the `Partner` class to specify things like email, phone number, contact name, etc.
+
+
+```python
+sender = sbdh.Partner(
+    partner_type=sbdh.PartnerType.SENDER,
+    partner_id=sender_partner_id,
+    contact='John Smith',
+    telephone_number='555-555-5555',
+    email_address='john.smith@pharma.local',
+    contact_type_identifier='Seller'
+)
+receiver = sbdh.Partner(
+    partner_type=sbdh.PartnerType.RECEIVER,
+    partner_id=receiver_partner_id,
+    contact='Joe Blow',
+    telephone_number='555-555-2222',
+    email_address='joe.blow@distributor.local',
+    contact_type_identifier='Buyer'
+)
+
+```
+
+## Create the Document Identification and Header Class Instances
+So the SBDH requires a specific `DocumentIdentification` element with required values.  Some optional values that you can supply are the `instance_identifier` which is a unique value that identifies the document- the default value for this is a UUID4.  Another optional value you can supply is the created date and time in ISO format- the default for this is the current date and time in ISO using UTC timezone info. 
+
+
+```python
+document_identification = sbdh.DocumentIdentification(
+    creation_date_and_time=datetime.now().isoformat(),
+    document_type=sbdh.DocumentType.EVENTS
+)
+header = template_sbdh.StandardBusinessDocumentHeader(
+    document_identification=document_identification,
+    partners=[sender, receiver]
+)
+print(header.render())
+```
+
+# Adding The Header and Events to an EPCIS Document
  
 To execute this code in Jupyter, make sure you have run the code in the prior example.  
 
@@ -444,7 +509,7 @@ Creating and EPCIS Document and adding events to it in EPCPyYes if fairly simple
 ```python
 from EPCPyYes.core.v1_2.template_events import EPCISDocument
 
-epc_doc = EPCISDocument(object_events=[oe], aggregation_events=[ae],
+epc_doc = EPCISDocument(header=header, object_events=[oe], aggregation_events=[ae],
                         transaction_events=[te], transformation_events=[tx_event])
 print(epc_doc.render())
 ```

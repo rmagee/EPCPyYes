@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2015 Rob Magee.  All rights reserved.
+# Copyright 2018 Rob Magee.  All rights reserved.
 
 from EPCPyYes.core.v1_2.CBV import instance_lot_master_data
 import gettext

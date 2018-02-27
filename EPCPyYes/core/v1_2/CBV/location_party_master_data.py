@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2015 Rob Magee,  All rights reserved.
+# Copyright 2018 Rob Magee,  All rights reserved.
 '''
 This section contains enumerations and classes taht
 express master data attributes that may be used to describe
