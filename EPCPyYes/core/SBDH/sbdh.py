@@ -216,7 +216,11 @@ class DocumentIdentification(object):
         Returns the string value of the document type enum.
         :return: A string value of the DocumentType enum.
         '''
-        return self._document_type.value
+        if isinstance(self._document_type, DocumentType):
+            ret = self._document_type.value
+        else:
+            ret = self._document_type
+        return ret
 
     @document_type.setter
     def document_type(self, value: DocumentType):
