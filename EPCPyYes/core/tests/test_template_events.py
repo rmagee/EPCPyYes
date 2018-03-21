@@ -314,10 +314,10 @@ class CoreEventTests(unittest.TestCase):
 
         ilmd = [
             InstanceLotMasterDataAttribute(
-                name=LotLevelAttributeName.itemExpirationDate,
+                name=LotLevelAttributeName.itemExpirationDate.value,
                 value='2015-12-31'),
             InstanceLotMasterDataAttribute(
-                name=ItemLevelAttributeName.lotNumber,
+                name=ItemLevelAttributeName.lotNumber.value,
                 value='DL232')
         ]
 
@@ -358,10 +358,10 @@ class CoreEventTests(unittest.TestCase):
         destination_list = self.create_destination_list()
         ilmd = [
             InstanceLotMasterDataAttribute(
-                name=LotLevelAttributeName.itemExpirationDate,
+                name=LotLevelAttributeName.itemExpirationDate.value,
                 value='2015-12-31'),
             InstanceLotMasterDataAttribute(
-                name=ItemLevelAttributeName.lotNumber,
+                name=ItemLevelAttributeName.lotNumber.value,
                 value='DL232')
         ]
         oe = self.create_object_event(biz_location, business_transaction_list,

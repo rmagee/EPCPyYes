@@ -236,10 +236,10 @@ more complicated description, see the standard.
     # lets create some lot and expiration data for event
     ilmd = [
         InstanceLotMasterDataAttribute(
-            name=LotLevelAttributeName.itemExpirationDate,
+            name=LotLevelAttributeName.itemExpirationDate.value,
             value='2015-12-31'),
         InstanceLotMasterDataAttribute(
-            name=ItemLevelAttributeName.lotNumber,
+            name=ItemLevelAttributeName.lotNumber.value,
             value='DL232')
     ]
     

@@ -192,10 +192,10 @@ from EPCPyYes.core.v1_2.CBV.instance_lot_master_data import InstanceLotMasterDat
 # lets create some lot and expiration data for event
 ilmd = [
     InstanceLotMasterDataAttribute(
-        name=LotLevelAttributeName.itemExpirationDate,
+        name=LotLevelAttributeName.itemExpirationDate.value,
         value='2015-12-31'),
     InstanceLotMasterDataAttribute(
-        name=ItemLevelAttributeName.lotNumber,
+        name=ItemLevelAttributeName.lotNumber.value,
         value='DL232')
 ]
 
@@ -378,10 +378,10 @@ from EPCPyYes.core.v1_2.template_events import TransformationEvent
 #lets create a custom ilmd for the transformation event
 ilmd = [
     InstanceLotMasterDataAttribute(
-        name=LotLevelAttributeName.itemExpirationDate,
+        name=LotLevelAttributeName.itemExpirationDate.value,
         value='2015-12-31'),
     InstanceLotMasterDataAttribute(
-        name=ItemLevelAttributeName.lotNumber,
+        name=ItemLevelAttributeName.lotNumber.value,
         value='DL232')
 ]
 
