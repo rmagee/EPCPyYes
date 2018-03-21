@@ -1,6 +1,19 @@
 [![coverage report](https://gitlab.com/serial-lab/EPCPyYes/badges/master/coverage.svg)](https://gitlab.com/serial-lab/EPCPyYes/commits/master)
 [![build status](https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg)](https://gitlab.com/serial-lab/EPCPyYes/commits/master)
 
+
+    8888888888 8888888b.   .d8888b.  8888888b.        Y88b   d88P
+    888        888   Y88b d88P  Y88b 888   Y88b        Y88b d88P
+    888        888    888 888    888 888    888         Y88o88P
+    8888888    888   d88P 888        888   d88P 888  888 Y888P  .d88b.  .d8888b
+    888        8888888P"  888        8888888P"  888  888  888  d8P  Y8b 88K
+    888        888        888    888 888        888  888  888  88888888 "Y8888b.
+    888        888        Y88b  d88P 888        Y88b 888  888  Y8b.          X88
+    8888888888 888         "Y8888P"  888         "Y88888  888   "Y8888   88888P'
+                                                     888
+                                                Y8b d88P
+                                                 "Y88P"
+
 # Pronounced "EPC-Pie-Yes": Open source components for the GS1 EPCIS standard
 
 The main
