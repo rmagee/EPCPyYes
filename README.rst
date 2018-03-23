@@ -1,3 +1,6 @@
+EPCPYYes
+========
+
 .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/coverage.svg
    :target: https://gitlab.com/serial-lab/EPCPyYes/pipelines
 .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg
