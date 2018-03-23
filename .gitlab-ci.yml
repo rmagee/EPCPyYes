@@ -61,7 +61,8 @@ deploy_pypi:
     - python setup.py check sdist bdist upload
     - echo "" > ~/.pypirc && rm ~/.pypirc
   only:
-    - /^v\d+\.\d+\.\d+([abc]\d*)?$/
+    - master
+    - tags
   except:
     - branches
 
