@@ -3,7 +3,7 @@ CONTRIBUTING.rst
 HISTORY.md
 LICENSE.md
 MANIFEST.in
-README.md
+README.rst
 setup.cfg
 setup.py
 EPCPyYes/__init__.py
