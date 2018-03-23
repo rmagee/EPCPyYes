@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Serial Lab <slab@serial-lab.com>
+* Rob Magee <slab@serial-lab.com>
 
 Contributors
 ------------

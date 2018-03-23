@@ -6,3 +6,8 @@ History
 ------------------
 
 * First beta release on GitLab.
+
+1.0.0
+------------------
+
+PyPI release candidate.

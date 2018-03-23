@@ -29,7 +29,6 @@ from EPCPyYes.core.v1_2.events import InstanceLotMasterDataAttribute
 _ = gettext.gettext
 
 
-
 class ILMDAttributeName(Enum):
     pass
 
@@ -114,7 +113,7 @@ class InstanceLotMasterDataAttribute(InstanceLotMasterDataAttribute):
     standard and section 9 of the CBV.
     '''
 
-    def __init__(self, name: ILMDAttributeName, value: str):
+    def __init__(self, name: str, value: str):
         '''
         Initializes a new InstanceLotMasterDataAttribute instance that
         is CBV 1.2 compliant.
@@ -122,13 +121,8 @@ class InstanceLotMasterDataAttribute(InstanceLotMasterDataAttribute):
         :param name: An ILMDAttribute as defined in the CBV
         :param value: The value of that attribute.
         '''
-        if not isinstance(name, ILMDAttributeName):
-            raise ValueError(_("The name value should be a valid CBV "
-                               "ILMDAttribute instance.  For generic attributes "
-                               "use the InstanceLotMasterDataAttribute in "
-                               "the core package."))
-        self._name = name
         self._value = value
+        self._name = name
 
     @property
     def name(self):
@@ -142,13 +136,13 @@ class InstanceLotMasterDataAttribute(InstanceLotMasterDataAttribute):
         return self._name
 
     @name.setter
-    def name(self, value):
-        if not isinstance(value, ILMDAttributeName):
-            raise ValueError(_("The name value should be a valid CBV "
-                               "ILMDAttribute instance.  For generic attributes "
-                               "use the InstanceLotMasterDataAttribute in "
-                               "the core package."))
+    def name(self, value: str):
         self._name = value
 
+    @property
+    def value(self):
+        return self._value
 
-
+    @value.setter
+    def value(self, value):
+        self._value = value
