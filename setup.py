@@ -14,7 +14,7 @@ def get_data_files(path):
     return data_files
 
 
-with open('README.md') as readme_file:
+with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.md') as history_file:
@@ -38,8 +38,9 @@ setup(
     description="EPCIS Python module for quickly developing "
                 "EPCIS-enabled applications.",
     long_description=readme + '\n\n' + history,
-    author="Serial Lab, LLC",
+    author="Rob Magee",
     author_email='slab@serial-lab.com',
+    maintainer='SerialLab Corp',
     url='https://gitlab.com/serial-lab/EPCPyYes',
     packages=[
         'EPCPyYes', 'EPCPyYes.core', 'EPCPyYes.core.v1_2',
@@ -59,8 +60,7 @@ setup(
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU Affero General Public License v3 '
-        '(AGPLv3)',
+        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',

@@ -1,13 +1,27 @@
-Metadata-Version: 1.1
+Metadata-Version: 1.2
 Name: EPCPyYes
-Version: 0.1.0
+Version: 1.0.1
 Summary: EPCIS Python module for quickly developing EPCIS-enabled applications.
 Home-page: https://gitlab.com/serial-lab/EPCPyYes
-Author: Serial Lab, LLC
+Author: Rob Magee
 Author-email: slab@serial-lab.com
+Maintainer: SerialLab Corp
 License: GNU Affero General Public License v3
 Description: [![coverage report](https://gitlab.com/serial-lab/EPCPyYes/badges/master/coverage.svg)](https://gitlab.com/serial-lab/EPCPyYes/commits/master)
         [![build status](https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg)](https://gitlab.com/serial-lab/EPCPyYes/commits/master)
+        
+        
+            8888888888 8888888b.   .d8888b.  8888888b.        Y88b   d88P
+            888        888   Y88b d88P  Y88b 888   Y88b        Y88b d88P
+            888        888    888 888    888 888    888         Y88o88P
+            8888888    888   d88P 888        888   d88P 888  888 Y888P  .d88b.  .d8888b
+            888        8888888P"  888        8888888P"  888  888  888  d8P  Y8b 88K
+            888        888        888    888 888        888  888  888  88888888 "Y8888b.
+            888        888        Y88b  d88P 888        Y88b 888  888  Y8b.          X88
+            8888888888 888         "Y8888P"  888         "Y88888  888   "Y8888   88888P'
+                                                             888
+                                                        Y8b d88P
+                                                         "Y88P"
         
         # Pronounced "EPC-Pie-Yes": Open source components for the GS1 EPCIS standard
         
@@ -95,11 +109,20 @@ Description: [![coverage report](https://gitlab.com/serial-lab/EPCPyYes/badges/m
         
         * First beta release on GitLab.
         
+        1.0.0
+        ------------------
+        
+        PyPI release candidate.
+        
+        1.0.1
+        ------------------
+        
+        Fix to CBV enumeration issues with ILMD.
 Keywords: EPCPyYes EPCIS GS1 RFID Serialization
 Platform: UNKNOWN
 Classifier: Development Status :: 2 - Pre-Alpha
 Classifier: Intended Audience :: Developers
-Classifier: License :: OSI Approved :: GNU Affero General Public License v3 (AGPLv3)
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)
 Classifier: Natural Language :: English
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.5

@@ -10,7 +10,7 @@ Installation
 
     .. code-block:: console
 
-        $ pip install EPCPyYes
+        $ pip install epcpyyes
 
     This is the preferred method to install EPCPyYes, as it will always install the most recent stable release.
 

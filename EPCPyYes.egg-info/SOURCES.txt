@@ -45,6 +45,7 @@ EPCPyYes/core/v1_2/CBV/instance_lot_master_data.py
 EPCPyYes/core/v1_2/CBV/location_party_master_data.py
 EPCPyYes/core/v1_2/CBV/source_destination.py
 EPCPyYes/templates/epcis/aggregation_event.xml
+EPCPyYes/templates/epcis/base_extension.xml
 EPCPyYes/templates/epcis/biz_transaction_list.xml
 EPCPyYes/templates/epcis/business_data.xml
 EPCPyYes/templates/epcis/child_quantity_list.xml
@@ -55,12 +56,12 @@ EPCPyYes/templates/epcis/extension.xml
 EPCPyYes/templates/epcis/ilmd.xml
 EPCPyYes/templates/epcis/object_event.xml
 EPCPyYes/templates/epcis/quantity_list.xml
+EPCPyYes/templates/epcis/sbdh.xml
 EPCPyYes/templates/epcis/source_list.xml
 EPCPyYes/templates/epcis/transaction_event.xml
 EPCPyYes/templates/epcis/transformation_event.xml
 docs/events.ipynb
 docs/events.md
-docs/.ipynb_checkpoints/events-Copy1-checkpoint.ipynb
 docs/.ipynb_checkpoints/events-checkpoint.ipynb
 docs/api/CBV.rst
 docs/api/EPCISEvents.rst
@@ -76,15 +77,3 @@ docs/api/make.bat
 docs/api/readme.rst
 docs/api/serial-lab-favicon.png
 docs/api/usage.rst
-docs/api/_build/html/_static/ajax-loader.gif
-docs/api/_build/html/_static/comment-bright.png
-docs/api/_build/html/_static/comment-close.png
-docs/api/_build/html/_static/comment.png
-docs/api/_build/html/_static/down-pressed.png
-docs/api/_build/html/_static/down.png
-docs/api/_build/html/_static/file.png
-docs/api/_build/html/_static/minus.png
-docs/api/_build/html/_static/plus.png
-docs/api/_build/html/_static/serial-lab-favicon.png
-docs/api/_build/html/_static/up-pressed.png
-docs/api/_build/html/_static/up.png
