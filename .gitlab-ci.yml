@@ -50,6 +50,9 @@ pages:
 deploy_pypi:
   image: seriallab/python3.5dev
   stage: deploy
+  environment:
+    name: deployment
+    url: https://pypi.org/
   script:
     - echo "[distutils]" >> ~/.pypirc
     - echo "index-servers = " >> ~/.pypirc
