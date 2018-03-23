@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2015 Rob Magee.  All rights reserved.
+# Copyright 2018 Rob Magee.  All rights reserved.
 '''
 The events module contains the base python implementations of the
 fundamental EPCIS event classes.  The intent of these classes is to
@@ -35,6 +35,7 @@ from enum import Enum
 
 from EPCPyYes.core.errors import ValidationError
 from EPCPyYes.core.v1_2.helpers import get_iso_8601_regex
+from EPCPyYes.core.SBDH.sbdh import StandardBusinessDocumentHeader as sbdh
 
 iso_regex = get_iso_8601_regex()
 
@@ -867,7 +868,9 @@ class EPCISDocument(object):
     events.
     '''
 
-    def __init__(self, object_events: list = None,
+    def __init__(self,
+                 header: sbdh = None,
+                 object_events: list = None,
                  aggregation_events: list = None,
                  transaction_events: list = None,
                  transformation_events: list = None,
@@ -883,6 +886,7 @@ class EPCISDocument(object):
         :param transaction_events: A list of TransactionEvent instances
         :param transformation_events: A list of TransformationEvent instances.
         '''
+        self._header = header
         self._object_events = object_events or []
         self._transaction_events = transaction_events or []
         self._aggregation_events = aggregation_events or []
@@ -890,6 +894,14 @@ class EPCISDocument(object):
         self._render_xml_declaration = render_xml_declaration
         self._created_date = created_date or datetime.utcnow()
 
+    @property
+    def header(self):
+        return self._header
+    
+    @header.setter
+    def header(self, value: sbdh):
+        self._header = value
+    
     @property
     def object_events(self):
         return self._object_events

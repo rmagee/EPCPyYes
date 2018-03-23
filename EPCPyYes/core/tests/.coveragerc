@@ -1,0 +1,9 @@
+[run]
+omit =
+    */__init__.py/*
+    EPCPyYes/core/tests/*
+    # CBV is just a bunch of literal enums- no need/way to test
+    */CBV/*.py
+    */tests/*.py
+source =
+    EPCPyYes

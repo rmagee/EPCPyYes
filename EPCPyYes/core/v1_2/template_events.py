@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Copyright 2015 Rob Magee.  All rights reserved.
+# Copyright 2018 Rob Magee.  All rights reserved.
 '''
 The templates package contains classes derived from the core EPCIS classes
 along with Jinja2 templates for generating EPCIS event XML.  By calling any
@@ -25,8 +25,9 @@ from EPCPyYes.core.v1_2 import events
 from EPCPyYes.core.v1_2.events import Action, ErrorDeclaration
 from EPCPyYes.core.v1_2.CBV.instance_lot_master_data import \
     InstanceLotMasterDataAttribute
+from EPCPyYes.core.SBDH.sbdh import StandardBusinessDocumentHeader as sbdh
 
-from jinja2 import Environment, PackageLoader, Template
+from jinja2 import Environment, PackageLoader
 
 
 def _load_default_environment():
@@ -116,6 +117,7 @@ class ObjectEvent(events.ObjectEvent, TemplateMixin):
     associated with the class.  The default environment utilizes the
     `templates` directory in the root folder of the package.
     '''
+
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
                  event_timezone_offset: str = '+00:00',
                  record_time: datetime = None,
@@ -133,7 +135,6 @@ class ObjectEvent(events.ObjectEvent, TemplateMixin):
                          business_transaction_list, ilmd, quantity_list)
         TemplateMixin.__init__(self)
         self.template = self._env.get_template('epcis/object_event.xml')
-
 
     @property
     def namespaces(self):
@@ -157,6 +158,7 @@ class AggregationEvent(events.AggregationEvent, TemplateMixin):
     '''
     Generates an EPCIS Aggregation Event.
     '''
+
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
                  event_timezone_offset: str = '+00:00',
                  record_time: datetime = None,
@@ -258,20 +260,24 @@ class TransformationEvent(events.TransformationEvent, TemplateMixin):
 
 
 class EPCISDocument(events.EPCISDocument, TemplateMixin):
-    def __init__(self, object_events: list = [], aggregation_events: list = [],
+    def __init__(self,
+                 header: sbdh = None,
+                 object_events: list = [], aggregation_events: list = [],
                  transaction_events: list = [],
                  transformation_events: list = [],
                  render_xml_declaration: bool = False,
                  created_date: datetime = datetime.utcnow(),
                  template: str = 'epcis/epcis_document.xml'):
-        super().__init__(object_events, aggregation_events, transaction_events,
+        super().__init__(header, object_events, aggregation_events,
+                         transaction_events,
                          transformation_events, render_xml_declaration,
                          created_date)
         TemplateMixin.__init__(self)
         self._template = self._env.get_template(template)
 
     def render(self, render_namespaces=False, render_xml_declaration=False):
-        context = {'object_events': self.object_events,
+        context = {'header': self.header,
+                   'object_events': self.object_events,
                    'aggregation_events': self.aggregation_events,
                    'transaction_events': self.transaction_events,
                    'transformation_events': self.transformation_events,

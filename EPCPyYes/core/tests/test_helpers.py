@@ -14,8 +14,8 @@
 # Copyright 2017 Serial Lab.  All rights reserved.
 
 import unittest
-
-from EPCPyYes.core.v1_2.helpers import sscc_urn_generator
+from datetime import datetime
+from EPCPyYes.core.v1_2 import helpers
 
 
 class HelperTests(unittest.TestCase):
@@ -29,16 +29,22 @@ class HelperTests(unittest.TestCase):
         and the output matches the input. Checks the 0 padding is applied properly
         based on length of parameters that constitute the SSCC URN.
         '''
-        results = list(sscc_urn_generator(company_prefix='1234567', extension='1',
+        results = list(helpers.sscc_urn_generator(company_prefix='1234567', extension='1',
                                           serial_numbers=['1', '2', '12345', '111111111']))
-        self.assertEquals(results[0], 'urn:epc:id:sscc:1234567.1000000001')
-        self.assertEquals(results[1], 'urn:epc:id:sscc:1234567.1000000002')
-        self.assertEquals(results[2], 'urn:epc:id:sscc:1234567.1000012345')
-        self.assertEquals(results[3], 'urn:epc:id:sscc:1234567.1111111111')
-        results = list(sscc_urn_generator(company_prefix='123456', extension='2',
+        self.assertEqual(results[0], 'urn:epc:id:sscc:1234567.1000000001')
+        self.assertEqual(results[1], 'urn:epc:id:sscc:1234567.1000000002')
+        self.assertEqual(results[2], 'urn:epc:id:sscc:1234567.1000012345')
+        self.assertEqual(results[3], 'urn:epc:id:sscc:1234567.1111111111')
+        results = list(helpers.sscc_urn_generator(company_prefix='123456', extension='2',
                                           serial_numbers=['1', '2', '12345', '1111111111', '111111111']))
-        self.assertEquals(results[0], 'urn:epc:id:sscc:123456.20000000001')
-        self.assertEquals(results[1], 'urn:epc:id:sscc:123456.20000000002')
-        self.assertEquals(results[2], 'urn:epc:id:sscc:123456.20000012345')
-        self.assertEquals(results[3], 'urn:epc:id:sscc:123456.21111111111')
-        self.assertEquals(results[4], 'urn:epc:id:sscc:123456.20111111111')
+        self.assertEqual(results[0], 'urn:epc:id:sscc:123456.20000000001')
+        self.assertEqual(results[1], 'urn:epc:id:sscc:123456.20000000002')
+        self.assertEqual(results[2], 'urn:epc:id:sscc:123456.20000012345')
+        self.assertEqual(results[3], 'urn:epc:id:sscc:123456.21111111111')
+        self.assertEqual(results[4], 'urn:epc:id:sscc:123456.20111111111')
+
+    def test_iso_8601_helper(self):
+        isodate = datetime.now().isoformat()
+        regex = helpers.get_iso_8601_regex()
+        res = regex.match(isodate)
+        self.assertIsNotNone(res, 'The date regex is incorrect.')
