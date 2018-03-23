@@ -11,3 +11,8 @@ History
 ------------------
 
 PyPI release candidate.
+
+1.0.1
+------------------
+
+Fix to CBV enumeration issues with ILMD.
