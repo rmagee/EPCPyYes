@@ -6,7 +6,8 @@ EPCPYYes
 .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg
    :target: https://gitlab.com/serial-lab/EPCPyYes/commits/master
 
-..code-block::
+
+.. code-block::
 
     8888888888 8888888b.   .d8888b.  8888888b.        Y88b   d88P
     888        888   Y88b d88P  Y88b 888   Y88b        Y88b d88P
