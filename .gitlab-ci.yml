@@ -1,6 +1,12 @@
+variables:
+    PYPI_USER: SECURE
+    PYPI_PASSWORD: SECURE
+
 stages:
     - test-python
     - build-docs
+    - deploy
+    - cleanup
 
 python3_5_unit_test:
   image: seriallab/python3.5dev
@@ -45,3 +51,26 @@ pages:
         - public
     only:
       - master
+
+deploy_pypi:
+  stage: deploy
+  script:
+    - echo "[server-login]" >> ~/.pypirc
+    - echo "username=" ${PYPI_USER} >> ~/.pypirc
+    - echo "password=" ${PYPI_PASSWORD} >> ~/.pypirc
+    - python setup.py check sdist bdist upload
+    - echo "" > ~/.pypirc && rm ~/.pypirc
+  only:
+    - /^v\d+\.\d+\.\d+([abc]\d*)?$/
+  except:
+    - branches
+
+cleanup_deploy:
+  stage: cleanup
+  when: always
+  script:
+    - rm -vf ~/.pypirc
+  only:
+    - /^v\d+\.\d+\.\d+([abc]\d*)?$/
+  except:
+    - branches

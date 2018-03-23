@@ -90,9 +90,9 @@ Helpers
 Utilities that help you:
 ************************
 
-* Quickly generate lists of SGTIN or SSCC URN values by a range of serial numbers.
-* Quickly serialize python EPCIS classes into valid EPCIS XML and back.
-* ...and More.
+- Quickly generate lists of SGTIN or SSCC URN values by a range of serial numbers.
+- Quickly serialize python EPCIS classes into valid EPCIS XML and back.
+- ...and More.
 
 CBV 1.2 Type Support and Utilities
 ----------------------------------
