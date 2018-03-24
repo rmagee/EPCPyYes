@@ -1,6 +1,6 @@
 Metadata-Version: 1.2
 Name: EPCPyYes
-Version: 1.0.5
+Version: 1.0.11
 Summary: EPCIS Python module for quickly developing EPCIS-enabled applications.
 Home-page: https://gitlab.com/serial-lab/EPCPyYes
 Author: Rob Magee
@@ -9,12 +9,10 @@ Maintainer: SerialLab Corp
 License: GNU Affero General Public License v3
 Description: EPCPYYes
         ========
-        
         .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/coverage.svg
            :target: https://gitlab.com/serial-lab/EPCPyYes/pipelines
         .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg
            :target: https://gitlab.com/serial-lab/EPCPyYes/commits/master
-        
         
         .. code-block::
         
@@ -43,25 +41,28 @@ Description: EPCPYYes
         ------------
         See our code-coverage and continuous integration builds for the coverage
         build artifacts and build/test results.  You can download the code coverage
-        build artifacts on the Pipelines Page_. by clicking on the download button
-        to the right of the build you are interested in.
-        
-        .. _Page: https://gitlab.com/serial-lab/EPCPyYes/pipelines
+        build artifacts on the
+        `Pipelines Page <https://gitlab.com/serial-lab/EPCPyYes/pipelines>`_.
+        by clicking on the download button to the right of the build you are
+        interested in.
         
         
         Fully Documented
         ----------------
-        The EPCPyYes module is fully documented_.
-        .. _documented: https://serial-lab.gitlab.io/EPCPyYes/index.html
+        The documentation to the EPCPyYes module can be found here:
+        
+        https://serial-lab.gitlab.io/EPCPyYes/index.html
         
         Jupyter Notebook:
         =================
-        The Jupyter notebook with running example code can be found here_.
-        .. _here: https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.ipynb
+        The Jupyter notebook with running example code is included in the documentation
+        and can be found here:
         
-        If you don't have a notebook, you can view the Jupyter example documentation 
-        here_.
-        .. _here: https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.md
+        https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.ipynb
+        
+        If you don't have a notebook, you can view the Jupyter example documentation
+        here:
+        https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.md
         
         Jinja2 Templates for Creating and Transforming EPCIS Docs and Events
         --------------------------------------------------------------------
@@ -112,30 +113,11 @@ Description: EPCPYYes
         
         For example:
         
-        .. code-block:: python
+        .. code-block:: text
         
             from EPCPyYes.core.v1_2.CBV.dispositions import Disposition
             print(Disposition.commissioning.value)
             urn:epcglobal:cbv:bizstep:commissioning
-        
-        =======
-        History
-        =======
-        
-        0.1.0
-        ------------------
-        
-        * First beta release on GitLab.
-        
-        1.0.0
-        ------------------
-        
-        PyPI release candidate.
-        
-        1.0.1
-        ------------------
-        
-        Fix to CBV enumeration issues with ILMD.
 Keywords: EPCPyYes EPCIS GS1 RFID Serialization
 Platform: UNKNOWN
 Classifier: Development Status :: 2 - Pre-Alpha
