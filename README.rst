@@ -32,16 +32,15 @@ Fully Tested
 ------------
 See our code-coverage and continuous integration builds for the coverage
 build artifacts and build/test results.  You can download the code coverage
-build artifacts on the Pipelines Page_. by clicking on the download button
-to the right of the build you are interested in.
-
-.. _Page: https://gitlab.com/serial-lab/EPCPyYes/pipelines
+build artifacts on the
+`Pipelines Page <https://gitlab.com/serial-lab/EPCPyYes/pipelines>`_.
+by clicking on the download button to the right of the build you are
+interested in.
 
 
 Fully Documented
 ----------------
-The EPCPyYes module is `fully documented <https://serial-lab.gitlab.io/EPCPyYes/index.html>`_.
-You can find the documentation here:
+The documentation to the EPCPyYes module can be found here:
 
 https://serial-lab.gitlab.io/EPCPyYes/index.html
 
@@ -105,7 +104,7 @@ anyone is interested in adding and/or supporting it please contact us.
 
 For example:
 
-.. code-block:: python
+.. code-block:: text
 
     from EPCPyYes.core.v1_2.CBV.dispositions import Disposition
     print(Disposition.commissioning.value)
