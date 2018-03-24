@@ -1,11 +1,9 @@
 EPCPYYes
 ========
-
 .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/coverage.svg
    :target: https://gitlab.com/serial-lab/EPCPyYes/pipelines
 .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg
    :target: https://gitlab.com/serial-lab/EPCPyYes/commits/master
-
 
 .. code-block::
 
@@ -42,17 +40,21 @@ to the right of the build you are interested in.
 
 Fully Documented
 ----------------
-The EPCPyYes module is fully documented_.
-.. _documented: https://serial-lab.gitlab.io/EPCPyYes/index.html
+The EPCPyYes module is `fully documented <https://serial-lab.gitlab.io/EPCPyYes/index.html>`_.
+You can find the documentation here:
+
+https://serial-lab.gitlab.io/EPCPyYes/index.html
 
 Jupyter Notebook:
 =================
-The Jupyter notebook with running example code can be found here_.
-.. _here: https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.ipynb
+The Jupyter notebook with running example code is included in the documentation
+and can be found here:
 
-If you don't have a notebook, you can view the Jupyter example documentation 
-here_.
-.. _here: https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.md
+https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.ipynb
+
+If you don't have a notebook, you can view the Jupyter example documentation
+here:
+https://gitlab.com/serial-lab/EPCPyYes/blob/master/docs/events.md
 
 Jinja2 Templates for Creating and Transforming EPCIS Docs and Events
 --------------------------------------------------------------------
