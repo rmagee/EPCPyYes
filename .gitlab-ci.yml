@@ -45,7 +45,7 @@ pages:
         paths:
         - public
     only:
-      - master
+      - tags
 
 deploy_pypi:
   image: seriallab/python3.5dev
@@ -63,7 +63,6 @@ deploy_pypi:
     - rm ~/.pypirc
   only:
     - tags
-  except:
-    - branches
+    #- /\d+\.\d+\.\d+([abc]\d*)?$/
 
 
