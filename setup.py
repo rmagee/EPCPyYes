@@ -17,8 +17,6 @@ def get_data_files(path):
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.md') as history_file:
-    history = history_file.read()
 
 requirements = [
     'Jinja2==2.9.4',
