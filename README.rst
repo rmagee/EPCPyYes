@@ -4,6 +4,8 @@ EPCPYYes
    :target: https://gitlab.com/serial-lab/EPCPyYes/pipelines
 .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg
    :target: https://gitlab.com/serial-lab/EPCPyYes/commits/master
+.. image:: https://badge.fury.io/py/EPCPyYes.svg
+    :target: https://badge.fury.io/py/EPCPyYes
 
 .. code-block::
 

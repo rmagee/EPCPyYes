@@ -1,6 +1,6 @@
 Metadata-Version: 1.2
 Name: EPCPyYes
-Version: 1.0.11
+Version: 1.0.14
 Summary: EPCIS Python module for quickly developing EPCIS-enabled applications.
 Home-page: https://gitlab.com/serial-lab/EPCPyYes
 Author: Rob Magee
@@ -13,6 +13,8 @@ Description: EPCPYYes
            :target: https://gitlab.com/serial-lab/EPCPyYes/pipelines
         .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg
            :target: https://gitlab.com/serial-lab/EPCPyYes/commits/master
+        .. image:: https://badge.fury.io/py/EPCPyYes.svg
+            :target: https://badge.fury.io/py/EPCPyYes
         
         .. code-block::
         
