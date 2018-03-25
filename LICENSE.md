@@ -1,7 +1,7 @@
 # EPCPyYes
 A Pythoninc approach to EPCIS-enabled application development.
 
-Copyright (C) 2018 SerialLab, LLC
+Copyright (C) 2018 SerialLab Corp
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as

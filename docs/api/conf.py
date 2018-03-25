@@ -58,7 +58,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'EPCPyYes'
-copyright = u"2018, SerialLab,LLC"
+copyright = u"2018, SerialLab Corp"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -246,7 +246,7 @@ latex_documents = [
 man_pages = [
     ('index', 'EPCPyYes',
      u'EPCPyYes Documentation',
-     [u'Serial Lab, LLC'], 1)
+     [u'Serial LabCorp'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -261,7 +261,7 @@ man_pages = [
 texinfo_documents = [
     ('index', 'EPCPyYes',
      u'EPCPyYes Documentation',
-     u'Serial Lab, LLC',
+     u'Serial LabCorp',
      'EPCPyYes',
      'EPCIS Python Package',
      'Miscellaneous'),
