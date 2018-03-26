@@ -17,3 +17,5 @@ show_missing = True
 exclude_lines =
     raise NotImplementedError
     self\._[a-z_]* = value
+    def [a-z_]*\(self\, value\):
+
