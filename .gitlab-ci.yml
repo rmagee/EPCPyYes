@@ -31,7 +31,7 @@ python3_6_unit_test:
   - coverage html
   artifacts:
     paths:
-      - build
+      - EPCPyYes/core/tests/htmlcov/
 
 pages:
     image: seriallab/python3.5dev
@@ -41,10 +41,11 @@ pages:
     - pip install sphinx recommonmark sphinx_rtd_theme pygments ipython
     - make html --directory=docs/api
     - mv docs/api/_build/html/ public/
-    - cp -fr build/* public/coverage/
+    - mv EPCPyYes/core/tests/htmlcov/* public/coverage/
     artifacts:
         paths:
         - public
+        expire_in: 1h
     only:
       - tags
 
