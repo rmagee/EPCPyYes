@@ -31,7 +31,7 @@ python3_6_unit_test:
   - coverage html
   artifacts:
     paths:
-      - EPCPyYes/core/tests/htmlcov/
+      - build
 
 pages:
     image: seriallab/python3.5dev
@@ -41,6 +41,7 @@ pages:
     - pip install sphinx recommonmark sphinx_rtd_theme pygments ipython
     - make html --directory=docs/api
     - mv docs/api/_build/html/ public/
+    - cp -fr build/* public/coverage/
     artifacts:
         paths:
         - public
