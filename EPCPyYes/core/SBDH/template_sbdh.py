@@ -16,6 +16,7 @@
 from EPCPyYes.core.SBDH import sbdh
 from EPCPyYes.core.v1_2.template_events import TemplateMixin
 
+
 class StandardBusinessDocumentHeader(sbdh.StandardBusinessDocumentHeader,
                                      TemplateMixin):
     '''
@@ -25,12 +26,13 @@ class StandardBusinessDocumentHeader(sbdh.StandardBusinessDocumentHeader,
     def __init__(
             self,
             namespace: str = 'sbdh',
-            schema_location: str = 'http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader',
+            schema_location: str = ('http://www.unece.org/cefact/'
+                                    'namespaces/'
+                                    'StandardBusinessDocumentHeader'),
             document_identification: sbdh.DocumentIdentification = None,
             partners: sbdh.PartnerList = None,
             header_version: str = '1.0'
     ):
-
         super().__init__(namespace, schema_location, document_identification,
                          partners, header_version)
         TemplateMixin.__init__(self)
@@ -39,4 +41,3 @@ class StandardBusinessDocumentHeader(sbdh.StandardBusinessDocumentHeader,
     def render(self):
         self._context = {"header": self}
         return super().render()
-

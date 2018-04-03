@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import glob
-import EPCPyYes
 from setuptools import setup
 
 def get_data_files(path):

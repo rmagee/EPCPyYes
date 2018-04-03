@@ -276,21 +276,17 @@ class StandardBusinessDocumentHeader(object):
     def __init__(
             self,
             namespace: str = 'sbdh',
-            schema_location='http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader',
+            schema_location=('http://www.unece.org/cefact/namespaces/'
+                             'StandardBusinessDocumentHeader'),
             document_identification: DocumentIdentification = None,
             partners: PartnerList = None,
             header_version: str = '1.0',
     ):
-        '''
-
-        :param namespace:
-        :param document_identification:
-        :param partners:
-        '''
         self._header_version = header_version
         self._namespace = namespace
         self._schema_location = schema_location
-        self._document_identification = document_identification
+        self._document_identification = \
+            document_identification or DocumentIdentification()
         self._partners = partners
 
     @property
