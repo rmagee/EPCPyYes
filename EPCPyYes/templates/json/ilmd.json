@@ -16,7 +16,7 @@ Copyright 2018 SerialLab Corp.  All rights reserved.
 #}
 "ilmd":[
 {% for attribute in ilmd %}
-{"{{ attribute.name }}":"{{ attribute.value }}"}
+{"{{ attribute.name }}":"{{ attribute.value }}"}{{"," if not loop.last}}
 {% endfor %}
 ]
 

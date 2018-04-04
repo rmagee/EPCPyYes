@@ -17,12 +17,38 @@ This module just overrides the constructors of the template_events
 EPCIS classes in order to specify JSON templates instead of the
 EPCIS XML templates in the template_events module.
 '''
+import json
 from datetime import datetime
 from EPCPyYes.core.v1_2 import template_events
 from EPCPyYes.core.v1_2.events import Action, ErrorDeclaration
 
 
-class ObjectEvent(template_events.ObjectEvent):
+class JSONFormatMixin:
+    '''
+    Provides formatting options for JSON output such as compression (stripping
+    of white space) and pretty printing. Must be used on a class that already
+    utilizes the `template_events.TemplateMixin`.
+    '''
+
+    def render_pretty(self, indent=4, sort_keys=False):
+        '''
+        Pretty prints the JSON output.
+        :param indent: Default of 4.
+        :param sort_keys: Default of False.
+        :return: A formatted JSON string indented and (potentially) sorted.
+        '''
+        return json.dumps(json.loads(self.render()), indent=indent,
+                          sort_keys=sort_keys)
+
+    def render_compressed(self):
+        '''
+        Will strip all white space from the template output.
+        :return: A JSON string with no whitespace.
+        '''
+        return json.dumps(json.loads(self.render()))
+
+
+class ObjectEvent(template_events.ObjectEvent, JSONFormatMixin):
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
                  event_timezone_offset: str = '+00:00',
                  record_time: datetime = None, action: str = Action.add.value,
@@ -40,7 +66,7 @@ class ObjectEvent(template_events.ObjectEvent):
         self.template = self._env.get_template("json/object_event.json")
 
 
-class AggregationEvent(template_events.AggregationEvent):
+class AggregationEvent(template_events.AggregationEvent, JSONFormatMixin):
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
                  event_timezone_offset: str = '+00:00',
                  record_time: datetime = None, action: str = Action.add.value,
@@ -58,7 +84,7 @@ class AggregationEvent(template_events.AggregationEvent):
         self.template = self._env.get_template("json/aggregation_event.json")
 
 
-class TransactionEvent(template_events.TransactionEvent):
+class TransactionEvent(template_events.TransactionEvent, JSONFormatMixin):
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
                  event_timezone_offset: str = '+00:00',
                  record_time: datetime = None, action: str = Action.add.value,
@@ -77,7 +103,8 @@ class TransactionEvent(template_events.TransactionEvent):
         self.template = self._env.get_template("json/transaction_event.json")
 
 
-class TransformationEvent(template_events.TransformationEvent):
+class TransformationEvent(template_events.TransformationEvent,
+                          JSONFormatMixin):
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
                  event_timezone_offset: str = '+00:00',
                  record_time: datetime = None, event_id: str = None,
