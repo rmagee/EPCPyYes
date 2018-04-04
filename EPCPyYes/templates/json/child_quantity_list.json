@@ -1,0 +1,10 @@
+"childQuantityList":[
+{% for quantity_element in event.child_quantity_list %}
+{
+"epcClass":"{{quantity_element.epc_class}}",
+"quantity":"{{ quantity_element.quantity }}"{{"," if quantity_element.uom}}
+{% if quantity_element.uom %}"uom":"{{ quantity_element.uom }}"{% endif %}
+}{{"," if not loop.last}}
+{% endfor %}
+]
+

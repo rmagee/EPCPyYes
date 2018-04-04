@@ -1,0 +1,8 @@
+"eventTime":"{{ event.event_time }}",
+{% if event.record_time %}
+"recordTime":"{{ event.record_time }}",
+{% endif %}
+{% if event.event_timezone_offset %}
+"eventTimeZoneOffset":"{{ event.event_timezone_offset }}",
+{% endif %}
+

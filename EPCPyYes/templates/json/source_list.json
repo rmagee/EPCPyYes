@@ -1,0 +1,12 @@
+"sourceList":[
+{% for source in source_list %}
+{
+"type":"{{ source.type }}",
+"source:":"{{ source.source }}"
+}{{"," if not loop.last}}
+{% endfor %}
+]
+
+
+
+

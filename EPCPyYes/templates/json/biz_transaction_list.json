@@ -1,0 +1,5 @@
+"bizTransactionList":[
+{% for bt in business_transaction_list %}
+{"{{ bt.type.value or bt.type }}":"{{ bt.biz_transaction }}"}{{"," if not loop.last}}
+{% endfor %}
+]

@@ -1,0 +1,16 @@
+"AggregationEvent":{
+{% include "json/event_times.json" %}
+{% include "json/base_extension.json" %}
+{% if event.parent_id %}
+"parentID":"{{ event.parent_id }}",
+{% endif %}
+{% if event.child_epcs %}
+"childEPCs":[
+{% for epc in event.child_epcs %}
+"{{ epc }}"{{ "," if not loop.last }}
+{% endfor %}
+]
+{% endif %}
+{% include "json/business_data.json" %}
+{% include "json/extension.json" %}
+}

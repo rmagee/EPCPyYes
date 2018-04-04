@@ -1,0 +1,21 @@
+,
+{% if event.action %}
+"action":"{{ event.action.value or event.action }}"{{"," if event.biz_step or event.disposition or event.read_point or event.biz_location or event.business_transaction_list }}
+{% endif %}
+{% if event.biz_step %}
+"bizStep":"{{ event.biz_step }}"{{"," if event.disposition or event.read_point or event.biz_location or event.business_transaction_list }}
+{% endif %}
+{% if event.disposition %}
+"disposition":"{{ event.disposition }}"{{"," if event.read_point or event.biz_location or event.business_transaction_list }}
+{% endif %}
+{% if event.read_point %}
+"readPoint":"{{ event.read_point }}"{{"," if event.biz_location or event.business_transaction_list }}
+{% endif %}
+{% if event.biz_location %}
+"bizLocation":"{{ event.biz_location }}"{{"," if event.business_transaction_list }}
+{% endif %}
+{% if event.business_transaction_list %}
+    {% with business_transaction_list = event.business_transaction_list %}
+        {% include "json/biz_transaction_list.json" %}
+    {% endwith %}
+{% endif %}

@@ -1,0 +1,9 @@
+"destinationList":[
+{% for destination in destination_list %}
+{
+"type":"{{ destination.type }}",
+"source:":"{{ destination.destination }}"
+}{{"," if not loop.last}}
+{% endfor %}
+]
+
