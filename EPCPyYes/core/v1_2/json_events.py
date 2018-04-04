@@ -21,7 +21,7 @@ import json
 from datetime import datetime
 from EPCPyYes.core.v1_2 import template_events
 from EPCPyYes.core.v1_2.events import Action, ErrorDeclaration
-
+from EPCPyYes.core.SBDH import sbdh
 
 class JSONFormatMixin:
     '''
@@ -123,3 +123,16 @@ class TransformationEvent(template_events.TransformationEvent,
                          destination_list, ilmd, error_declaration)
         self.template = self._env.get_template(
             "json/transformation_event.json")
+
+
+class EPCISDocument(template_events.EPCISDocument, JSONFormatMixin):
+    def __init__(self, header: sbdh = None, object_events: list = [],
+                 aggregation_events: list = [], transaction_events: list = [],
+                 transformation_events: list = [],
+                 render_xml_declaration: bool = False,
+                 created_date: datetime = datetime.utcnow(),
+                 template: str = 'json/epcis_document.json'):
+        super().__init__(header, object_events, aggregation_events,
+                         transaction_events, transformation_events,
+                         render_xml_declaration, created_date, template)
+        self.template = self._env.get_template(template)

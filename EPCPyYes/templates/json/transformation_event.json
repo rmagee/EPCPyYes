@@ -1,0 +1,59 @@
+{"TransformationEvent": {
+    {% include "json/base_extension.json" %}
+{% if event.input_epc_list %}
+"inputEPCList":
+[{% for epc in event.input_epc_list %}
+"{{ epc }}"{{"," if not loop.last }}
+{% endfor %}
+],
+{% endif %}
+{% if event.inputQuantityList|length > 0 %}
+"inputQuantityList":[
+{% for quantity_element in event.input_quantity_list %}
+{
+"epcClass":"{{quantity_element.epc_class}}",
+"quantity":"{{ quantity_element.quantity }}"{{"," if quantity_element.uom }}
+{% if quantity_element.uom %}"uom":"{{ quantity_element.uom }}"{% endif %}
+}{{"," if not loop.last}}
+{% endfor %}
+]
+{% endif %}
+{% if event.output_epc_list %}
+"outputEPCList":
+[{% for epc in event.output_epc_list %}
+"{{ epc }}"{{"," if not loop.last }}
+{% endfor %}
+]{{"," if not event.biz_step or not event.disposition or not event.read_point or not event.biz_location or not event.business_transaction_list }}
+{% endif %}
+{% if event.outputQuantityList|length > 0 %}
+"outputQuantityList":[
+{% for quantity_element in event.output_quantity_list %}
+{
+"epcClass":"{{quantity_element.epc_class}}",
+"quantity":"{{ quantity_element.quantity }}"{{"," if quantity_element.uom }}
+{% if quantity_element.uom %}"uom":"{{ quantity_element.uom }}"{% endif %}
+}{{"," if not loop.last}}
+{% endfor %}
+]
+{% endif %}
+{% include "json/business_data.json" %}
+{% if event.source_list %}
+{% with source_list = event.source_list %}
+{% include "json/source_list.json" %},
+{% endwith %}
+{% endif %}
+{% if event.destination_list %}
+{% with destination_list = event.destination_list %}
+{% include "json/destination_list.json" %},
+{% endwith %}
+{% endif %}
+{% if event.ilmd %}
+{% with ilmd = event.ilmd %}
+{% include "json/ilmd.json" %},
+{% endwith %}
+{% endif %}
+{% if event.transformationID %}
+"transformationID":"{{ event.transformationID }}"
+{% endif %}
+{% include "json/event_times.json" %}
+}}

@@ -1,21 +1,21 @@
-,
+{{"," if event.action or event.biz_step or event.disposition or event.read_point or event.biz_location or event.business_transaction_list }}
 {% if event.action %}
-"action":"{{ event.action.value or event.action }}"{{"," if event.biz_step or event.disposition or event.read_point or event.biz_location or event.business_transaction_list }}
+"action":"{{ event.action.value or event.action }}",
 {% endif %}
 {% if event.biz_step %}
-"bizStep":"{{ event.biz_step }}"{{"," if event.disposition or event.read_point or event.biz_location or event.business_transaction_list }}
+"bizStep":"{{ event.biz_step }}",
 {% endif %}
 {% if event.disposition %}
-"disposition":"{{ event.disposition }}"{{"," if event.read_point or event.biz_location or event.business_transaction_list }}
+"disposition":"{{ event.disposition }}",
 {% endif %}
 {% if event.read_point %}
-"readPoint":"{{ event.read_point }}"{{"," if event.biz_location or event.business_transaction_list }}
+"readPoint":"{{ event.read_point }}",
 {% endif %}
 {% if event.biz_location %}
-"bizLocation":"{{ event.biz_location }}"{{"," if event.business_transaction_list }}
+"bizLocation":"{{ event.biz_location }}",
 {% endif %}
 {% if event.business_transaction_list %}
     {% with business_transaction_list = event.business_transaction_list %}
-        {% include "json/biz_transaction_list.json" %}
+        {% include "json/biz_transaction_list.json" %}{{ "," if event.source_list or event.destination_list or event.ilmd or event.transformationID }}
     {% endwith %}
 {% endif %}

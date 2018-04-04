@@ -1,5 +1,4 @@
 {"ObjectEvent":{
-{% include "json/event_times.json" %}
 {% include "json/base_extension.json" %}
 {% if event.epc_list %}
 "EPCList":[
@@ -10,4 +9,5 @@
 {% endif %}
 {% include "json/business_data.json" %}
 {% include "json/extension.json" %}
+{% include "json/event_times.json" %}
 }}
