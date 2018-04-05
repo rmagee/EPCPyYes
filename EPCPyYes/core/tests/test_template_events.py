@@ -288,7 +288,9 @@ class CoreEventTests(unittest.TestCase):
             transformation_events=[txe]
         )
         print(epcis_document.render())
+        print(epcis_document.render_json())
         validate_epcis_doc(epcis_document.render().encode('utf-8'))
+        return epcis_document
 
     def test_transformation_doc(self):
         txe = self.create_transformation_event()

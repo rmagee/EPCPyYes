@@ -41,3 +41,6 @@ class Disposition(Enum):
     sellable_not_accessible = 'urn:epcglobal:cbv:disp:sellable_not_accessible'
     stolen = 'urn:epcglobal:cbv:disp:stolen'
     unknown = 'urn:epcglobal:cbv:disp:unknown'
+
+    def __str__(self):
+        return self.value

@@ -29,3 +29,6 @@ class BusinessTransactionType(Enum):
     Production_Order = 'urn:epcglobal:cbv:btt:prodorder'
     Receiving_Advice = 'urn:epcglobal:cbv:btt:recadv'
     Return_Merchandise_Authorization = 'urn:epcglobal:cbv:btt:rma'
+
+    def __str__(self):
+        return self.value

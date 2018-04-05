@@ -57,3 +57,6 @@ class BusinessSteps(Enum):
     unloading = 'urn:epcglobal:cbv:bizstep:unloading'
     unpacking = 'urn:epcglobal:cbv:bizstep:unpacking'
     void_shipping = 'urn:epcglobal:cbv:bizstep:void_shipping'
+
+    def __str__(self):
+        return self.value

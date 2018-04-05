@@ -58,7 +58,8 @@ class Action(Enum):
     '''
     The entity in question has been removed from or destroyed altogether.
     '''
-
+    def __str__(self):
+        return self.value
 
 class BusinessTransaction(object):
     '''

@@ -26,7 +26,8 @@ from EPCPyYes.core.v1_2.events import Action, ErrorDeclaration
 from EPCPyYes.core.v1_2.CBV.instance_lot_master_data import \
     InstanceLotMasterDataAttribute
 from EPCPyYes.core.SBDH.sbdh import StandardBusinessDocumentHeader as sbdh
-
+from EPCPyYes.core.v1_2.json_encoders import JSONFormatMixin
+from EPCPyYes.core.v1_2 import json_encoders
 from jinja2 import Environment, PackageLoader
 
 
@@ -42,7 +43,7 @@ def _load_default_environment():
                        lstrip_blocks=True)
 
 
-class TemplateMixin(object):
+class TemplateMixin(JSONFormatMixin):
     '''
     Mixin class to add template support for serializing EPCIS classes to
     text using jinja templates.
@@ -135,6 +136,7 @@ class ObjectEvent(events.ObjectEvent, TemplateMixin):
                          business_transaction_list, ilmd, quantity_list)
         TemplateMixin.__init__(self)
         self.template = self._env.get_template('epcis/object_event.xml')
+        self.encoder = json_encoders.ObjectEventEncoder()
 
     @property
     def namespaces(self):
@@ -214,7 +216,7 @@ class AggregationEvent(events.AggregationEvent, TemplateMixin):
                          destination_list, business_transaction_list)
         TemplateMixin.__init__(self)
         self._template = self._env.get_template('epcis/aggregation_event.xml')
-
+        self.encoder = json_encoders.AggregationEventEncoder()
 
 class TransactionEvent(events.TransactionEvent, TemplateMixin):
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
@@ -235,6 +237,7 @@ class TransactionEvent(events.TransactionEvent, TemplateMixin):
                          business_transaction_list, quantity_list)
         TemplateMixin.__init__(self)
         self.template = 'epcis/transaction_event.xml'
+        self.encoder = json_encoders.TransactionEventEncoder()
 
 
 class TransformationEvent(events.TransformationEvent, TemplateMixin):
@@ -257,7 +260,7 @@ class TransformationEvent(events.TransformationEvent, TemplateMixin):
                          destination_list, ilmd, error_declaration)
         TemplateMixin.__init__(self)
         self.template = 'epcis/transformation_event.xml'
-
+        self.encoder = json_encoders.TransformationEventEncoder()
 
 class EPCISDocument(events.EPCISDocument, TemplateMixin):
     def __init__(self,
@@ -274,6 +277,7 @@ class EPCISDocument(events.EPCISDocument, TemplateMixin):
                          created_date)
         TemplateMixin.__init__(self)
         self._template = self._env.get_template(template)
+        self.encoder = json_encoders.EPCISDocumentEncoder()
 
     def render(self, render_namespaces=False, render_xml_declaration=False):
         context = {'header': self.header,
@@ -285,4 +289,4 @@ class EPCISDocument(events.EPCISDocument, TemplateMixin):
                    'render_xml_declaration': self.render_xml_declaration,
                    }
         return self._template.render(**context)
-        # TODO: add namespace support
+

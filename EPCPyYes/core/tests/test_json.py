@@ -14,18 +14,18 @@
 # Copyright 2018 SerialLab Corp.  All rights reserved.
 
 import uuid
-import json
-from EPCPyYes.core.v1_2 import json_events
+from EPCPyYes.core.v1_2 import template_events as json_events
 from EPCPyYes.core.tests.test_template_events import CoreEventTests
 from EPCPyYes.core.v1_2.helpers import get_current_utc_time_and_offset, \
     gtin_to_urn
 from EPCPyYes.core.v1_2.CBV.instance_lot_master_data import \
     InstanceLotMasterDataAttribute, \
     LotLevelAttributeName, ItemLevelAttributeName
-from EPCPyYes.core.v1_2.events import Action, QuantityElement
+from EPCPyYes.core.v1_2.events import Action, QuantityElement, EPCISDocument
 from EPCPyYes.core.v1_2.CBV.business_steps import BusinessSteps
 from EPCPyYes.core.v1_2.CBV.dispositions import Disposition
 from EPCPyYes.core.v1_2.CBV import helpers
+from EPCPyYes.core.v1_2 import json_encoders
 
 
 class JSONTestCase(CoreEventTests):
@@ -45,15 +45,16 @@ class JSONTestCase(CoreEventTests):
         epcs = self.create_epcs(1000, 1010)
         transaction_event = self.create_transaction_json_event(epcs, parent_id)
         txe = self.create_transformation_event()
-        #header = self.create_sbdh() # TODO add the header back in
-        epcis_document = json_events.EPCISDocument(
-            header=None,
+        header = self.create_sbdh()
+        epcis_document = EPCISDocument(
+            header=header,
             object_events=object_events,
             aggregation_events=[ag1, ag2],
             transaction_events=[transaction_event],
             transformation_events=[txe]
         )
-        print(epcis_document.render_pretty())
+        encoder = json_encoders.EPCISDocumentEncoder()
+        print(encoder.encode(epcis_document))
 
     def test_epcis_base_template_2(self):
         oe1 = self.create_object_event_json_template()
@@ -78,7 +79,7 @@ class JSONTestCase(CoreEventTests):
             transaction_events=[],
             transformation_events=[]
         )
-        print(epcis_document.render_pretty())
+        print(epcis_document.render_pretty_json())
         epcis_document = json_events.EPCISDocument(
             header=None,
             object_events=[],
@@ -86,7 +87,7 @@ class JSONTestCase(CoreEventTests):
             transaction_events=None,
             transformation_events=[txe]
         )
-        print(epcis_document.render_pretty())
+        print(epcis_document.render_pretty_json())
 
     def test_json_agg_event(self):
         '''
@@ -97,7 +98,9 @@ class JSONTestCase(CoreEventTests):
         parent_id = gtin_to_urn('305555', '1', '555551', 1000)
         # get the current time and tz
         ae = self.create_aggregation_event(epcs, parent_id)
-        print(ae.render_pretty())
+        encoder = json_encoders.AggregationEventEncoder()
+        print(encoder.encode(ae))
+        print(ae.render_pretty_json())
 
     def test_json_object_event(self):
         '''
@@ -105,11 +108,15 @@ class JSONTestCase(CoreEventTests):
         of an EPCIS Object Event
         '''
         oe = self.create_object_event_json_template()
-        print(oe.render_pretty())
+        print(oe.render_pretty_json())
+        encoder = json_encoders.ObjectEventEncoder()
+        print(encoder.encode(oe))
 
     def test_json_transformation_event(self):
         xe = self.create_transformation_event()
-        print(xe.render_pretty())
+        encoder = json_encoders.TransformationEventEncoder()
+        print(encoder.encode(xe))
+
 
     def test_permutated_object_event_data(self):
         '''
@@ -123,18 +130,18 @@ class JSONTestCase(CoreEventTests):
         ae = self.create_object_event_json_template()
         ae.biz_step = None
         ae.destination_list = None
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
         ae = self.create_object_event_json_template()
         ae.child_quantity_list = None
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
         ae = self.create_object_event_json_template()
         ae.record_time = None
         ae.event_timezone_offset = None
         ae.disposition = None
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
         ae = self.create_object_event_json_template()
         ae.ilmd = None
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
 
     def test_permutated_event_data(self):
         '''
@@ -148,20 +155,20 @@ class JSONTestCase(CoreEventTests):
         ae = self.create_aggregation_event(epcs, parent_id)
         ae.biz_step = None
         ae.destination_list = None
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
         ae = self.create_aggregation_event(epcs, parent_id)
         ae.child_quantity_list = None
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
         ae = self.create_aggregation_event(epcs, parent_id)
         ae.record_time = None
         ae.event_timezone_offset = None
         ae.disposition = None
         print(ae.render())
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
         ae = self.create_aggregation_event(epcs, parent_id)
         ae.business_transaction_list = None
         print(ae.render())
-        print(ae.render_pretty())
+        print(ae.render_pretty_json())
 
     def create_aggregation_event(self, epcs, parent_id):
         business_transaction_list = self.create_business_transaction_list()
@@ -184,7 +191,9 @@ class JSONTestCase(CoreEventTests):
             destination_list=destination_list,
             child_quantity_list=child_quantity_list,
             error_declaration=error_declaration,
-            event_id=event_id
+            event_id=event_id,
+            disposition=Disposition.container_closed.value,
+            biz_step=BusinessSteps.packing.value
         )
         return ae
 
@@ -193,7 +202,7 @@ class JSONTestCase(CoreEventTests):
         parent_id = gtin_to_urn('305555', '1', '555551', 1000)
         te = self.create_transaction_json_event(epcs, parent_id)
         # render the event using it's default template
-        data = te.render_pretty()
+        data = te.render_pretty_json()
         print(data)
         # make sure the data we want is there
         self.assertTrue('+00:00' in data)
@@ -211,7 +220,7 @@ class JSONTestCase(CoreEventTests):
                       'Disposition not present')
 
     def create_object_event_json_template(self):
-        epcs = self.create_epcs()
+        epcs = list(self.create_epcs(start=1, end=10))
         # get the current time and tz
         now, tzoffset = get_current_utc_time_and_offset()
         business_transaction_list = self.create_business_transaction_list()
@@ -233,12 +242,23 @@ class JSONTestCase(CoreEventTests):
         oe.clean()
         return oe
 
+    def test_create_json_sbdh(self):
+        sbdh = self.create_sbdh()
+        sbdh_encoder = json_encoders.StandardBusinessDocumentHeaderEncoder()
+        print(sbdh_encoder.encode(sbdh))
+
     def create_json_object_event(self, biz_location, business_transaction_list,
                             destination_list, epcs, now, read_point,
                             source_list, tzoffset, action=None, ilmd=None):
         # create the event
         event_id = str(uuid.uuid4())
         error_declaration = self.create_error_declaration()
+        trade_item = helpers.make_trade_item_master_data_urn('305555', '0',
+                                                             '555551')
+        quantity_list = [
+            QuantityElement(epc_class=trade_item, quantity=100),
+            QuantityElement(epc_class=trade_item, quantity=94.3,
+                            uom='LB')]
         oe = json_events.ObjectEvent(now, tzoffset,
                          record_time=now,
                          action=action,
@@ -251,7 +271,7 @@ class JSONTestCase(CoreEventTests):
                          source_list=source_list,
                          destination_list=destination_list,
                          ilmd=ilmd, error_declaration=error_declaration,
-                         event_id=event_id)
+                         event_id=event_id, quantity_list=quantity_list)
         return oe
 
     def create_transaction_json_event(self, epcs, parent_id):
