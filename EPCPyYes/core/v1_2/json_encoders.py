@@ -34,8 +34,8 @@ from EPCPyYes.core.SBDH import sbdh
 
 QList = List[events.QuantityElement]
 
-
 import json
+
 
 class JSONFormatMixin:
     '''
@@ -51,7 +51,7 @@ class JSONFormatMixin:
         :param sort_keys: Default of False.
         :return: A formatted JSON string indented and (potentially) sorted.
         '''
-        return json.dumps(self.encoder.encode(self), indent=indent,
+        return json.dumps(self.encoder.default(self), indent=indent,
                           sort_keys=sort_keys)
 
     def render_json(self):
@@ -60,6 +60,7 @@ class JSONFormatMixin:
         :return: A JSON string with no whitespace.
         '''
         return self.encoder.encode(self)
+
 
 class SourceListJSONEncoder(JSONEncoder):
     def default(self, o):
@@ -81,24 +82,45 @@ class QuantityMixin:
 
 
 class ErrorDeclarationMixin:
+    '''
+    Handles encoding the error declarations for encoders that require this.
+    '''
+
     def get_error_declaration(self,
                               error_declaration: events.ErrorDeclaration):
-        return {
-            "declarationTime": error_declaration.declaration_time,
-            "reason": error_declaration.reason,
-            "correctiveEventIDs": [id for id in
-                                   error_declaration.corrective_event_ids]
-        }
+        if error_declaration:
+            return {
+                "declarationTime": error_declaration.declaration_time,
+                "reason": error_declaration.reason,
+                "correctiveEventIDs": [id for id in
+                                       error_declaration.corrective_event_ids]
+            }
 
 
 class ListMixin:
+    '''
+    Handles the source destination BT and ILMD lists for encoders that
+    require these.
+    '''
+
     def get_source_list(self, o):
+        '''
+        Return the encoded list if it is not none or an empty dictionary.
+        :param o:
+        :return: A dictionary of source values.
+        '''
         if o.source_list:
             ret = {item.type: item.source for item in o.source_list}
         else:
             ret = {}
+        return ret
 
     def get_destination_list(self, o):
+        '''
+        Return the encoded list if it is not none or an empty dictionary.
+        :param o:
+        :return: A dictionary of destination values.
+        '''
         if o.destination_list:
             ret = {item.type: item.destination for item in o.destination_list}
         else:
@@ -106,6 +128,11 @@ class ListMixin:
         return ret
 
     def get_business_transaction_list(self, o):
+        '''
+        Return the encoded list if it is not none or an empty dictionary.
+        :param o:
+        :return: A dictionary of BT values.
+        '''
         if o.business_transaction_list:
             ret = {str(bt.biz_transaction): str(bt.type) for bt in
                    o.business_transaction_list}
@@ -114,6 +141,11 @@ class ListMixin:
         return ret
 
     def get_ilmd_list(self, o):
+        '''
+        Return the encoded list if it is not none or an empty dictionary.
+        :param o:
+        :return: A dictionary of ILMD values.
+        '''
         if o.ilmd:
             ret = {str(item.name): item.value for item in o.ilmd}
         else:
@@ -123,6 +155,11 @@ class ListMixin:
 
 class EPCISEventEncoder(JSONEncoder, ErrorDeclarationMixin,
                         QuantityMixin):
+    '''
+    All EPCIS classes share these common elements.  This is the base
+    encoder.
+    '''
+
     def default(self, o: events.EPCISEvent):
         ret = {
             'eventID': o.event_id or uuid.uuid4().hex,
@@ -136,6 +173,11 @@ class EPCISEventEncoder(JSONEncoder, ErrorDeclarationMixin,
 
 
 class EPCISBusinessEventEncoder(EPCISEventEncoder, ListMixin):
+    '''
+    These elements are shared by the object, aggregation and transaction
+    event classes- this is the base for those.
+    '''
+
     def default(self, o):
         if isinstance(o, events.EPCISBusinessEvent):
             ret = super(EPCISBusinessEventEncoder, self).default(o)
@@ -157,6 +199,11 @@ class EPCISBusinessEventEncoder(EPCISEventEncoder, ListMixin):
 
 
 class ObjectEventEncoder(EPCISBusinessEventEncoder, ListMixin):
+    '''
+    Encodes an `EPCPyYes.core.v1_2.template_events.ObjectEvent` to
+    JSON.
+    '''
+
     def default(self, o):
         if isinstance(o, events.ObjectEvent):
             ret = super(ObjectEventEncoder,
@@ -172,6 +219,11 @@ class ObjectEventEncoder(EPCISBusinessEventEncoder, ListMixin):
 
 
 class AggregationEventEncoder(EPCISBusinessEventEncoder):
+    '''
+    Encodes an `EPCPyYes.core.v1_2.template_events.AggregationEvent` to
+    JSON.
+    '''
+
     def default(self, o: events.AggregationEvent):
         ret = super().default(o)
         ret.update(
@@ -186,6 +238,11 @@ class AggregationEventEncoder(EPCISBusinessEventEncoder):
 
 
 class TransactionEventEncoder(EPCISBusinessEventEncoder):
+    '''
+    Encodes an `EPCPyYes.core.v1_2.template_events.TransactionEvent` to
+    JSON.
+    '''
+
     def default(self, o: events.TransactionEvent):
         ret = super().default(o)
         ret.update(
@@ -199,6 +256,11 @@ class TransactionEventEncoder(EPCISBusinessEventEncoder):
 
 
 class TransformationEventEncoder(EPCISEventEncoder, ListMixin):
+    '''
+    Encodes an `EPCPyYes.core.v1_2.template_events.TransformationEvent` to
+    JSON.  This class can not inherit from the business base class due
+    to its radically different structure and general purpose.
+    '''
 
     def default(self, o: events.TransformationEvent):
         ret = super(TransformationEventEncoder, self).default(o)
@@ -226,12 +288,18 @@ class TransformationEventEncoder(EPCISEventEncoder, ListMixin):
 
 
 class PartnerIdentificationEncoder(JSONEncoder):
+    '''
+    PartnerID encoder for the SBDH header.
+    '''
 
     def default(self, o: sbdh.PartnerIdentification):
-        ret = {
-            "authority": o.authority,
-            "value": o.value
-        }
+        if o:
+            ret = {
+                "authority": o.authority,
+                "value": o.value
+            }
+        else:
+            ret = {}
         return ret
 
 
@@ -252,13 +320,20 @@ class PartnerEncoder(JSONEncoder):
 
 class DocumentIdentificationEncoder(JSONEncoder):
     def default(self, o: sbdh.DocumentIdentification):
+        if o.creation_date_and_time:
+            creation_date_and_time = o.creation_date_and_time if \
+                isinstance(o.creation_date_and_time, str) \
+                else o.creation_date_and_time.isoformat()
+        else:
+            creation_date_and_time = None
         ret = {
             "standard": o.standard,
             "typeVersion": o.type_version,
             "instanceIdentifier": o.instance_identifier,
             "documentType": str(o.document_type),
-            "mutlipleType": str(o.multiple_type).lower(),
-            "creationDateAndTime": o.creation_date_and_time
+            "mutlipleType": str(
+                o.multiple_type).lower() if o.multiple_type else None,
+            "creationDateAndTime": creation_date_and_time
         }
         return ret
 
@@ -278,6 +353,12 @@ class StandardBusinessDocumentHeaderEncoder(JSONEncoder):
 
 class EPCISDocumentEncoder(JSONEncoder):
     def default(self, o: events.EPCISDocument):
+        if o.created_date:
+            created_date = o.created_date if \
+                isinstance(o.created_date, str) \
+                else o.created_date.isoformat()
+        else:
+            created_date = None
         sbdh = StandardBusinessDocumentHeaderEncoder()
         obj = ObjectEventEncoder()
         agg = AggregationEventEncoder()
@@ -291,9 +372,7 @@ class EPCISDocumentEncoder(JSONEncoder):
                         self.list_events(o.transaction_events, xact) + \
                         self.list_events(o.transformation_events, trans)
 
-        ret["createdData"] = o.created_date if \
-            isinstance(o.created_date, str) \
-            else o.created_date.isoformat()
+        ret["createdDate"] = created_date
         return ret
 
     def list_events(self, event_list, encoder):

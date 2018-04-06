@@ -11,3 +11,7 @@ History
 ------------------
 
 PyPI release candidate.
+
+1.1.0
+-------------------
+Added JSON output support.
