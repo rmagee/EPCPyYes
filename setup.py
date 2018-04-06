@@ -39,7 +39,6 @@ setup(
     maintainer="SerialLab Corp",
     author="Rob Magee",
     author_email='slab@serial-lab.com',
-    maintainer='SerialLab Corp',
     url='https://gitlab.com/serial-lab/EPCPyYes',
     packages=[
         'EPCPyYes', 'EPCPyYes.core', 'EPCPyYes.core.v1_2',
