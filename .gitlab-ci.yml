@@ -41,7 +41,6 @@ pages:
     - pip install sphinx recommonmark sphinx_rtd_theme pygments ipython
     - make html --directory=docs/api
     - mv docs/api/_build/html/ public/
-    - mv EPCPyYes/core/tests/htmlcov/* public/coverage/
     artifacts:
         paths:
         - public
