@@ -4,6 +4,7 @@
 import glob
 from setuptools import setup
 
+
 def get_data_files(path):
     data_files = []
     directories = glob.glob(path)
@@ -31,10 +32,11 @@ test_requirements = requirements + [
 
 setup(
     name='EPCPyYes',
-    version='1.0.14',
+    version='1.1.0',
     description="EPCIS Python module for quickly developing "
                 "EPCIS-enabled applications.",
-    long_description=readme,
+    long_description=readme + '\n\n' + history,
+    maintainer="SerialLab Corp",
     author="Rob Magee",
     author_email='slab@serial-lab.com',
     maintainer='SerialLab Corp',
@@ -43,8 +45,7 @@ setup(
         'EPCPyYes', 'EPCPyYes.core', 'EPCPyYes.core.v1_2',
         'EPCPyYes.core.v1_2.CBV', 'EPCPyYes.core.tests'
     ],
-    package_dir={'EPCPyYes':
-                     'EPCPyYes'},
+    package_dir={'EPCPyYes':'EPCPyYes'},
     entry_points={
     },
     data_files=get_data_files('EPCPyYes/templates/epcis/') + \

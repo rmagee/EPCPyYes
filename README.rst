@@ -29,6 +29,29 @@ purpose of this library is to allow developers to quickly build systems that
 parse, generate and store EPCIS data quickly and efficiently with a clear
 and straight-forward pythonic API.
 
+# Python to EPCIS XML or JSON
+Work with python classes that take the pain out of knowing the EPCIS protocol.
+Each class in the EPCPyYes package can be directly manipulated in python and 
+then quickly rendered to EPCIS 1.2 compliant XML or JSON for any number
+of purposes.  For example:
+
+    # for example, create an ObjectEvent
+    oe = ObjectEvent(now, tzoffset,
+                     record_time=now,
+                     action=Action.add.value,
+                     epc_list=epcs,
+                     biz_step=BusinessSteps.commissioning.value,
+                     disposition=Disposition.encoded.value)
+    
+    # Create EPCIS 1.2 compliant XML
+    print(oe.render())
+    
+    # Render as JSON
+    print(oe.render_json())
+    
+    # Render as pretty printed JSON
+    print(oe.render_pretty_json()
+
 
 Fully Tested
 ------------

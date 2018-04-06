@@ -27,6 +27,8 @@ class PartnerType(enum.Enum):
     SENDER = 'Sender'
     RECEIVER = 'Receiver'
 
+    def __str__(self):
+        return self.value
 
 class PartnerIdentification(object):
     '''
@@ -164,6 +166,8 @@ class DocumentType(enum.Enum):
     QUERYCALLBACK = 'QueryCallBack'
     QUERY = 'Query'
 
+    def __str__(self):
+        return self.value
 
 class DocumentIdentification(object):
     '''
