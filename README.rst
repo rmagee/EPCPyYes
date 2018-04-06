@@ -35,6 +35,8 @@ Each class in the EPCPyYes package can be directly manipulated in python and
 then quickly rendered to EPCIS 1.2 compliant XML or JSON for any number
 of purposes.  For example:
 
+.. code-block:: text
+
     # for example, create an ObjectEvent
     oe = ObjectEvent(now, tzoffset,
                      record_time=now,
