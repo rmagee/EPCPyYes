@@ -26,28 +26,35 @@ Defined in section 10 of the CBV standard.
 
 from enum import Enum
 
-class LocationPartyMasterDataAttributes(Enum):
+
+class LocationEnum(Enum):
+    def __str__(self):
+        return self.value
+
+
+class LocationPartyMasterDataAttributes(LocationEnum):
     '''
-    As defined in section 10.2
+     As defined in section 10.2
     '''
     site = 'urn:epcglobal:cbv:mda:site'
     sst = 'urn:epcglobal:cbv:mda:sst'
     ssa = 'urn:epcglobal:cbv:mda:ssa'
     ssd = 'urn:epcglobal:cbv:mda:ssd'
-    name = 'urn:epcglobal:cbv:mda#name '
+    name = 'urn:epcglobal:cbv:mda#name'
     streetAddressOne = 'urn:epcglobal:cbv:mda#streetAddressOne'
     streetAddressTwo = 'urn:epcglobal:cbv:mda#streetAddressTwo'
     streetAddressThree = 'urn:epcglobal:cbv:mda#streetAddressThree'
-    city = 'urn:epcglobal:cbv:mda#city '
-    state = 'urn:epcglobal:cbv:mda#state '
-    postalCode = 'urn:epcglobal:cbv:mda#postalCode '
-    countryCode = 'urn:epcglobal:cbv:mda#countryCode '
-    latitude = 'urn:epcglobal:cbv:mda#latitude '
-    longitude = 'urn:epcglobal:cbv:mda#longitude '
+    city = 'urn:epcglobal:cbv:mda#city'
+    state = 'urn:epcglobal:cbv:mda#state'
+    postalCode = 'urn:epcglobal:cbv:mda#postalCode'
+    countryCode = 'urn:epcglobal:cbv:mda#countryCode'
+    latitude = 'urn:epcglobal:cbv:mda#latitude'
+    longitude = 'urn:epcglobal:cbv:mda#longitude'
 
-class SubSiteTypeMmasterDataAttribute(Enum):
+
+class SubSiteTypeMmasterDataAttribute(LocationEnum):
     '''
-    As defined in section 10.3.1
+     As defined in section 10.3.1
     '''
     backroom = '201'
     storage_area = '202'
@@ -66,9 +73,10 @@ class SubSiteTypeMmasterDataAttribute(Enum):
     pharmacy_area = '253'
     undefined = '299'
 
-class SubSiteAttributesMasterDataAttribute(Enum):
+
+class SubSiteAttributesMasterDataAttribute(LocationEnum):
     '''
-    As defined in section 10.3.2
+     As defined in section 10.3.2
     '''
     electronics = '401'
     cold_storage = '402'

@@ -23,3 +23,5 @@ class SourceDestinationTypes(Enum):
     possessing_party =  'urn:epcglobal:cbv:sdt:possessing_party'
     location = 'urn:epcglobal:cbv:sdt:location'
 
+    def __str__(self):
+        return self.value

@@ -85,6 +85,8 @@ class CoreEventTests(unittest.TestCase):
         # get the current time and tz
         ae = self.create_aggregation_event(epcs, parent_id)
         print(ae.render())
+        print(ae.render_json())
+        print(ae.render_pretty_json())
 
     def test_bad_aggregation_event(self):
         '''
@@ -114,6 +116,8 @@ class CoreEventTests(unittest.TestCase):
         '''
         te = self.create_transformation_event()
         print(te.render())
+        print(te.render_json())
+        print(te.render_pretty_json())
 
     def create_aggregation_event(self, epcs, parent_id):
         business_transaction_list = self.create_business_transaction_list()
@@ -222,12 +226,15 @@ class CoreEventTests(unittest.TestCase):
         self.assertEqual(sender.email_address, 'john.smith@pharma.local')
         self.assertEqual(sender.contact_type_identifier, 'Seller')
         print(header.render())
-        return header
+        print(header.render_json())
+        print(header.render_pretty_json())
 
     def test_object_event_template(self):
         oe = self.create_object_event_template()
         # render the event using it's default template
         data = oe.render()
+        print(oe.render_json())
+        print(oe.render_pretty_json())
         print(data)
         # make sure the data we want is there
         self.assertTrue('+00:00' in data)
@@ -248,6 +255,8 @@ class CoreEventTests(unittest.TestCase):
         te = self.create_transaction_event(epcs, parent_id)
         # render the event using it's default template
         data = te.render()
+        print(te.render_json())
+        print(te.render_pretty_json())
         print(data)
         # make sure the data we want is there
         self.assertTrue('+00:00' in data)
@@ -288,7 +297,10 @@ class CoreEventTests(unittest.TestCase):
             transformation_events=[txe]
         )
         print(epcis_document.render())
+        print(epcis_document.render_json())
+        print(epcis_document.render_pretty_json())
         validate_epcis_doc(epcis_document.render().encode('utf-8'))
+        return epcis_document
 
     def test_transformation_doc(self):
         txe = self.create_transformation_event()

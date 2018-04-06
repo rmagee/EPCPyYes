@@ -15,6 +15,7 @@
 
 from EPCPyYes.core.SBDH import sbdh
 from EPCPyYes.core.v1_2.template_events import TemplateMixin
+from EPCPyYes.core.v1_2 import json_encoders
 
 class StandardBusinessDocumentHeader(sbdh.StandardBusinessDocumentHeader,
                                      TemplateMixin):
@@ -35,6 +36,7 @@ class StandardBusinessDocumentHeader(sbdh.StandardBusinessDocumentHeader,
                          partners, header_version)
         TemplateMixin.__init__(self)
         self.template = 'epcis/sbdh.xml'
+        self.encoder = json_encoders.StandardBusinessDocumentHeaderEncoder()
 
     def render(self):
         self._context = {"header": self}

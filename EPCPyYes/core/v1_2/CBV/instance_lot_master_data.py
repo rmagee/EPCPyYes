@@ -30,7 +30,8 @@ _ = gettext.gettext
 
 
 class ILMDAttributeName(Enum):
-    pass
+    def __str__(self):
+        return self.value
 
 
 class TradeItemLevelAttributeName(ILMDAttributeName):

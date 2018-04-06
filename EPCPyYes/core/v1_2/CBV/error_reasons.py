@@ -22,3 +22,6 @@ class ErrorReason(Enum):
     '''
     did_not_occur = 'urn:epcglobal:cbv:er:did_not_occur'
     incorrect_data = 'urn:epcglobal:cbv:er:incorrect_data'
+
+    def __str__(self):
+        return self.value
