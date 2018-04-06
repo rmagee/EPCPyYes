@@ -35,7 +35,7 @@ setup(
     version='1.1.1',
     description="EPCIS Python module for quickly developing "
                 "EPCIS-enabled applications.",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     maintainer="SerialLab Corp",
     author="Rob Magee",
     author_email='slab@serial-lab.com',
