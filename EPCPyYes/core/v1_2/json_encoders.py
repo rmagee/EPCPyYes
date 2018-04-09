@@ -28,6 +28,7 @@
 # Copyright 2015 Rob Magee.  All rights reserved.
 from typing import List
 import uuid
+from datetime import datetime
 from json import JSONEncoder
 from EPCPyYes.core.v1_2 import events
 from EPCPyYes.core.SBDH import sbdh
@@ -62,6 +63,7 @@ class JSONFormatMixin:
         return self.encoder.encode(self)
 
 
+
 class SourceListJSONEncoder(JSONEncoder):
     def default(self, o):
         return {
@@ -79,6 +81,17 @@ class QuantityMixin:
         else:
             ret = {}
         return ret
+
+
+class DateHelperMixin:
+    '''
+    If a datetime object is supplied will convert to iso 8601 string,
+    if not will just use the string
+    '''
+
+    def get_date(self, value):
+        return value.isoformat().replace(' ', 'Z') \
+            if isinstance(value, datetime) else value
 
 
 class ErrorDeclarationMixin:
@@ -154,18 +167,19 @@ class ListMixin:
 
 
 class EPCISEventEncoder(JSONEncoder, ErrorDeclarationMixin,
-                        QuantityMixin):
+                        QuantityMixin, DateHelperMixin):
     '''
     All EPCIS classes share these common elements.  This is the base
     encoder.
     '''
 
     def default(self, o: events.EPCISEvent):
+        record_time = self.get_date(o.record_time) if o.record_time else None
         ret = {
             'eventID': o.event_id or uuid.uuid4().hex,
             'eventTime': o.event_time,
             'eventTimezoneOffset': o.event_timezone_offset,
-            'recordTime': o.record_time,
+            'recordTime': record_time,
             'errorDeclaration': self.get_error_declaration(
                 o.error_declaration),
         }
@@ -191,7 +205,7 @@ class EPCISBusinessEventEncoder(EPCISEventEncoder, ListMixin):
                     'bizLocation': o.biz_location,
                     'sourceList': self.get_source_list(o),
                     'destinationList': self.get_destination_list(o),
-                    'businessTransactionList': \
+                    'bizTransactionList': \
                         self.get_business_transaction_list(o)
                 }
             )
@@ -318,12 +332,10 @@ class PartnerEncoder(JSONEncoder):
         return ret
 
 
-class DocumentIdentificationEncoder(JSONEncoder):
+class DocumentIdentificationEncoder(JSONEncoder, DateHelperMixin):
     def default(self, o: sbdh.DocumentIdentification):
         if o.creation_date_and_time:
-            creation_date_and_time = o.creation_date_and_time if \
-                isinstance(o.creation_date_and_time, str) \
-                else o.creation_date_and_time.isoformat()
+            creation_date_and_time = self.get_date(o.creation_date_and_time)
         else:
             creation_date_and_time = None
         ret = {
@@ -351,12 +363,10 @@ class StandardBusinessDocumentHeaderEncoder(JSONEncoder):
         return ret
 
 
-class EPCISDocumentEncoder(JSONEncoder):
+class EPCISDocumentEncoder(JSONEncoder, DateHelperMixin):
     def default(self, o: events.EPCISDocument):
         if o.created_date:
-            created_date = o.created_date if \
-                isinstance(o.created_date, str) \
-                else o.created_date.isoformat()
+            created_date = self.get_date(o.created_date)
         else:
             created_date = None
         sbdh = StandardBusinessDocumentHeaderEncoder()

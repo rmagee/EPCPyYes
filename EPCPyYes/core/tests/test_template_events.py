@@ -14,6 +14,7 @@
 # Copyright 2018 SerialLab Corp.  All rights reserved.
 
 import unittest
+import json
 import uuid
 import re
 from datetime import datetime
@@ -87,6 +88,8 @@ class CoreEventTests(unittest.TestCase):
         print(ae.render())
         print(ae.render_json())
         print(ae.render_pretty_json())
+        reverse = json.loads(ae.render_json())
+        print(reverse)
 
     def test_bad_aggregation_event(self):
         '''
@@ -140,7 +143,9 @@ class CoreEventTests(unittest.TestCase):
             destination_list=destination_list,
             child_quantity_list=child_quantity_list,
             error_declaration=error_declaration,
-            event_id=event_id
+            event_id=event_id,
+            biz_step=BusinessSteps.packing.value,
+            record_time=datetime.now()
         )
         return ae
 
@@ -390,7 +395,7 @@ class CoreEventTests(unittest.TestCase):
         nums = range(start, end)
         # generate some URNS
         epcs = gtin_urn_generator('305555', '1', '555555', nums)
-        return epcs
+        return list(epcs)
 
     def test_create_illegal_object_event(self):
         # create a range for the number generation

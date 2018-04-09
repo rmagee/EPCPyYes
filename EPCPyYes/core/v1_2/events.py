@@ -58,8 +58,10 @@ class Action(Enum):
     '''
     The entity in question has been removed from or destroyed altogether.
     '''
+
     def __str__(self):
         return self.value
+
 
 class BusinessTransaction(object):
     '''
@@ -211,8 +213,8 @@ class EPCISEvent(object):
     '''
 
     # TODO: add getter setters
-    def __init__(self, event_time: datetime, event_timezone_offset: str,
-                 record_time: datetime = None, event_id: str = None,
+    def __init__(self, event_time: str, event_timezone_offset: str,
+                 record_time: str = None, event_id: str = None,
                  error_declaration: ErrorDeclaration = None):
         '''
         The base EPCIS event class contains common properties shared
@@ -234,17 +236,21 @@ class EPCISEvent(object):
         '''
         self._event_time = event_time or datetime.utcnow().isoformat(sep='T')
         self._event_timezone_offset = event_timezone_offset or '+00:00'
-        self._record_time = record_time
+        self._record_time = record_time or datetime.utcnow().isoformat(
+            sep='T')
         self._event_id = event_id
         self._error_declaration = error_declaration
 
     @property
     def event_time(self):
-        return self._event_time
+        return self._event_time.isoformat(sep='T') if isinstance(
+            self._event_time, datetime) else self._event_time
 
     @event_time.setter
     def event_time(self, value):
-        self._event_time = value
+        self._event_time = value if isinstance(
+            value, str
+        ) else value.isoformat(sep='T')
 
     @property
     def event_timezone_offset(self):
@@ -256,7 +262,8 @@ class EPCISEvent(object):
 
     @property
     def record_time(self):
-        return self._record_time
+        return self._record_time.isoformat(sep='T') if isinstance(
+            self._record_time, datetime) else self._record_time
 
     @record_time.setter
     def record_time(self, value):
@@ -285,13 +292,14 @@ class EPCISEvent(object):
         :return: None or a EPCPyYes.core.errors.ValidationError
         '''
         msgs = []
-        if self.record_time:
+        if self.record_time and isinstance(self.record_time, str):
             match = iso_regex.match(self.record_time)
             if not match:
                 msgs.append(_('The record_time field is malformed.'))
-        match = iso_regex.match(self.event_time)
-        if not match:
-            msgs.append(_('The event_time field is malformed.'))
+        if isinstance(self.event_time, str):
+            match = iso_regex.match(self.event_time)
+            if not match:
+                msgs.append(_('The event_time field is malformed.'))
         match = re.search(r'[\+\-][0-9]{2}:[0-9]{2}',
                           self.event_timezone_offset)
         if not match:
@@ -898,11 +906,11 @@ class EPCISDocument(object):
     @property
     def header(self):
         return self._header
-    
+
     @header.setter
     def header(self, value: sbdh):
         self._header = value
-    
+
     @property
     def object_events(self):
         return self._object_events
