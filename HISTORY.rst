@@ -29,3 +29,9 @@ to include files in the root that were being ignored.
 Added JSON serialization support to the EPCPyYes core
 template event classes and the standard business document header
 template classes.
+
+1.1.2
+--------------------
+Fixes to allow datetimes and strings to be used more flexibly in
+EPCIS events and a fix to the bizTransactionList label in the
+JSON encoder.
