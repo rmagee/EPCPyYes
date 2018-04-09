@@ -63,7 +63,6 @@ class JSONFormatMixin:
         return self.encoder.encode(self)
 
 
-
 class SourceListJSONEncoder(JSONEncoder):
     def default(self, o):
         return {
@@ -193,6 +192,12 @@ class EPCISBusinessEventEncoder(EPCISEventEncoder, ListMixin):
     '''
 
     def default(self, o):
+        '''
+        Creates default set of fields for object, transaction and
+        aggregation events.
+        :param o: The event to create the default set of fields for.
+        :return: An EPCPyYes.core.v1_2.events.EPCISBusinessEvent instance.
+        '''
         if isinstance(o, events.EPCISBusinessEvent):
             ret = super(EPCISBusinessEventEncoder, self).default(o)
             ret.update(
