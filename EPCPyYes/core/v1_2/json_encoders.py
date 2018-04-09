@@ -62,6 +62,13 @@ class JSONFormatMixin:
         '''
         return self.encoder.encode(self)
 
+    def render_dict(self):
+        '''
+        Will return the python dictionary rendered by the JSON encoder.
+        :return: A dictionary.
+        '''
+        return self.encoder.default(self)
+
 
 class SourceListJSONEncoder(JSONEncoder):
     def default(self, o):
