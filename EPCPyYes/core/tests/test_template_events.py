@@ -26,7 +26,8 @@ from EPCPyYes.core.v1_2.events import BusinessTransaction, \
     Source, Destination, \
     Action, QuantityElement, ErrorDeclaration
 from EPCPyYes.core.v1_2.template_events import ObjectEvent, AggregationEvent, \
-    EPCISDocument, TransactionEvent, TransformationEvent
+    EPCISDocument, TransactionEvent, TransformationEvent, \
+    EPCISEventListDocument
 from EPCPyYes.core.v1_2.CBV.dispositions import Disposition
 from EPCPyYes.core.v1_2.CBV.source_destination import SourceDestinationTypes
 from EPCPyYes.core.v1_2.CBV.business_steps import BusinessSteps
@@ -211,7 +212,7 @@ class CoreEventTests(unittest.TestCase):
             contact_type_identifier='Buyer'
         )
         document_identification = sbdh.DocumentIdentification(
-            creation_date_and_time=datetime.now().isoformat(),
+            creation_date_and_time=datetime.now().isoformat(sep="T"),
             document_type=sbdh.DocumentType.EVENTS
         )
         header = template_sbdh.StandardBusinessDocumentHeader(
@@ -233,6 +234,7 @@ class CoreEventTests(unittest.TestCase):
         print(header.render())
         print(header.render_json())
         print(header.render_pretty_json())
+        return header
 
     def test_object_event_template(self):
         oe = self.create_object_event_template()
@@ -300,6 +302,31 @@ class CoreEventTests(unittest.TestCase):
             aggregation_events=[ag1, ag2],
             transaction_events=[transaction_event],
             transformation_events=[txe]
+        )
+        print(epcis_document.render())
+        print(epcis_document.render_json())
+        print(epcis_document.render_pretty_json())
+        validate_epcis_doc(epcis_document.render().encode('utf-8'))
+        return epcis_document
+
+    def test_epcis_event_list_template(self):
+        oe1 = self.create_object_event_template()
+        oe2 = self.create_object_event_template()
+        ag1 = self.create_aggregation_event(self.create_epcs(1000, 1009),
+                                            gtin_to_urn('305555', '2',
+                                                        '555555', '235'))
+        ag2 = self.create_aggregation_event(self.create_epcs(1010, 1019),
+                                            gtin_to_urn('305555', '2',
+                                                        '555555', '216'))
+        parent_id = gtin_to_urn('305555', '1', '555551', 1000)
+        epcs = self.create_epcs(1000, 1010)
+        transaction_event = self.create_transaction_event(epcs, parent_id)
+        txe = self.create_transformation_event()
+        template_events = [oe1, oe2, ag1, ag2, transaction_event, txe]
+        header = self.create_sbdh()
+        epcis_document = EPCISEventListDocument(
+            header=header,
+            template_events=template_events
         )
         print(epcis_document.render())
         print(epcis_document.render_json())

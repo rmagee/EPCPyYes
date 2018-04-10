@@ -19,6 +19,7 @@ classes' `render` function, you can obtain the output of the Jinja2 template
 associated with the current class.  There are examples of this in the
 *Usage* section of this documentation.
 '''
+from typing import List
 from datetime import datetime
 
 from EPCPyYes.core.v1_2 import events
@@ -110,6 +111,9 @@ class TemplateMixin(JSONFormatMixin):
         root element.
         '''
         return self._template.render(**self._context)
+
+
+TemplateEventList = List[TemplateMixin]
 
 
 class ObjectEvent(events.ObjectEvent, TemplateMixin):
@@ -218,6 +222,7 @@ class AggregationEvent(events.AggregationEvent, TemplateMixin):
         self._template = self._env.get_template('epcis/aggregation_event.xml')
         self.encoder = json_encoders.AggregationEventEncoder()
 
+
 class TransactionEvent(events.TransactionEvent, TemplateMixin):
     def __init__(self, event_time: datetime = datetime.utcnow().isoformat(),
                  event_timezone_offset: str = '+00:00',
@@ -262,6 +267,7 @@ class TransformationEvent(events.TransformationEvent, TemplateMixin):
         self.template = 'epcis/transformation_event.xml'
         self.encoder = json_encoders.TransformationEventEncoder()
 
+
 class EPCISDocument(events.EPCISDocument, TemplateMixin):
     def __init__(self,
                  header: sbdh = None,
@@ -269,7 +275,7 @@ class EPCISDocument(events.EPCISDocument, TemplateMixin):
                  transaction_events: list = [],
                  transformation_events: list = [],
                  render_xml_declaration: bool = False,
-                 created_date: datetime = datetime.utcnow(),
+                 created_date: str = None,
                  template: str = 'epcis/epcis_document.xml'):
         super().__init__(header, object_events, aggregation_events,
                          transaction_events,
@@ -285,8 +291,75 @@ class EPCISDocument(events.EPCISDocument, TemplateMixin):
                    'aggregation_events': self.aggregation_events,
                    'transaction_events': self.transaction_events,
                    'transformation_events': self.transformation_events,
-                   'created_date': self._created_date.isoformat(),
+                   'created_date': self.created_date,
                    'render_xml_declaration': self.render_xml_declaration,
                    }
         return self._template.render(**context)
 
+
+class EPCISEventListDocument(events.EPCISDocument, TemplateMixin):
+    '''
+    This template event of the EPCISDocument type allows you to specify
+    a generic list of EPCPyYes events of any type in any order- as opposed
+    to the EPCISDocument template class in this same module which has separate
+    lists for each event type.
+
+    The EPCISEventListDocument has a single list called
+    `template_events` which can be supplied in the constructor or
+    can be accessed via the property of the same name.  The class must
+    be initialized, however, with at least one event in the
+    `template_events` parameter.
+    '''
+
+    def __init__(self, template_events: TemplateEventList,
+                 header: sbdh = None,
+                 render_xml_declaration: bool = True,
+                 created_date: str = None,
+                 render_namespaces=False,
+                 template='epcis/epcis_events_document.xml'):
+        '''
+        Initializes the class with at least one event in the
+        `template_events` paramter.
+        :param template_events: A list of
+        `EPCPyYes.core.v1_2.template_event.TemplateMixin` objects.
+        :param header: An EPCPyYes SBDH object.
+        :param render_xml_declaration:
+        :param created_date: Created date or the current UTC now.
+        :param render_namespaces: Whether or not to render namespaces in the
+        header. Default = False
+        :param template: The Jinja2 template path. Default is
+        `epcis/epcis_events_document.xml`
+        '''
+        super().__init__(header=header,
+                         render_xml_declaration=render_xml_declaration,
+                         created_date=created_date)
+        TemplateMixin.__init__(self)
+        self._template_events = template_events
+        self._render_namespaces = render_namespaces
+        self._template = self._env.get_template(template)
+        self.encoder = json_encoders.EPCISDocumentEncoder()
+
+    def render(self):
+        # we remove transformation events from the main event
+        # list since they must go into the <extension> element.
+        for event in self.template_events:
+            if isinstance(event, TransformationEvent):
+                self.transformation_events.append(event)
+                self.template_events.remove(event)
+        context = {
+            'header': self.header,
+            'template_events': self.template_events,
+            'transformation_events': self.transformation_events,
+            'render_namespaces': self._render_namespaces,
+            'render_xml_declaration': self.render_xml_declaration,
+            'created_date': self.created_date,
+        }
+        return self._template.render(**context)
+
+    @property
+    def template_events(self):
+        return self._template_events
+
+    @template_events.setter
+    def template_events(self, value):
+        self._template_events = value

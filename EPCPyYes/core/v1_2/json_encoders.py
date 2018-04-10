@@ -393,9 +393,15 @@ class EPCISDocumentEncoder(JSONEncoder, DateHelperMixin):
                         self.list_events(o.aggregation_events, agg) + \
                         self.list_events(o.transaction_events, xact) + \
                         self.list_events(o.transformation_events, trans)
+        if hasattr(o,'template_events'):
+            ret["events"] += self.list_template_events(o.template_events)
 
         ret["createdDate"] = created_date
         return ret
 
     def list_events(self, event_list, encoder):
         return [encoder.default(event) for event in event_list] or []
+
+    def list_template_events(self, template_events):
+        return [event.encoder.default(event) for event in template_events]
+

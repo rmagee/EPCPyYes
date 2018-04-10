@@ -35,3 +35,11 @@ template classes.
 Fixes to allow datetimes and strings to be used more flexibly in
 EPCIS events and a fix to the bizTransactionList label in the
 JSON encoder.
+
+1.1.3
+--------------------
+Added a dict render function to the JSON plugin for API view support
+in Django projects, etc.
+
+Added in a new template and template_events EPCISEventListDocument class
+to support a generic list of EPCIS template_event instances in any order.

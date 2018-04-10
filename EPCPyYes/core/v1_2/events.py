@@ -884,7 +884,7 @@ class EPCISDocument(object):
                  transaction_events: list = None,
                  transformation_events: list = None,
                  render_xml_declaration: bool = True,
-                 created_date: datetime = None
+                 created_date: str = None
                  ):
         '''
         Initializes the EPCIS Document with the constituent object, aggregation,
@@ -901,7 +901,8 @@ class EPCISDocument(object):
         self._aggregation_events = aggregation_events or []
         self._transformation_events = transformation_events or []
         self._render_xml_declaration = render_xml_declaration
-        self._created_date = created_date or datetime.utcnow()
+        self._created_date = created_date or datetime.utcnow().isoformat(
+            sep='T')
 
     @property
     def header(self):
@@ -945,7 +946,9 @@ class EPCISDocument(object):
 
     @property
     def created_date(self):
-        return self._created_date
+        return self._created_date.isoformat(sep='T') \
+            if isinstance(self._created_date, datetime) \
+            else self._created_date
 
     @created_date.setter
     def created_date(self, value: datetime):
