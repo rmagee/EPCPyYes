@@ -17,7 +17,6 @@ def get_data_files(path):
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
-
 requirements = [
     'Jinja2==2.9.4',
     'commonmark',
@@ -44,7 +43,7 @@ setup(
         'EPCPyYes', 'EPCPyYes.core', 'EPCPyYes.core.v1_2',
         'EPCPyYes.core.v1_2.CBV', 'EPCPyYes.core.tests'
     ],
-    package_dir={'EPCPyYes':'EPCPyYes'},
+    package_dir={'EPCPyYes': 'EPCPyYes'},
     entry_points={
     },
     data_files=get_data_files('EPCPyYes/templates/epcis/') + \
@@ -63,6 +62,7 @@ setup(
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
     test_suite='EPCPyYes.core.tests',
     tests_require=test_requirements
