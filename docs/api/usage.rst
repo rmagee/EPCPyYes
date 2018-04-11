@@ -7,6 +7,23 @@ IPython notebook. All of the code in this document can be executed if
 you run the ``.ipynb`` file in a local notebook from the source code
 tree.
 
+Python Classes That Generate Compliant XML and JSON
+---------------------------------------------------
+
+The EPCPyYes module allows you to work with Python objects that
+represent the constructs defined in the GS1 EPCIS and CBV standards and
+then serialize those class instances to EPCSI compliant XML or JSON-
+which has value in web interface development and also document database
+use cases.
+
+Each class that can render XML or JSON has three functions it exposes:
+
+::
+
+    render() # renders XML
+    render_json() # renders compressed json
+    render_pretty_json() # renders pretty printed json
+
 Get Jupyter
 -----------
 
@@ -99,6 +116,13 @@ time values in EPCIS events (this is covered later).
     from EPCPyYes.core.v1_2 import helpers
     print(helpers.get_current_utc_time_and_offset())
 
+Converting a GLN to an SGLN URN Value with the gln13_data_to_sgln_urn function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Below you can see we are creating a generic GLN by specifying a company
+prefix and location reference as well as creating a SGLN by specifying
+the aformentioned values along with an extension.
+
 .. code:: ipython3
 
     from EPCPyYes.core.v1_2 import helpers
@@ -116,13 +140,6 @@ Generating EPCIS Events
 Events can be generated in EPCPyYes by using the ``template_events``
 module classes. These classes rely on the Jinja2 templates defined in
 the root level ``templates`` directory of the project.
-
-Converting a GLN to an SGLN URN Value with the gln13_data_to_sgln_urn function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Below you can see we are creating a generic GLN by specifying a company
-prefix and location reference as well as creating a SGLN by specifying
-the aformentioned values along with an extension.
 
 Create Sample EPCs Using the Helpers
 ------------------------------------
@@ -160,11 +177,10 @@ list.
 Creating a Basic Object Event
 -----------------------------
 
-Here we will define an Object event in python and render it to XML and
-JSON. By the time we complete all the other examples below, this event
-would be very much like a commissioning event one might see from a
-pharmaceutical packaging operation complete with lot and exipration
-date.
+Here we will define an Object event in python and render it to XML. By
+the time we complete all the other examples below, this event would be
+very much like a commissioning event one might see from a pharmaceutical
+packaging operation complete with lot and exipration date.
 
 Using the CVB ``BusinessSteps`` and ``Disposition`` enumerations.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -192,11 +208,8 @@ value will convert that value to a string for use in EPCIS events, etc.
                      epc_list=epcs,
                      biz_step=BusinessSteps.commissioning.value,
                      disposition=Disposition.encoded.value)
-    # first render to GS1 EPCIS 1.2 XML 
-    print(oe.render())
     
-    # now render to "pretty" JSON- call oe.render_json for compressed JSON.
-    print(oe.render_pretty_json())
+    print(oe.render())
 
 Adding a *Business Location* and *Read Point*
 ---------------------------------------------
@@ -222,11 +235,7 @@ in the ``EPCPyYes.core.v1_2.helpers`` module.
     oe.biz_location = biz_location
     oe.read_point = read_point
     
-    # render XML
     print(oe.render())
-    
-    # render JSON
-    print(oe.render_pretty_json())
 
 Adding Instance Lot Master Data (ILMD) to an Event
 --------------------------------------------------
@@ -254,10 +263,8 @@ more complicated description, see the standard.
     # assign the property and that's it
     oe.ilmd = ilmd
     
-    # first render to GS1 EPCIS 1.2 XML 
     print(oe.render())
-    
-    # now render to "pretty" JSON- call oe.render_json for compressed JSON.
+    # try pretty json
     print(oe.render_pretty_json())
 
 Adding Source and Destination Data to an Event
@@ -299,11 +306,8 @@ section 7.4 of the *CBV 1.2* standard.
     oe.source_list = source_list
     oe.destination_list = destination_list
     
-    # first render to GS1 EPCIS 1.2 XML 
     print(oe.render())
-    
-    # now render to "pretty" JSON- call oe.render_json for compressed JSON.
-    print(oe.render_pretty_json())
+    print(oe.render_json())
 
 Creating an Aggregation Event
 -----------------------------
@@ -386,6 +390,7 @@ manufacturing environment with the following data (to review):
                           business_transaction_list=biz_transaction_list
                          )
     print(te.render())
+    print(oe.render_json())
 
 Creating a Quantity List
 ------------------------
@@ -413,6 +418,7 @@ We will add a ``quantity_list`` to our event to express that there were
     
     te.quantity_list = quantity_list
     print(te.render())
+    print(oe.render_json())
 
 Using the New EventID and ErrorDeclaration
 ==========================================
@@ -509,12 +515,7 @@ were repacked into new EPC values.
         error_declaration=error_declaration
     )
     
-    # render EPCIS 1.2 XML
     print(tx_event.render())
-    
-    # render out to JSON (to render compressed JSON call render_json)
-    print(tx_event.render_pretty_json())
-
 
 Create a Standard Business Document Header
 ==========================================
@@ -595,12 +596,8 @@ for this is the current date and time in ISO using UTC timezone info.
         document_identification=document_identification,
         partners=[sender, receiver]
     )
-    # render the SBDH to XML
     print(header.render())
-    
-    # or render to JSON
-    print(header.render_pretty_json())
-
+    print(header.render_json())
 
 Adding The Header and Events to an EPCIS Document
 =================================================
@@ -608,21 +605,41 @@ Adding The Header and Events to an EPCIS Document
 To execute this code in Jupyter, make sure you have run the code in the
 prior example.
 
+EPCISDocument Class
+-------------------
+
+The first type of document class is the ``EPCISDocument`` and, as you
+can see below, it has a 4 lists you intialize the object with that
+contain object, aggregation, transaction and transformation event lists.
+Each of those event types will always be rendered in that order if you
+use this class…which is usually fine.
+
+EPCISEventListDocument
+----------------------
+
+If you need to directly control the order of events in a document, use
+the ``EPCISEventListDocument`` which allows you to pass in a list of any
+type event in any order. Each event will be rendered in the order in
+which it sits in the list.
+
 Creating and EPCIS Document and adding events to it in EPCPyYes if
 fairly simple:
 
-
 .. code:: ipython3
 
-    from EPCPyYes.core.v1_2.template_events import EPCISDocument
+    from EPCPyYes.core.v1_2.template_events import EPCISDocument, EPCISEventListDocument
     
+    #event types strictly ordered
     epc_doc = EPCISDocument(header=header, object_events=[oe], aggregation_events=[ae],
                             transaction_events=[te], transformation_events=[tx_event])
     
-    # print out a GS1 compliant EPCIS document...
-    print(epc_doc.render())
+    #events ordered as they appear in the list
+    epc_doc_2 = EPCISEventListDocument(template_events=[te, oe, ae, tx_event], header=header)
     
-    # or render to JSON
-    print(epc_doc.render_json())
-
+    print(epc_doc.render())
+    print('\n'*5)
+    print(epc_doc_2.render())
+    
+    # as with all the template_event classes, you can render to JSON as well...
+    print(epc_doc_2.render_json())
 
