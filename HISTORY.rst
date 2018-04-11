@@ -36,7 +36,7 @@ Fixes to allow datetimes and strings to be used more flexibly in
 EPCIS events and a fix to the bizTransactionList label in the
 JSON encoder.
 
-1.1.3
+1.2.0
 --------------------
 Added a dict render function to the JSON plugin for API view support
 in Django projects, etc.
