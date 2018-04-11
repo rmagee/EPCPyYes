@@ -55,7 +55,9 @@ setup(
     zip_safe=False,
     keywords='EPCPyYes EPCIS GS1 RFID Serialization',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Healthcare Industry',
+        'Intended Audience :: Manufacturing',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
         'Natural Language :: English',
