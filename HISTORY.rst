@@ -43,3 +43,6 @@ in Django projects, etc.
 
 Added in a new template and template_events EPCISEventListDocument class
 to support a generic list of EPCIS template_event instances in any order.
+
+Updated documentation for EPCISEventListDocument and JSON rendering
+options.
