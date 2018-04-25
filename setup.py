@@ -20,13 +20,13 @@ with open('README.rst') as readme_file:
 requirements = [
     'Jinja2==2.9.4',
     'commonmark',
-    'lxml==3.7.0',
+    'lxml',
 ]
 
 test_requirements = requirements + [
     'Jinja2==2.9.4',
     'commonmark',
-    'lxml==3.7.0',
+    'lxml',
 ]
 
 setup(

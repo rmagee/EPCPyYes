@@ -46,3 +46,7 @@ to support a generic list of EPCIS template_event instances in any order.
 
 Updated documentation for EPCISEventListDocument and JSON rendering
 options.
+
+1.2.1
+---------------------
+Updates to the setup and stated python compatibility.

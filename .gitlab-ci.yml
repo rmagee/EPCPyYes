@@ -34,19 +34,19 @@ python3_6_unit_test:
       - EPCPyYes/core/tests/htmlcov/
 
 pages:
-    image: seriallab/python3.5dev
-    stage: build-docs
-    script:
-    - export PYTHONPATH=$PYTHONPATH:$CI_PROJECT_DIR
-    - pip install sphinx recommonmark sphinx_rtd_theme pygments ipython
-    - make html --directory=docs/api
-    - mv docs/api/_build/html/ public/
-    artifacts:
-        paths:
-        - public
-        expire_in: 1h
-    only:
-      - tags
+  image: seriallab/python3.5dev
+  stage: build-docs
+  script:
+  - export PYTHONPATH=$PYTHONPATH:$CI_PROJECT_DIR
+  - pip install sphinx recommonmark sphinx_rtd_theme pygments ipython
+  - make html --directory=docs/api
+  - mv docs/api/_build/html/ public/
+  artifacts:
+      paths:
+      - public
+      expire_in: 1h
+  only:
+    - tags
 
 deploy_pypi:
   image: seriallab/python3.5dev
