@@ -18,13 +18,13 @@ with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    'Jinja2==2.9.4',
+    'Jinja2',
     'commonmark',
     'lxml',
 ]
 
 test_requirements = requirements + [
-    'Jinja2==2.9.4',
+    'Jinja2',
     'commonmark',
     'lxml',
 ]
