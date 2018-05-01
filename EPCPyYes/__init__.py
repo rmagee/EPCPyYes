@@ -26,5 +26,5 @@
                                              "Y88P"
 '''
 
-__version__ = '1.2.2'
+__version__ = '1.2.3'
 __release__ = 'stable'
