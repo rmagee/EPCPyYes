@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import glob
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def get_data_files(path):
@@ -39,10 +39,7 @@ setup(
     author="Rob Magee",
     author_email='slab@serial-lab.com',
     url='https://gitlab.com/serial-lab/EPCPyYes',
-    packages=[
-        'EPCPyYes', 'EPCPyYes.core', 'EPCPyYes.core.v1_2',
-        'EPCPyYes.core.v1_2.CBV', 'EPCPyYes.core.tests'
-    ],
+    packages=find_packages(),
     package_dir={'EPCPyYes': 'EPCPyYes'},
     entry_points={
     },
