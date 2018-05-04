@@ -64,6 +64,7 @@ deploy_pypi:
     - rm ~/.pypirc
   only:
     - tags
+
     #- /\d+\.\d+\.\d+([abc]\d*)?$/
 
 
