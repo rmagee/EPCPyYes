@@ -29,7 +29,8 @@ purpose of this library is to allow developers to quickly build systems that
 parse, generate and store EPCIS data quickly and efficiently with a clear
 and straight-forward pythonic API.
 
-# Python to EPCIS XML or JSON
+Python to EPCIS XML or JSON
+---------------------------
 Work with python classes that take the pain out of knowing the EPCIS protocol.
 Each class in the EPCPyYes package can be directly manipulated in python and 
 then quickly rendered to EPCIS 1.2 compliant XML or JSON for any number
