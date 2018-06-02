@@ -215,7 +215,7 @@ class EPCISEvent(object):
     # TODO: add getter setters
     def __init__(self, event_time: str, event_timezone_offset: str,
                  record_time: str = None, event_id: str = None,
-                 error_declaration: ErrorDeclaration = None):
+                 error_declaration: ErrorDeclaration = None, id=None):
         '''
         The base EPCIS event class contains common properties shared
         across each of the Aggregation, Object, Transaction and
@@ -233,13 +233,26 @@ class EPCISEvent(object):
         :param error_declaration:  If present, indicates that this event
             serves to assert that the assertions made by a prior event are in
             error.
+        :param id: If present is used to store a reference to a database
+            primary key.  This will NOT be rendered in the XML EPCIS documents.
+            Use the id parameter and class property according to development
+            needs.
         '''
+        self._id = id,
         self._event_time = event_time or datetime.utcnow().isoformat(sep='T')
         self._event_timezone_offset = event_timezone_offset or '+00:00'
         self._record_time = record_time or datetime.utcnow().isoformat(
             sep='T')
         self._event_id = event_id
         self._error_declaration = error_declaration
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        self._id = value
 
     @property
     def event_time(self):
