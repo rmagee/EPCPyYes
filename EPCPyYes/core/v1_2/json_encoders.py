@@ -182,6 +182,7 @@ class EPCISEventEncoder(JSONEncoder, ErrorDeclarationMixin,
     def default(self, o: events.EPCISEvent):
         record_time = self.get_date(o.record_time) if o.record_time else None
         ret = {
+            'id': o.id,
             'eventID': o.event_id,
             'eventTime': o.event_time,
             'eventTimezoneOffset': o.event_timezone_offset,
