@@ -50,3 +50,9 @@ options.
 1.2.1
 ---------------------
 Updates to the setup and stated python compatibility.
+
+1.2.7
+---------------------
+Added the new `EventType` enumeration to the events module.  Can be used
+to compare event types and settings while keeping string literals consistent
+across applications.
