@@ -39,6 +39,7 @@ from EPCPyYes.core.SBDH.sbdh import StandardBusinessDocumentHeader as sbdh
 
 iso_regex = get_iso_8601_regex()
 
+
 class EventType(Enum):
     '''
     A helper Enum for comparing and using event types.
@@ -47,6 +48,7 @@ class EventType(Enum):
     Object = 'Object'
     Transformation = 'Transformation'
     Aggregation = 'Aggregation'
+
 
 class Action(Enum):
     '''
