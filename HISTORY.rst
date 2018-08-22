@@ -56,3 +56,7 @@ Updates to the setup and stated python compatibility.
 Added the new `EventType` enumeration to the events module.  Can be used
 to compare event types and settings while keeping string literals consistent
 across applications.
+
+1.2.8 & 1.2.9
+-------------
+Fixed camel case issues with epc_list and quantity_list in the JSON encoders.
