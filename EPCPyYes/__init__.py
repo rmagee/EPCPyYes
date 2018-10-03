@@ -25,6 +25,10 @@
                                             Y8b d88P
                                              "Y88P"
 '''
+import os
 
 __version__ = '1.2.9'
 __release__ = 'stable'
+
+
+TEMPLATES_PATH = os.path.join(os.path.dirname(__file__), 'templates/epcis')

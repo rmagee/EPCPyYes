@@ -15,6 +15,7 @@ Examples and Usage
    :maxdepth: 4
 
    usage
+   extending
 
 API Documentation
 =====
