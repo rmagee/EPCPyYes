@@ -60,3 +60,8 @@ across applications.
 1.2.8 & 1.2.9
 -------------
 Fixed camel case issues with epc_list and quantity_list in the JSON encoders.
+
+1.2.10
+------
+New documentation and explicit export of templates directory via the
+`EPCPyYes.TEMPLATES_DIRECTORY` property.
