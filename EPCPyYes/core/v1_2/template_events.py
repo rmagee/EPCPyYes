@@ -132,14 +132,20 @@ class ObjectEvent(events.ObjectEvent, TemplateMixin):
                  error_declaration: ErrorDeclaration = None,
                  source_list: list = None, destination_list: list = None,
                  business_transaction_list: list = None, ilmd: list = None,
-                 quantity_list: list = None):
+                 quantity_list: list = None, env: Environment = None,
+                 template: str = None, render_xml_declaration=None):
         super().__init__(event_time, event_timezone_offset, record_time,
                          action, epc_list, biz_step, disposition, read_point,
                          biz_location, event_id, error_declaration,
                          source_list, destination_list,
                          business_transaction_list, ilmd, quantity_list)
-        TemplateMixin.__init__(self)
-        self.template = self._env.get_template('epcis/object_event.xml')
+        kwargs = {'env': env,
+                  'template': template,
+                  'render_xml_declaration': render_xml_declaration
+                  }
+        TemplateMixin.__init__(self, **kwargs)
+        template = template or 'epcis/object_event.xml'
+        self.template = self._env.get_template(template)
         self.encoder = json_encoders.ObjectEventEncoder()
 
     @property
@@ -174,7 +180,10 @@ class AggregationEvent(events.AggregationEvent, TemplateMixin):
                  disposition: str = None, read_point: str = None,
                  biz_location: str = None, event_id: str = None,
                  error_declaration: ErrorDeclaration = None, source_list=None,
-                 destination_list=None, business_transaction_list=None):
+                 destination_list=None, business_transaction_list=None,
+                 env: Environment = None,
+                 template: str = None, render_xml_declaration=None
+                 ):
         '''
         Creates a new EPCIS AggregationEvent instance.
 
@@ -218,7 +227,11 @@ class AggregationEvent(events.AggregationEvent, TemplateMixin):
                          biz_step, disposition, read_point, biz_location,
                          event_id, error_declaration, source_list,
                          destination_list, business_transaction_list)
-        TemplateMixin.__init__(self)
+        kwargs = {'env': env,
+                  'template': template,
+                  'render_xml_declaration': render_xml_declaration
+                  }
+        TemplateMixin.__init__(self, **kwargs)
         self._template = self._env.get_template('epcis/aggregation_event.xml')
         self.encoder = json_encoders.AggregationEventEncoder()
 
@@ -234,13 +247,18 @@ class TransactionEvent(events.TransactionEvent, TemplateMixin):
                  event_id: str = None,
                  error_declaration: ErrorDeclaration = None, source_list=None,
                  destination_list=None, business_transaction_list=None,
-                 quantity_list: list = None):
+                 quantity_list: list = None, env: Environment = None,
+                 template: str = None, render_xml_declaration=None):
         super().__init__(event_time, event_timezone_offset, record_time,
                          action, parent_id, epc_list, biz_step, disposition,
                          read_point, biz_location, event_id, error_declaration,
                          source_list, destination_list,
                          business_transaction_list, quantity_list)
-        TemplateMixin.__init__(self)
+        kwargs = {'env': env,
+                  'template': template,
+                  'render_xml_declaration': render_xml_declaration
+                  }
+        TemplateMixin.__init__(self, **kwargs)
         self.template = 'epcis/transaction_event.xml'
         self.encoder = json_encoders.TransactionEventEncoder()
 
@@ -256,14 +274,21 @@ class TransformationEvent(events.TransformationEvent, TemplateMixin):
                  disposition: str = None, read_point: str = None,
                  biz_location: str = None, business_transaction_list=None,
                  source_list=None, destination_list=None, ilmd=None,
-                 error_declaration: ErrorDeclaration = None):
+                 error_declaration: ErrorDeclaration = None,
+                 env: Environment = None,
+                 template: str = None, render_xml_declaration=None
+                 ):
         super().__init__(event_time, event_timezone_offset, record_time,
                          event_id, input_epc_list, input_quantity_list,
                          output_epc_list, output_quantity_list,
                          transformation_id, biz_step, disposition, read_point,
                          biz_location, business_transaction_list, source_list,
                          destination_list, ilmd, error_declaration)
-        TemplateMixin.__init__(self)
+        kwargs = {'env': env,
+                  'template': template,
+                  'render_xml_declaration': render_xml_declaration
+                  }
+        TemplateMixin.__init__(self, **kwargs)
         self.template = 'epcis/transformation_event.xml'
         self.encoder = json_encoders.TransformationEventEncoder()
 
