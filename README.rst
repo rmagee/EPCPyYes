@@ -26,6 +26,9 @@ Pronounced "EPC-Pie-Yes": Open source components for the GS1 EPCIS standard
 
 A foundational component of the QU4RTET open-source EPCIS platform.
 
+For more info on this and other QU4RTET components,
+visit http://serial-lab.com
+
 The main
 purpose of this library is to allow developers to quickly build systems that
 parse, generate and store EPCIS data quickly and efficiently with a clear
