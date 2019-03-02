@@ -15,6 +15,9 @@ EPCPyYes.egg-info/requires.txt
 EPCPyYes.egg-info/top_level.txt
 EPCPyYes/core/__init__.py
 EPCPyYes/core/errors.py
+EPCPyYes/core/SBDH/__init__.py
+EPCPyYes/core/SBDH/sbdh.py
+EPCPyYes/core/SBDH/template_sbdh.py
 EPCPyYes/core/tests/__init__.py
 EPCPyYes/core/tests/test_cbv_helpers.py
 EPCPyYes/core/tests/test_helpers.py
@@ -34,6 +37,7 @@ EPCPyYes/core/tests/schemas/StandardBusinessDocumentHeader.xsd
 EPCPyYes/core/v1_2/__init__.py
 EPCPyYes/core/v1_2/events.py
 EPCPyYes/core/v1_2/helpers.py
+EPCPyYes/core/v1_2/json_encoders.py
 EPCPyYes/core/v1_2/template_events.py
 EPCPyYes/core/v1_2/CBV/__init__.py
 EPCPyYes/core/v1_2/CBV/business_steps.py
@@ -51,6 +55,7 @@ EPCPyYes/templates/epcis/business_data.xml
 EPCPyYes/templates/epcis/child_quantity_list.xml
 EPCPyYes/templates/epcis/destination_list.xml
 EPCPyYes/templates/epcis/epcis_document.xml
+EPCPyYes/templates/epcis/epcis_events_document.xml
 EPCPyYes/templates/epcis/event_times.xml
 EPCPyYes/templates/epcis/extension.xml
 EPCPyYes/templates/epcis/ilmd.xml
@@ -70,6 +75,7 @@ docs/api/authors.rst
 docs/api/conf.py
 docs/api/contributing.rst
 docs/api/events.rst
+docs/api/extending.rst
 docs/api/history.rst
 docs/api/index.rst
 docs/api/installation.rst

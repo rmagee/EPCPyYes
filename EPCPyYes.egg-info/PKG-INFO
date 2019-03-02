@@ -1,6 +1,6 @@
 Metadata-Version: 1.2
 Name: EPCPyYes
-Version: 1.0.14
+Version: 1.3.0
 Summary: EPCIS Python module for quickly developing EPCIS-enabled applications.
 Home-page: https://gitlab.com/serial-lab/EPCPyYes
 Author: Rob Magee
@@ -37,6 +37,32 @@ Description: EPCPYYes
         purpose of this library is to allow developers to quickly build systems that
         parse, generate and store EPCIS data quickly and efficiently with a clear
         and straight-forward pythonic API.
+        
+        Python to EPCIS XML or JSON
+        ---------------------------
+        Work with python classes that take the pain out of knowing the EPCIS protocol.
+        Each class in the EPCPyYes package can be directly manipulated in python and 
+        then quickly rendered to EPCIS 1.2 compliant XML or JSON for any number
+        of purposes.  For example:
+        
+        .. code-block:: text
+        
+            # for example, create an ObjectEvent
+            oe = ObjectEvent(now, tzoffset,
+                             record_time=now,
+                             action=Action.add.value,
+                             epc_list=epcs,
+                             biz_step=BusinessSteps.commissioning.value,
+                             disposition=Disposition.encoded.value)
+            
+            # Create EPCIS 1.2 compliant XML
+            print(oe.render())
+            
+            # Render as JSON
+            print(oe.render_json())
+            
+            # Render as pretty printed JSON
+            print(oe.render_pretty_json()
         
         
         Fully Tested
@@ -122,9 +148,12 @@ Description: EPCPYYes
             urn:epcglobal:cbv:bizstep:commissioning
 Keywords: EPCPyYes EPCIS GS1 RFID Serialization
 Platform: UNKNOWN
-Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Healthcare Industry
+Classifier: Intended Audience :: Manufacturing
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)
 Classifier: Natural Language :: English
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6

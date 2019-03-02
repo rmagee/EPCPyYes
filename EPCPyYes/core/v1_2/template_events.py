@@ -341,7 +341,8 @@ class EPCISEventListDocument(events.EPCISDocument, TemplateMixin):
                  render_xml_declaration: bool = True,
                  created_date: str = None,
                  render_namespaces=False,
-                 template='epcis/epcis_events_document.xml'):
+                 template='epcis/epcis_events_document.xml',
+                 additional_context:dict = None):
         '''
         Initializes the class with at least one event in the
         `template_events` paramter.
@@ -363,6 +364,7 @@ class EPCISEventListDocument(events.EPCISDocument, TemplateMixin):
         self._render_namespaces = render_namespaces
         self._template = self._env.get_template(template)
         self.encoder = json_encoders.EPCISDocumentEncoder()
+        self.additional_context = additional_context
 
     def render(self):
         # we remove transformation events from the main event
@@ -378,6 +380,7 @@ class EPCISEventListDocument(events.EPCISDocument, TemplateMixin):
             'render_namespaces': self._render_namespaces,
             'render_xml_declaration': self.render_xml_declaration,
             'created_date': self.created_date,
+            'additional_context': self.additional_context
         }
         return self._template.render(**context)
 
