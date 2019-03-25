@@ -226,6 +226,7 @@ class ObjectEventEncoder(EPCISBusinessEventEncoder, ListMixin):
                     'epcList': [epc for epc in o.epc_list],
                     'ilmd': self.get_ilmd_list(o),
                     'quantityList': self.get_quantity_list(o.quantity_list),
+                    'id': str(o.id)
                 }
             )
             return {'objectEvent': ret}
