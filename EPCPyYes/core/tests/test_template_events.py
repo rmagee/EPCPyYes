@@ -40,6 +40,8 @@ from EPCPyYes.core.v1_2.CBV import helpers, error_reasons
 from EPCPyYes.core.tests.test_utils import validate_epcis_doc
 from EPCPyYes.core.SBDH import template_sbdh
 from EPCPyYes.core.SBDH import sbdh
+from EPCPyYes.core.v1_2.json_decoders import AggregationEventDecoder, \
+    ObjectEventDecoder, TransactionEventDecoder
 
 
 class CoreEventTests(unittest.TestCase):
@@ -91,6 +93,44 @@ class CoreEventTests(unittest.TestCase):
         print(ae.render_pretty_json())
         reverse = json.loads(ae.render_json())
         print(reverse)
+
+    def test_aggregation_event_json_decode(self):
+        '''
+        Creates an aggregation event and renders it using the
+        aggregation event template.
+
+        :return: String with the rendered event.
+        '''
+
+        epcs = self.create_epcs(1000, 1010)
+        parent_id = gtin_to_urn('305555', '1', '555551', 1000)
+        # get the current time and tz
+        ae = self.create_aggregation_event(epcs, parent_id)
+        decoded = AggregationEventDecoder(ae.render_pretty_json()).get_event()
+        self.assertEqual(ae.child_epcs, decoded.child_epcs)
+        self.assertEqual(ae.parent_id, decoded.parent_id)
+        self.assertEqual(ae.action, decoded.action)
+
+    def test_object_event_json_decode(self):
+        oe = self.create_object_event_template()
+        # render the event using it's default template
+        data = oe.render_pretty_json()
+        decoded = ObjectEventDecoder(data).get_event()
+        self.assertEqual(oe.action, decoded.action)
+        self.assertEqual(oe.biz_step, decoded.biz_step)
+        self.assertEqual(oe.disposition, decoded.disposition)
+
+    def test_transaction_event_json_decode(self):
+        epcs = self.create_epcs(1000, 1010)
+        parent_id = gtin_to_urn('305555', '1', '555551', 1000)
+        te = self.create_transaction_event(epcs, parent_id)
+        # render the event using it's default template
+        decoded = TransactionEventDecoder(
+            te.render_pretty_json()
+        ).get_event()
+        self.assertEqual(te.action, decoded.action)
+        self.assertEqual(te.biz_step, decoded.biz_step)
+        self.assertEqual(te.disposition, decoded.disposition)
 
     def test_bad_aggregation_event(self):
         '''
