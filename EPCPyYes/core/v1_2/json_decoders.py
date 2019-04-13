@@ -12,6 +12,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Copyright 2019 SerialLab Corp.  All rights reserved.
+from uuid import uuid4
 from EPCPyYes.core.v1_2.events import QuantityElement, ErrorDeclaration, \
     Source, SourceDest, Destination, BusinessTransaction, \
     InstanceLotMasterDataAttribute
@@ -152,7 +153,7 @@ class ObjectEventDecoder(
         if isinstance(payload, str):
             self.__dict__ = loads(payload)['objectEvent']
         elif isinstance(payload, dict):
-            self.__dict__ = payload
+            self.__dict__ = payload['objectEvent']
         else:
             raise TypeError('Input payload must be a string or a dictionary.')
 
@@ -187,6 +188,7 @@ class ObjectEventDecoder(
                 getattr(self, 'ilmd')
             )
         )
+        obj_event.id = str(uuid4())
         return obj_event
 
 
@@ -215,7 +217,7 @@ class AggregationEventDecoder(
         if isinstance(payload, str):
             self.__dict__ = loads(payload)['aggregationEvent']
         elif isinstance(payload, dict):
-            self.__dict__ = payload
+            self.__dict__ = payload['aggregationEvent']
         else:
             raise TypeError('Input payload must be a string or a dictionary.')
 
@@ -246,8 +248,9 @@ class AggregationEventDecoder(
             ),
             business_transaction_list=self.decode_business_transaction_list(
                 getattr(self, 'bizTransactionList')
-            )
+            ),
         )
+        agg_event.id = str(uuid4())
         return agg_event
 
 
@@ -276,7 +279,7 @@ class TransactionEventDecoder(
         if isinstance(payload, str):
             self.__dict__ = loads(payload)['transactionEvent']
         elif isinstance(payload, dict):
-            self.__dict__ = payload
+            self.__dict__ = payload['transactionEvent']
         else:
             raise TypeError('Input payload must be a string or a dictionary.')
 
@@ -309,4 +312,5 @@ class TransactionEventDecoder(
                 getattr(self, 'bizTransactionList')
             )
         )
+        xact_event.id = str(uuid4())
         return xact_event

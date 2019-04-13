@@ -119,6 +119,7 @@ class CoreEventTests(unittest.TestCase):
         self.assertEqual(oe.action, decoded.action)
         self.assertEqual(oe.biz_step, decoded.biz_step)
         self.assertEqual(oe.disposition, decoded.disposition)
+        print(decoded.render_pretty_json())
 
     def test_transaction_event_json_decode(self):
         epcs = self.create_epcs(1000, 1010)
