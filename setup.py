@@ -35,8 +35,8 @@ setup(
     description="EPCIS Python module for quickly developing "
                 "EPCIS-enabled applications.",
     long_description=readme,
-    maintainer="SerialLab Corp",
-    author="Rob Magee",
+    maintainer="Rob Magee",
+    author="Serial Lab",
     author_email='slab@serial-lab.com',
     url='https://gitlab.com/serial-lab/EPCPyYes',
     packages=find_packages(),
@@ -60,6 +60,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='EPCPyYes.core.tests',
     tests_require=test_requirements
