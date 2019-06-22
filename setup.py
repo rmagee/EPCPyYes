@@ -31,7 +31,7 @@ test_requirements = requirements + [
 
 setup(
     name='EPCPyYes',
-    version='2.0.2',
+    version='2.0.3',
     description="EPCIS Python module for quickly developing "
                 "EPCIS-enabled applications.",
     long_description=readme,
