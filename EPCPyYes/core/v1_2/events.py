@@ -37,6 +37,7 @@ from EPCPyYes.core.errors import ValidationError
 from EPCPyYes.core.v1_2.helpers import get_iso_8601_regex
 from EPCPyYes.core.SBDH.sbdh import StandardBusinessDocumentHeader as sbdh
 
+
 iso_regex = get_iso_8601_regex()
 
 
