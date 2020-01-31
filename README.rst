@@ -2,7 +2,7 @@ EPCPYYes
 ========
 .. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/coverage.svg
    :target: https://gitlab.com/serial-lab/EPCPyYes/pipelines
-.. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/build.svg
+.. image:: https://gitlab.com/serial-lab/EPCPyYes/badges/master/pipeline.svg
    :target: https://gitlab.com/serial-lab/EPCPyYes/commits/master
 .. image:: https://badge.fury.io/py/EPCPyYes.svg
     :target: https://badge.fury.io/py/EPCPyYes
