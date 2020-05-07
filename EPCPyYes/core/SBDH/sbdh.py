@@ -291,7 +291,7 @@ class StandardBusinessDocumentHeader(object):
         self._schema_location = schema_location
         self._document_identification = \
             document_identification or DocumentIdentification()
-        self._partners = partners
+        self._partners = partners or []
 
     @property
     def header_version(self):
