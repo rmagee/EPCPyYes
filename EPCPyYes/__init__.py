@@ -27,7 +27,7 @@
 '''
 import os
 
-__version__ = '2.0.4'
+__version__ = '2.0.5'
 __release__ = 'stable'
 
 
